@@ -6,5 +6,5 @@ import { RepositoryContract } from "./repository.contract";
 export abstract class DatabaseServicesContract {
     abstract users: RepositoryContract<User>;
     abstract gyms: RepositoryContract<IGym>;
-    abstract customers: RepositoryContract<Customer>
+    abstract customers: RepositoryContract<Customer>;
 }
