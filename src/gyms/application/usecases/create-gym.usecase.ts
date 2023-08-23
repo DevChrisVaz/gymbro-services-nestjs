@@ -1,11 +1,11 @@
 import { Injectable } from "@nestjs/common";
-import { IDataServices } from "src/core/abstracts/data-services.abstract";
+import { DatabaseServicesContract } from "src/database/domain/contracts/database-services.contract";
 import { IGym } from "src/gyms/domain/entities/gym.entity";
 
 @Injectable()
 export class CreateGymUseCase {
     constructor(
-        private dataServices: IDataServices
+        private dataServices: DatabaseServicesContract
     ) {}
 
     async run(gym: IGym): Promise<IGym> {

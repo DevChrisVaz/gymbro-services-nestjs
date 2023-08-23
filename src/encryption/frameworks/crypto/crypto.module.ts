@@ -1,23 +1,21 @@
 import { Module } from "@nestjs/common";
-import { EncryptionContract } from "../../domain/contracts/encryption.contract";
+import { DataEncryptionContract } from "../../domain/contracts/encryption.contract";
 import { CryptoRepository } from "./crypto.repository";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import cryptoConfig, { configProviders } from "./crypto.config";
 
 @Module({
     imports: [
-        ConfigModule.forRoot({
-            load: [cryptoConfig]
-        })
+        ConfigModule.forFeature(cryptoConfig)
     ],
     providers: [
         ConfigService,
         ...configProviders,
         {
-            provide: EncryptionContract,
+            provide: DataEncryptionContract,
             useClass: CryptoRepository
         }
     ],
-    exports: [EncryptionContract]
+    exports: [DataEncryptionContract]
 })
 export class CryptoModule {}

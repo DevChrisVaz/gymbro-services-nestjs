@@ -1,11 +1,11 @@
 import { Injectable } from "@nestjs/common";
 import { User } from "../../domain/entities/User";
-import { IDataServices } from "src/core/abstracts/data-services.abstract";
+import { DatabaseServicesContract } from "src/database/domain/contracts/database-services.contract";
 
 @Injectable()
 export class DeleteUserUseCase {
     constructor(
-        private dataServices: IDataServices
+        private dataServices: DatabaseServicesContract
     ) {}
 
     async run(id: string): Promise<User> {

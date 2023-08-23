@@ -1,12 +1,12 @@
 import { Injectable } from "@nestjs/common";
-import { IDataServices } from "src/core/abstracts/data-services.abstract";
+import { DatabaseServicesContract } from "src/database/domain/contracts/database-services.contract";
 import { IGym } from "src/gyms/domain/entities/gym.entity";
 import { GymNotFoundException } from "src/gyms/domain/exceptions/gym-not-found.exception";
 
 @Injectable()
 export class DeleteGymUseCase {
     constructor(
-        private dataServices: IDataServices
+        private dataServices: DatabaseServicesContract
     ) {}
 
     async run(id: string): Promise<IGym> {

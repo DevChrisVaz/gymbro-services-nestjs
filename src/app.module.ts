@@ -5,7 +5,7 @@ import { UsersModule } from './users/users.module';
 import { GymsModule } from './gyms/gyms.module';
 import { CustomersModule } from './customers/customers.module';
 import { AuthModule } from './auth/auth.module';
-import ConfigModule from './config';
+import ConfigModule from './core/config';
 
 @Module({
   imports: [

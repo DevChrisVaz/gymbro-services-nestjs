@@ -1,5 +1,5 @@
 import { Exclude } from "class-transformer";
-import { ITimestamps } from "src/core/domain/entities/ITimestamps";
+import { ITimestamps } from "src/database/domain/entities/ITimestamps";
 
 export abstract class Customer extends ITimestamps {
     uuid: string;

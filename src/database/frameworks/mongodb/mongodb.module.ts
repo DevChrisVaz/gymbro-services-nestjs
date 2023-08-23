@@ -1,14 +1,16 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { IDataServices } from 'src/core/abstracts/data-services.abstract';
 import { UserModel, UserSchema } from 'src/users/frameworks/data/mogodb/models/user.model';
 import { MongoDBServices } from './mongodb.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { GymModel, GymSchema } from 'src/gyms/frameworks/data/mongodb/models/gym.model';
 import { CustomerModel, CustomerSchema } from 'src/customers/frameworks/data/mongodb/models/customer.model';
+import mongodbConfig from './mongodb.config';
+import { DatabaseServicesContract } from 'src/database/domain/contracts/database-services.contract';
 
 @Module({
     imports: [
+        ConfigModule.forFeature(mongodbConfig),
         MongooseModule.forFeature([
             { name: UserModel.name, schema: UserSchema },
             { name: GymModel.name, schema: GymSchema },
@@ -24,10 +26,10 @@ import { CustomerModel, CustomerSchema } from 'src/customers/frameworks/data/mon
     ],
     providers: [
         {
-            provide: IDataServices,
+            provide: DatabaseServicesContract,
             useClass: MongoDBServices
         }
     ],
-    exports: [IDataServices]
+    exports: [DatabaseServicesContract]
 })
 export class MongoDBModule {};

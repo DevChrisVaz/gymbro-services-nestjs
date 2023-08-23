@@ -5,4 +5,4 @@ import { MongoDBModule } from "./frameworks/mongodb/mongodb.module";
     imports: [MongoDBModule],
     exports: [MongoDBModule]
 })
-export class DataModule {}
+export class DatabaseModule {}

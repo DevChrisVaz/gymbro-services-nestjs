@@ -1,4 +1,5 @@
-import { ITimestamps } from "src/core/domain/entities/ITimestamps";
+import { ITimestamps } from "src/database/domain/entities/ITimestamps";
+
 
 export interface IGym extends ITimestamps {
     uuid?: string;

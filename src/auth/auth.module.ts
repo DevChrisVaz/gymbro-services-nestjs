@@ -5,11 +5,13 @@ import { UsersService } from 'src/users/users.service';
 import { CustomersService } from 'src/customers/customers.service';
 import { JwtModule } from '@nestjs/jwt';
 import { jwtConstants } from './auth.constants';
+import { UsersModule } from 'src/users/users.module';
+import { CustomersModule } from 'src/customers/customers.module';
 
 @Module({
   imports: [
-    UsersService,
-    CustomersService,
+    UsersModule,
+    CustomersModule,
     JwtModule.register({
       global: true,
       secret: jwtConstants.secret,

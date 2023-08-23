@@ -1,4 +1,4 @@
-import { IGenericRepository } from "src/core/domain/repositories/generic-repository.abstract";
+import { RepositoryContract } from "src/database/domain/contracts/repository.contract";
 import { IGym } from "../entities/gym.entity";
 
-export abstract class IGymRepository extends IGenericRepository<IGym> { }
+export abstract class GymRepositoryContract extends RepositoryContract<IGym> { }

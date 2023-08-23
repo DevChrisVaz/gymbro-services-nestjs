@@ -1,7 +1,7 @@
 import { Model } from "mongoose";
-import { IGenericRepository } from "src/core/domain/repositories/generic-repository.abstract";
+import { RepositoryContract } from "src/database/domain/contracts/repository.contract";
 
-export abstract class MongoDBRepository<T> implements IGenericRepository<T> {
+export abstract class MongoDBRepository<T> implements RepositoryContract<T> {
     private _repository: Model<T>;
     private _populateOnFind: string[];
 

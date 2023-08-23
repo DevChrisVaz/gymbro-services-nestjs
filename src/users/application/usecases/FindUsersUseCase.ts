@@ -1,12 +1,11 @@
 import { Injectable } from "@nestjs/common";
-import { IDataServices } from "src/core/abstracts/data-services.abstract";
+import { DatabaseServicesContract } from "src/database/domain/contracts/database-services.contract";
 import { User } from "src/users/domain/entities/User";
-import { IUserRepository } from "src/users/domain/repositories/IUserRepository";
 
 @Injectable()
 export class FindUsersUseCase {
     constructor(
-        private dataServices: IDataServices
+        private dataServices: DatabaseServicesContract
     ) {}
 
     async run(): Promise<User[]> {
