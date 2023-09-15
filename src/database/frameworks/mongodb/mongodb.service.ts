@@ -8,12 +8,15 @@ import { GymRepositoryImpl } from "src/gyms/frameworks/data/mongodb/gym-reposito
 import { CustomerRepositoryImpl } from "src/customers/frameworks/data/mongodb/customer-repository.impl";
 import { CustomerDocument, CustomerModel } from "src/customers/frameworks/data/mongodb/models/customer.model";
 import { DatabaseServicesContract } from "src/database/domain/contracts/database-services.contract";
+import { TokenRepository } from "src/auth/frameworks/data/mongodb/token.repository";
+import { TokenDocument, TokenModel } from "src/auth/frameworks/data/mongodb/models/token.model";
 
 @Injectable()
 export class MongoDBServices implements DatabaseServicesContract, OnApplicationBootstrap {
     users: UserRepositoryImpl;
     gyms: GymRepositoryImpl;
     customers: CustomerRepositoryImpl;
+    tokens: TokenRepository;
 
     constructor(
         @InjectModel(UserModel.name)
@@ -22,11 +25,14 @@ export class MongoDBServices implements DatabaseServicesContract, OnApplicationB
         private gymRepository: Model<GymDocument>,
         @InjectModel(CustomerModel.name)
         private customerRepository: Model<CustomerDocument>,
+        @InjectModel(TokenModel.name)
+        private tokenRepository: Model<TokenDocument>
     ) {}
 
     onApplicationBootstrap() {
         this.users = new UserRepositoryImpl(this.userRepository);
         this.gyms = new GymRepositoryImpl(this.gymRepository);
         this.customers = new CustomerRepositoryImpl(this.customerRepository);
+        this.tokens = new TokenRepository(this.tokenRepository);
     }
 }

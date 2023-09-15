@@ -9,7 +9,7 @@ export class CreateGymUseCase {
     ) {}
 
     async run(gym: IGym): Promise<IGym> {
-        const createdGym = await this.dataServices.gyms.create(gym);
+        const createdGym = await this.dataServices.gyms.save(gym);
         return createdGym;
     }
 }

@@ -15,7 +15,7 @@ export abstract class MongoDBRepository<T> implements RepositoryContract<T> {
     findOne(uuid: string): Promise<T> {
         return this._repository.findOne({ uuid }).lean().populate(this._populateOnFind) as Promise<T>;
     }
-    create(item: T): Promise<T> {
+    save(item: T): Promise<T> {
         return this._repository.create(item);
     }
     update(uuid: string, item: T): Promise<T> {

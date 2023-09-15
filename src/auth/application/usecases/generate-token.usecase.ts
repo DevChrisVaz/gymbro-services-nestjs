@@ -1,15 +1,16 @@
 import { Injectable } from "@nestjs/common";
+import { TokenContract } from "src/auth/domain/entities/token";
 import { Customer } from "src/customers/domain/entities/customer.entity";
 import { DatabaseServicesContract } from "src/database/domain/contracts/database-services.contract";
 
 @Injectable()
-export class CreateCustomerUseCase {
+export class SaveTokenUseCase {
     constructor(
         private dataServices: DatabaseServicesContract
     ) {}
 
-    async run(customer: Customer): Promise<Customer> {
-        const createdCustomer = await this.dataServices.customers.save(customer);
-        return createdCustomer;
+    async run(token: TokenContract): Promise<TokenContract> {
+        const savedToken = await this.dataServices.tokens.save(token);
+        return savedToken;
     }
 }

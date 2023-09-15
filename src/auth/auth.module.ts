@@ -14,8 +14,7 @@ import { CustomersModule } from 'src/customers/customers.module';
     CustomersModule,
     JwtModule.register({
       global: true,
-      secret: jwtConstants.secret,
-      signOptions: { expiresIn: "60s" }
+      secret: jwtConstants.secret
     })
   ],
   controllers: [AuthController],

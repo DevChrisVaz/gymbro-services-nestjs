@@ -20,7 +20,7 @@ import { DatabaseServicesContract } from 'src/database/domain/contracts/database
             imports: [ConfigModule],
             inject: [ConfigService],
             useFactory: async (config: ConfigService) => ({
-                uri: config.get<string>('database.uri')
+                uri: config.get<string>('mongoUri')
             })
         })
     ],

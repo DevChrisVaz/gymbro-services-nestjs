@@ -9,7 +9,7 @@ export class CreateUserUseCase {
     ) {}
 
     async run(user: User): Promise<User> {
-        const createdUser: User = await this.dataServices.users.create(user);
+        const createdUser: User = await this.dataServices.users.save(user);
         return createdUser;
     }
 }
