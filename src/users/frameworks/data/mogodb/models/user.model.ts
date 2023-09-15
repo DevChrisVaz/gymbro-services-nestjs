@@ -47,7 +47,7 @@ export class UserModel implements User {
     createdAt: string;
 
     @Prop({ default: now() })
-    updatedAd: string;
+    updatedAt: string;
 }
 
 export const UserSchema = SchemaFactory.createForClass(UserModel);

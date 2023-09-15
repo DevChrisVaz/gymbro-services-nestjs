@@ -7,6 +7,7 @@ import { GymModel, GymSchema } from 'src/gyms/frameworks/data/mongodb/models/gym
 import { CustomerModel, CustomerSchema } from 'src/customers/frameworks/data/mongodb/models/customer.model';
 import mongodbConfig from './mongodb.config';
 import { DatabaseServicesContract } from 'src/database/domain/contracts/database-services.contract';
+import { AuthModel, AuthSchema } from 'src/auth/frameworks/data/mongodb/models/auth.model';
 
 @Module({
     imports: [
@@ -14,7 +15,8 @@ import { DatabaseServicesContract } from 'src/database/domain/contracts/database
         MongooseModule.forFeature([
             { name: UserModel.name, schema: UserSchema },
             { name: GymModel.name, schema: GymSchema },
-            { name: CustomerModel.name, schema: CustomerSchema }
+            { name: CustomerModel.name, schema: CustomerSchema },
+            { name: AuthModel.name, schema: AuthSchema }
         ]),
         MongooseModule.forRootAsync({
             imports: [ConfigModule],

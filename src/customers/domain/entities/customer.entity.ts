@@ -42,7 +42,7 @@ export class SerializedCustomer implements Customer {
 
     status: string;
 
-    createdAt?: string;
+    createdAt: string;
 
-    updatedAt?: string;
+    updatedAt: string;
 }

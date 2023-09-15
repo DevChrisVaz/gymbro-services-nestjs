@@ -16,6 +16,8 @@ export interface IUser extends ITimestamps {
 }
 
 export class User implements IUser {
+    createdAt: string;
+    updatedAt: string;
     uuid: string;
     firstName: string;
     lastName: string;
@@ -56,9 +58,9 @@ export class SerializedUser implements IUser {
 
     status: string;
 
-    createdAt?: string;
+    createdAt: string;
 
-    updatedAt?: string;
+    updatedAt: string;
 
     constructor(partial: Partial<SerializedUser>) {
         Object.assign(this, partial);

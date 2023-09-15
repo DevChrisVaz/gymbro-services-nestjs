@@ -1,6 +1,5 @@
 import { Injectable } from "@nestjs/common";
 import { TokenContract } from "src/auth/domain/entities/token";
-import { Customer } from "src/customers/domain/entities/customer.entity";
 import { DatabaseServicesContract } from "src/database/domain/contracts/database-services.contract";
 
 @Injectable()
