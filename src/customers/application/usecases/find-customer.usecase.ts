@@ -10,7 +10,7 @@ export class FindCustomerUseCase {
     ) {}
 
     async run(id: string): Promise<Customer> {
-        const foundCustomer: Customer = await this.dataServices.customers.findOne(id);
+        const foundCustomer: Customer = await this.dataServices.customers.findOne({});
         if (foundCustomer) {
             return foundCustomer;
         }

@@ -10,7 +10,7 @@ export class FindGymUseCase {
     ) {}
 
     async run(id: string): Promise<IGym> {
-        const foundGym = await this.dataServices.gyms.findOne(id);
+        const foundGym = await this.dataServices.gyms.findOne({});
         if (foundGym) return foundGym;
         throw new GymNotFoundException();
     }

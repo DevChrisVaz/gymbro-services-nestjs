@@ -1,24 +1,24 @@
 import { Module } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
-import { UsersService } from 'src/users/users.service';
-import { CustomersService } from 'src/customers/customers.service';
 import { JwtModule } from '@nestjs/jwt';
 import { jwtConstants } from './auth.constants';
-import { UsersModule } from 'src/users/users.module';
-import { CustomersModule } from 'src/customers/customers.module';
+import { LoginUseCase } from './application/usecases/login.usecase';
+import { DatabaseModule } from 'src/database/database.module';
 
 @Module({
   imports: [
-    UsersModule,
-    CustomersModule,
     JwtModule.register({
       global: true,
       secret: jwtConstants.secret
-    })
+    }),
+    DatabaseModule
   ],
   controllers: [AuthController],
-  providers: [AuthService],
+  providers: [
+    AuthService,
+    LoginUseCase
+  ],
   exports: [AuthService]
 })
 export class AuthModule {}

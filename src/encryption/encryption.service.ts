@@ -18,7 +18,11 @@ export class EncryptionServices implements EncryptionServicesContract {
         return this.dataEncryption.decrypt(encryptedData);
     }
 
-    hash(data: string): string {
+    hash(data: string): Promise<string> {
         return this.dataHashing.hash(data);
+    }
+
+    compare(hashedData: string, comparison: string): Promise<boolean> {
+        return this.dataHashing.compare(hashedData, comparison)
     }
 }

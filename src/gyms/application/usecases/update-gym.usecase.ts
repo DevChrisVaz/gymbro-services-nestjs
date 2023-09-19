@@ -10,7 +10,7 @@ export class UpdateGymUseCase {
     ) {}
 
     async run(id: string, gym: IGym): Promise<IGym> {
-        const foundGym: IGym = await this.dataServices.gyms.findOne(id);
+        const foundGym: IGym = await this.dataServices.gyms.findOne({});
         if (foundGym) {
             const updatedGym = await this.dataServices.gyms.update(id, gym);
             return updatedGym;

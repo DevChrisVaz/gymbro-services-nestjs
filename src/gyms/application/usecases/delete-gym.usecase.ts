@@ -10,7 +10,7 @@ export class DeleteGymUseCase {
     ) {}
 
     async run(id: string): Promise<IGym> {
-        const foundGym = await this.dataServices.gyms.findOne(id);
+        const foundGym = await this.dataServices.gyms.findOne({});
         if (foundGym) {
             const deletedGym = await this.dataServices.gyms.delete(id);
             return deletedGym;

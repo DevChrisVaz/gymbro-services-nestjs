@@ -1,4 +1,4 @@
 export abstract class ITimestamps {
-    createdAt: string;
-    updatedAt: string;
+    createdAt?: string;
+    updatedAt?: string;
 }

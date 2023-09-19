@@ -9,7 +9,7 @@ export class UpdateUserUseCase {
     ) {}
 
     async run(id:string, user: User): Promise<User> {
-        const foundUser: User = await this.dataServices.users.findOne(id);
+        const foundUser: User = await this.dataServices.users.findOne({});
         if (foundUser) {
             const updatedUser: User = await this.dataServices.users.update(id, user);
             return updatedUser;

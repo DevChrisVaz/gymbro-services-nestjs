@@ -9,7 +9,7 @@ export class FindCustomersUseCase {
     ) {}
 
     async run(): Promise<Customer[]> {
-        const foundCustomers: Customer[] = await this.dataServices.customers.find();
+        const foundCustomers: Customer[] = await this.dataServices.customers.find({});
         return foundCustomers;
     }
 }

@@ -9,7 +9,7 @@ export class FindUsersUseCase {
     ) {}
 
     async run(): Promise<User[]> {
-        const users: User[] = await this.dataServices.users.find();
+        const users: User[] = await this.dataServices.users.find({});
         return users;
     }
 }

@@ -8,6 +8,7 @@ import { CustomerModel, CustomerSchema } from 'src/customers/frameworks/data/mon
 import mongodbConfig from './mongodb.config';
 import { DatabaseServicesContract } from 'src/database/domain/contracts/database-services.contract';
 import { AuthModel, AuthSchema } from 'src/auth/frameworks/data/mongodb/models/auth.model';
+import { TokenModel, TokenSchema } from 'src/auth/frameworks/data/mongodb/models/token.model';
 
 @Module({
     imports: [
@@ -16,7 +17,8 @@ import { AuthModel, AuthSchema } from 'src/auth/frameworks/data/mongodb/models/a
             { name: UserModel.name, schema: UserSchema },
             { name: GymModel.name, schema: GymSchema },
             { name: CustomerModel.name, schema: CustomerSchema },
-            { name: AuthModel.name, schema: AuthSchema }
+            { name: AuthModel.name, schema: AuthSchema },
+            { name: TokenModel.name, schema: TokenSchema }
         ]),
         MongooseModule.forRootAsync({
             imports: [ConfigModule],

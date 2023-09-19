@@ -9,7 +9,7 @@ export class FindUserUseCase {
     ) {}
 
     async run(id: string): Promise<User> {
-        const foundUser: User = await this.dataServices.users.findOne(id);
+        const foundUser: User = await this.dataServices.users.findOne({});
         return foundUser;
     }
 }

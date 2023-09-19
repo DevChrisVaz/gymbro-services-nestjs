@@ -11,8 +11,8 @@ export class Auth implements IAuth {
     ref: string;
     userName: string;
     password: string;
-    createdAt: string;
-    updatedAt: string;
+    createdAt?: string;
+    updatedAt?: string;
 }
 
 export class SerializedAuth implements IAuth {
@@ -20,8 +20,8 @@ export class SerializedAuth implements IAuth {
     ref: string;
     userName: string;
     password: string;
-    createdAt: string;
-    updatedAt: string;
+    createdAt?: string;
+    updatedAt?: string;
 
     constructor(partial: Partial<SerializedAuth>) {
         Object.assign(this, partial);

@@ -9,7 +9,7 @@ export class FindGymsUseCase {
     ) {}
 
     async run(): Promise<IGym[]> {
-        const foundGyms: IGym[] = await this.dataServices.gyms.find();
+        const foundGyms: IGym[] = await this.dataServices.gyms.find({});
         return foundGyms;
     }
 }

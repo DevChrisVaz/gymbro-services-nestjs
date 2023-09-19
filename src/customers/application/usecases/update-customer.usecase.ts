@@ -10,7 +10,7 @@ export class UpdateCustomerUseCase {
     ) {}
 
     async run(id: string, customer: Customer): Promise<Customer> {
-        if (await this.dataServices.customers.findOne(id)) {
+        if (await this.dataServices.customers.findOne({})) {
             const updatedCustomers: Customer = await this.dataServices.customers.update(id, customer);
             return updatedCustomers;
         }
