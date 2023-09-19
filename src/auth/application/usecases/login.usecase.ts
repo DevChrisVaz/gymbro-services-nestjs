@@ -1,15 +1,25 @@
 import { Injectable } from "@nestjs/common";
-import { TokenContract } from "src/auth/domain/entities/token";
+import { AuthService } from "src/auth/auth.service";
+import { LogInDto } from "src/auth/domain/dtos/log-in.dto";
+import { Auth } from "src/auth/domain/entities/auth";
+import { InvalidUserNameException } from "src/auth/domain/exceptions/invalid-username.exception";
 import { DatabaseServicesContract } from "src/database/domain/contracts/database-services.contract";
 
 @Injectable()
 export class LoginUseCase {
     constructor(
-        private dataServices: DatabaseServicesContract
+        private dataServices: DatabaseServicesContract,
+        private readonly authService: AuthService
     ) {}
 
-    async run(token: TokenContract): Promise<TokenContract> {
-        const savedToken = await this.dataServices.tokens.save(token);
-        return savedToken;
+    async run(logInDto: LogInDto): Promise<Auth> {
+        const foundAuth: Auth = await this.dataServices.auth.findOne(logInDto);
+        if (!foundAuth) throw new InvalidUserNameException();
+        
+        // const token = this.authService.generateAccessToken({
+        //     userName: 
+        // });
+
+        return foundAuth;
     }
 }

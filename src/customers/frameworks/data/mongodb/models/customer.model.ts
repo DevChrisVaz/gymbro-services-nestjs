@@ -38,6 +38,9 @@ export class CustomerModel implements Customer {
 
     @Prop({ default: "UNVERIFIED" })
     status: string;
+
+    createdAt: string;
+    updatedAt: string;
 }
 
 export const CustomerSchema = SchemaFactory.createForClass(CustomerModel);

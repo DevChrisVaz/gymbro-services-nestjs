@@ -9,6 +9,6 @@ export abstract class DatabaseServicesContract {
     abstract users: RepositoryContract<User>;
     abstract gyms: RepositoryContract<IGym>;
     abstract customers: RepositoryContract<Customer>;
-    // abstract tokens: RepositoryContract<TokenContract>;
+    abstract tokens: RepositoryContract<TokenContract>;
     abstract auth: RepositoryContract<IAuth>;
 }

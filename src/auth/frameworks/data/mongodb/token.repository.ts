@@ -1,4 +1,5 @@
 import { TokenContract } from "src/auth/domain/entities/token";
+import { TokenRepositoryContract } from "src/auth/domain/repositories/token-repository.contract";
 import { MongoDBRepository } from "src/database/frameworks/mongodb/mongodb.repository";
 
-export class TokenRepository extends MongoDBRepository<TokenContract> { }
+export class TokenRepository extends MongoDBRepository<TokenContract> implements TokenRepositoryContract { }

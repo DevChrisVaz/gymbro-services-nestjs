@@ -22,7 +22,10 @@ export class GymModel implements IGym {
     address: string;
 
     @Prop({ default: "UNVERIFIED" })
-    status: string
+    status: string;
+
+    createdAt: string;
+    updatedAt: string;
 }
 
 export const GymSchema = SchemaFactory.createForClass(GymModel);

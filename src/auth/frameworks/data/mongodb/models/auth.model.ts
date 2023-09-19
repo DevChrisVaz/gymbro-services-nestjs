@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { IAuth } from "src/auth/domain/entities/auth";
 
-export type UserDocument = AuthModel & Document;
+export type AuthDocument = AuthModel & Document;
 
 @Schema()
 export class AuthModel implements IAuth {
@@ -11,6 +11,9 @@ export class AuthModel implements IAuth {
     userName: string;
     @Prop({ required: true })
     password: string;
+
+    createdAt: string;
+    updatedAt: string;
 }
 
 export const AuthSchema = SchemaFactory.createForClass(AuthModel);
