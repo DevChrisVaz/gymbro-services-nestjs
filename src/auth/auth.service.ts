@@ -7,15 +7,15 @@ export class AuthService {
         private readonly jwtService: JwtService
     ) { }
 
-    async generateAccessToken(payload: any): Promise<any> {
+    async generateAccessToken(payload: any, expiration: string): Promise<any> {
         return await this.jwtService.signAsync(payload, {
-            expiresIn: '15m'
+            expiresIn: expiration
         });
     }
 
     async generateRefreshToken(payload: any): Promise<any> {
         return await this.jwtService.signAsync(payload, {
-            expiresIn: '15m'
+            expiresIn: '1d'
         });
     }
 }

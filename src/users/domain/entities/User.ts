@@ -13,6 +13,7 @@ export interface IUser extends ITimestamps {
     birthdate: Date;
     tokens: string[];
     status: string;
+    rol: string;
 }
 
 export class User implements IUser {
@@ -29,6 +30,7 @@ export class User implements IUser {
     birthdate: Date;
     tokens: string[];
     status: string;
+    rol: string;
 }
 
 export class SerializedUser implements IUser {
@@ -57,6 +59,8 @@ export class SerializedUser implements IUser {
     tokens: string[];
 
     status: string;
+
+    rol: string;
 
     createdAt: string;
 
