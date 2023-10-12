@@ -8,7 +8,7 @@ import { CookieOptions, Request, Response } from 'express';
 export class AuthController {
   constructor(
     private readonly loginUseCase: LoginUseCase,
-  ) {}
+  ) { }
 
   @Post("login")
   async logIn(@Req() req: Request, @Res() res: Response) {
@@ -28,7 +28,7 @@ export class AuthController {
 
   @Put("refresh")
   async refreshSession(@Req() req: Request, @Res() res: Response) {
-    
+
   }
 
   @UseGuards(AuthGuard)
