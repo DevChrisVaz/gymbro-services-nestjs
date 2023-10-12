@@ -1,11 +1,6 @@
 import { IsNotEmpty, IsString, IsStrongPassword } from "class-validator";
 
 export class LogInDto {
-
-    @IsString()
-    @IsNotEmpty()
-    ref: string;
-
     @IsString()
     @IsNotEmpty()
     userName: string;
@@ -14,5 +9,4 @@ export class LogInDto {
     @IsString()
     @IsStrongPassword()
     password: string;
-    
 }
