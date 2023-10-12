@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Req, Res, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Put, Req, Res, UseGuards } from '@nestjs/common';
 import { LogInDto } from './domain/dtos/log-in.dto';
 import { AuthGuard } from './auth.guard';
 import { LoginUseCase } from './application/usecases/login.usecase';
@@ -20,10 +20,15 @@ export class AuthController {
       secure: true, // Solo se envía sobre conexiones HTTPS
       sameSite: 'strict', // Protege contra ataques CSRF
       maxAge: 30 * 24 * 60 * 60, // Tiempo de expiración en segundos (por ejemplo, 30 días)
-      path: '/refresh-token', // La ruta donde se enviará la cookie (ajusta según tus necesidades)
+      path: '/token', // La ruta donde se enviará la cookie (ajusta según tus necesidades)
     };
 
-    return res.status(201).json({ accessToken }).cookie("refreshToken", refreshToken, cookieOptions)
+    return res.status(201).json({ token: accessToken }).cookie("token", refreshToken, cookieOptions)
+  }
+
+  @Put("refresh")
+  async refreshSession(@Req() req: Request, @Res() res: Response) {
+    
   }
 
   @UseGuards(AuthGuard)

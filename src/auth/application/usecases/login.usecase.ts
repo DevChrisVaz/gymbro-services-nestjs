@@ -17,6 +17,7 @@ export class LoginUseCase {
     async run(logInDto: LogInDto): Promise<{ accessToken: string, refreshToken: string }> {
         let accessToken: string;
         let refreshToken: string;
+        let ref: string;
         const foundAuth: Auth = await this.dataServices.auth.findOne(logInDto);
         if (!foundAuth) throw new InvalidUserNameException();
 
@@ -25,6 +26,8 @@ export class LoginUseCase {
             const foundCustomer: Customer = await this.dataServices.customers.findOne({
                 email: foundAuth.userName
             });
+
+            ref = foundCustomer.uuid;
 
             accessToken = await this.authService.generateAccessToken({
                 firstName: foundCustomer.firstName,
@@ -43,6 +46,8 @@ export class LoginUseCase {
                 userName: foundAuth.userName
             });
 
+            ref = foundUser.uuid;
+
             accessToken = await this.authService.generateAccessToken({
                 firstName: foundUser.firstName,
                 lastName: foundUser.lastName,
@@ -58,7 +63,7 @@ export class LoginUseCase {
         }
 
         await this.dataServices.tokens.save({
-            ref: "",
+            ref,
             token: refreshToken
         });
 

@@ -7,7 +7,7 @@ import { UpdateCustomerDto } from './domain/dto/update-customer.dto';
 export class CustomersController {
   constructor(private readonly customersService: CustomersService) {}
 
-  @Post()
+  @Post("register")
   create(@Body() createCustomerDto: CreateCustomerDto) {
     return this.customersService.create(createCustomerDto);
   }
