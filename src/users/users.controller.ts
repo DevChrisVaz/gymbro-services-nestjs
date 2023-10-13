@@ -1,13 +1,12 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseUUIDPipe, Patch, Post, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseUUIDPipe, Patch, Post, UseInterceptors, UsePipes } from '@nestjs/common';
 import { CreateUserDto } from './domain/dto/create-user.dto';
 import { UpdateUserDto } from './domain/dto/update-user.dto';
-import { AddUUIDInterceptor } from 'src/core/interceptors/add-uuid.interceptor';
 import { CreateUserUseCase } from './application/usecases/CreateUserUseCase';
 import { FindUsersUseCase } from './application/usecases/FindUsersUseCase';
-import { DeleteCustomerUseCase } from 'src/customers/application/usecases/delete-customer.usecase';
 import { DeleteUserUseCase } from './application/usecases/DeleteUserUseCase';
 import { FindUserUseCase } from './application/usecases/FindUserUseCase';
 import { UpdateUserUseCase } from './application/usecases/UpdateUserUseCase';
+import { AddUuidToBodyPipe } from 'src/core/pipes/add-uuid.pipe';
 
 @Controller("users")
 export class UsersController {
@@ -19,7 +18,7 @@ export class UsersController {
     private readonly updateUserUseCase: UpdateUserUseCase
   ) {}
 
-  @UseInterceptors(AddUUIDInterceptor)
+  @UsePipes(new AddUuidToBodyPipe())
   @HttpCode(HttpStatus.CREATED)
   @Post()
   create(@Body() createUserDTO: CreateUserDto) {

@@ -17,6 +17,6 @@ export class CreateUserUseCase {
         const user = this.usersService.mapDtoToUser(createUserDTO);
         user.password = await this.hashingService.hash(user.password);
         const createdUser: User = await this.dataServices.users.save(user);
-        return new SerializedUser(createdUser);
+        return this.usersService.serializeUser(createdUser);
     }
 }
