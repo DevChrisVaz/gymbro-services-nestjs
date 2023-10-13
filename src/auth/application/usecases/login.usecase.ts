@@ -1,11 +1,11 @@
 import { Injectable } from "@nestjs/common";
 import { AuthService } from "src/auth/auth.service";
-import { LogInDto } from "src/auth/domain/dtos/log-in.dto";
 import { Auth } from "src/auth/domain/entities/auth";
 import { InvalidUserNameException } from "src/auth/domain/exceptions/invalid-username.exception";
 import { Customer } from "src/customers/domain/entities/customer.entity";
 import { DatabaseServicesContract } from "src/database/domain/contracts/database-services.contract";
 import { User } from "src/users/domain/entities/User";
+import { LogInDto } from "../dtos";
 
 @Injectable()
 export class LoginUseCase {

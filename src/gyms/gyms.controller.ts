@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, ParseUUIDPipe, UsePipes } from '@nestjs/common';
-import { CreateGymDto } from './domain/dto/create-gym.dto';
-import { UpdateGymDto } from './domain/dto/update-gym.dto';
+import { CreateGymDto } from './application/dto/create-gym.dto';
+import { UpdateGymDto } from './application/dto/update-gym.dto';
 import { Public } from 'src/auth/auth.decorators';
 import { CreateGymUseCase, DeleteGymUseCase, FindGymUseCase, FindGymsUseCase, UpdateGymUseCase } from './application/usecases';
 import { AddUuidToBodyPipe } from 'src/core/pipes/add-uuid.pipe';

@@ -1,34 +1,40 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { CustomersService } from './customers.service';
-import { CreateCustomerDto } from './domain/dto/create-customer.dto';
-import { UpdateCustomerDto } from './domain/dto/update-customer.dto';
+import { CreateCustomerDto, UpdateCustomerDto } from './application/dto';
+import { CreateCustomerUseCase, DeleteCustomerUseCase, FindCustomerUseCase, FindCustomersUseCase, UpdateCustomerUseCase } from './application/usecases';
 
 @Controller('customers')
 export class CustomersController {
-  constructor(private readonly customersService: CustomersService) {}
+  constructor(
+    private readonly createCustomerUseCase: CreateCustomerUseCase,
+    private readonly findCustomersUseCase: FindCustomersUseCase,
+    private readonly findCustomerUseCase: FindCustomerUseCase,
+    private readonly updateCustomerUseCase: UpdateCustomerUseCase,
+    private readonly deleteCustomerUseCase: DeleteCustomerUseCase
+  ) {}
 
   @Post("register")
   create(@Body() createCustomerDto: CreateCustomerDto) {
-    return this.customersService.create(createCustomerDto);
+    return this.createCustomerUseCase.run(createCustomerDto);
   }
 
   @Get()
   findAll() {
-    return this.customersService.findMany();
+    return this.findCustomersUseCase.run();
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.customersService.findOne(id);
+    return this.findCustomersUseCase.run(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateCustomerDto: UpdateCustomerDto) {
-    return this.customersService.update(+id, updateCustomerDto);
+    return this.updateCustomerUseCase.run(+id, updateCustomerDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.customersService.remove(id);
+    return this.deleteCustomerUseCase.run(id);
   }
 }

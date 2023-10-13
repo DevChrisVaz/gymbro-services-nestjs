@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { CreateGymDto } from './domain/dto/create-gym.dto';
-import { UpdateGymDto } from './domain/dto/update-gym.dto';
+import { CreateGymDto } from './application/dto/create-gym.dto';
+import { UpdateGymDto } from './application/dto/update-gym.dto';
 import { plainToClass } from 'class-transformer';
 import { Gym, SerializedGym } from './domain/entities/gym.entity';
 

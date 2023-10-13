@@ -1,9 +1,9 @@
 import { Injectable } from "@nestjs/common";
 import { SerializedUser, User } from "../../domain/entities/User";
 import { DatabaseServicesContract } from "src/database/domain/contracts/database-services.contract";
-import { CreateUserDto } from "src/users/domain/dto/create-user.dto";
 import { UsersService } from "src/users/users.service";
 import { DataHashingContract } from "src/encryption/domain/contracts/hashing.contract";
+import { CreateUserDto } from "../dto";
 
 @Injectable()
 export class CreateUserUseCase {

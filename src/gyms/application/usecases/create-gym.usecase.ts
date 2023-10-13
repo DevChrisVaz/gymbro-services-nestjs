@@ -1,8 +1,8 @@
 import { Injectable } from "@nestjs/common";
 import { DatabaseServicesContract } from "src/database/domain/contracts/database-services.contract";
-import { CreateGymDto } from "src/gyms/domain/dto/create-gym.dto";
 import { Gym } from "src/gyms/domain/entities/gym.entity";
 import { GymsService } from "src/gyms/gyms.service";
+import { CreateGymDto } from "../dto/create-gym.dto";
 
 @Injectable()
 export class CreateGymUseCase {

@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseUUIDPipe, Patch, Post, UseInterceptors, UsePipes } from '@nestjs/common';
-import { CreateUserDto } from './domain/dto/create-user.dto';
-import { UpdateUserDto } from './domain/dto/update-user.dto';
+import { CreateUserDto } from './application/dto';
+import { UpdateUserDto } from './application/dto';
 import { CreateUserUseCase } from './application/usecases/CreateUserUseCase';
 import { FindUsersUseCase } from './application/usecases/FindUsersUseCase';
 import { DeleteUserUseCase } from './application/usecases/DeleteUserUseCase';

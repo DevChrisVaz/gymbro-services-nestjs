@@ -1,5 +1,5 @@
 import { Controller, Get, Post, Put, Req, Res, UseGuards } from '@nestjs/common';
-import { LogInDto } from './domain/dtos/log-in.dto';
+import { LogInDto } from './application/dtos';
 import { AuthGuard } from './auth.guard';
 import { LoginUseCase } from './application/usecases/login.usecase';
 import { CookieOptions, Request, Response } from 'express';

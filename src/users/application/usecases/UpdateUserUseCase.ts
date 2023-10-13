@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { User } from "../../domain/entities/User";
 import { DatabaseServicesContract } from "src/database/domain/contracts/database-services.contract";
 import { UsersService } from "src/users/users.service";
-import { UpdateUserDto } from "src/users/domain/dto/update-user.dto";
+import { UpdateUserDto } from "../dto";
 
 @Injectable()
 export class UpdateUserUseCase {

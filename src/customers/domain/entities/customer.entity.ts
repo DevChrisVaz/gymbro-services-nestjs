@@ -1,7 +1,7 @@
 import { Exclude } from "class-transformer";
 import { ITimestamps } from "src/database/domain/entities/ITimestamps";
 
-export abstract class Customer extends ITimestamps {
+export interface ICustomer extends ITimestamps {
     uuid: string;
     firstName: string;
     lastName: string;
@@ -15,7 +15,21 @@ export abstract class Customer extends ITimestamps {
     status: string;
 }
 
-export class SerializedCustomer implements Customer {
+export class Customer implements ICustomer {
+    uuid: string;
+    firstName: string;
+    lastName: string;
+    email: string;
+    phone: string;
+    birthdate: Date;
+    password: string;
+    usedPasswords: string[];
+    profilePicture: string;
+    tokens: string[];
+    status: string;
+}
+
+export class SerializedCustomer implements ICustomer {
 
     uuid: string;
     
@@ -45,4 +59,8 @@ export class SerializedCustomer implements Customer {
     createdAt: string;
 
     updatedAt: string;
+
+    constructor(partial: Partial<SerializedCustomer>) {
+        Object.assign(this, partial);
+    }
 }
