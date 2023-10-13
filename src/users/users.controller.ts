@@ -1,45 +1,48 @@
-import { Controller, Get } from '@nestjs/common';
-import { MessagePattern, Payload } from '@nestjs/microservices';
-import { UsersService } from './users.service';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseUUIDPipe, Patch, Post, UseInterceptors } from '@nestjs/common';
 import { CreateUserDto } from './domain/dto/create-user.dto';
 import { UpdateUserDto } from './domain/dto/update-user.dto';
-import { CreateUserResponseDTO } from './domain/dto/responses/create-user-response.dto';
+import { AddUUIDInterceptor } from 'src/core/interceptors/add-uuid.interceptor';
+import { CreateUserUseCase } from './application/usecases/CreateUserUseCase';
+import { FindUsersUseCase } from './application/usecases/FindUsersUseCase';
+import { DeleteCustomerUseCase } from 'src/customers/application/usecases/delete-customer.usecase';
+import { DeleteUserUseCase } from './application/usecases/DeleteUserUseCase';
+import { FindUserUseCase } from './application/usecases/FindUserUseCase';
+import { UpdateUserUseCase } from './application/usecases/UpdateUserUseCase';
 
 @Controller("users")
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(
+    private readonly createUserUseCase: CreateUserUseCase,
+    private readonly findUsersUseCase: FindUsersUseCase,
+    private readonly findUserUseCase: FindUserUseCase,
+    private readonly deleteUserUseCase: DeleteUserUseCase,
+    private readonly updateUserUseCase: UpdateUserUseCase
+  ) {}
 
-  @MessagePattern('createUser')
-  async create(@Payload() createUserDto: CreateUserDto): Promise<CreateUserResponseDTO> {
-    const createUserResponse = new CreateUserResponseDTO();
-    try {
-      const createdUser = await this.usersService.create(createUserDto);
-      createUserResponse.success = true;
-      createUserResponse.createdUser = createdUser;
-    } catch (error) {
-      createUserResponse.success = false;
-    }
-    return createUserResponse;
+  @UseInterceptors(AddUUIDInterceptor)
+  @HttpCode(HttpStatus.CREATED)
+  @Post()
+  create(@Body() createUserDTO: CreateUserDto) {
+    return this.createUserUseCase.run(createUserDTO);
   }
 
   @Get()
-  @MessagePattern("")
   findAll() {
-    return this.usersService.find();
+    return this.findUsersUseCase.run();
   }
 
-  @MessagePattern('findOneUser')
-  findOne(@Payload() id: string) {
-    return this.usersService.findOne(id);
+  @Get(':id')
+  findOne(@Param('id', ParseUUIDPipe) id: string) {
+    return this.findUserUseCase.run(id);
   }
 
-  @MessagePattern('updateUser')
-  update(@Payload() updateUserDto: UpdateUserDto) {
-    return this.usersService.update(updateUserDto.uuid, updateUserDto);
+  @Patch(':id')
+  update(@Param('id', ParseUUIDPipe) id: string, @Body() updateUserDto: UpdateUserDto) {
+    return this.updateUserUseCase.run(id, updateUserDto);
   }
 
-  @MessagePattern('removeUser')
-  remove(@Payload() id: string) {
-    return this.usersService.remove(id);
+  @Delete(':id')
+  remove(@Param('id', ParseUUIDPipe) id: string) {
+    return this.deleteUserUseCase.run(id);
   }
 }

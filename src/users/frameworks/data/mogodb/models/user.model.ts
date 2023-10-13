@@ -25,13 +25,13 @@ export class UserModel implements User {
     @Prop([String])
     usedPasswords: string[];
 
-    @Prop({ required: true })
+    @Prop()
     phone: string;
 
     @Prop()
     profilePicture: string;
 
-    @Prop({ required: true })
+    @Prop()
     birthdate: Date;
 
     @Prop([String])
@@ -40,7 +40,7 @@ export class UserModel implements User {
     @Prop({ required: true })
     rol: string;
 
-    @Prop({ required: true })
+    @Prop({ required: true, default: "ACTIVE" })
     status: string;
 
     @Prop({ default: now() })

@@ -1,11 +1,15 @@
 import { Module } from "@nestjs/common";
-import { EncryptionServicesContract } from "./domain/contracts/encryption-services.contract";
-import { cryptoProvider } from "./frameworks/crypto/crypto.providers";
+import { CryptoModule } from "./frameworks/crypto/crypto.module";
+import { BCryptModule } from "./frameworks/bcrypt/bcrypt.module";
 
 @Module({
-    providers: [
-        cryptoProvider
+    imports: [
+        CryptoModule,
+        BCryptModule
     ],
-    exports: [EncryptionServicesContract]
+    exports: [
+        CryptoModule,
+        BCryptModule
+    ]
 })
 export class EncryptionModule {}

@@ -2,17 +2,19 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, ParseUUIDPipe } from
 import { GymsService } from './gyms.service';
 import { CreateGymDto } from './domain/dto/create-gym.dto';
 import { UpdateGymDto } from './domain/dto/update-gym.dto';
+import { Public } from 'src/auth/auth.decorators';
 
 @Controller('gyms')
 export class GymsController {
   constructor(private readonly gymsService: GymsService) {}
 
-  @Post("create")
+  @Post()
   create(@Body() createGymDto: CreateGymDto) {
     return this.gymsService.create(createGymDto);
   }
 
-  @Get("")
+  @Public()
+  @Get()
   findAll() {
     return this.gymsService.findMany();
   }

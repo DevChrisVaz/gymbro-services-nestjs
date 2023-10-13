@@ -1,7 +1,22 @@
 import { Exclude } from "class-transformer";
-import { ITimestamps } from "src/database/domain/entities/ITimestamps";
+import { ITimestamps, TTimestamps } from "src/database/domain/entities/ITimestamps";
 
 export interface IUser extends ITimestamps {
+    uuid: string;
+    firstName: string;
+    lastName: string;
+    userName: string;
+    password: string;
+    usedPasswords: string[];
+    phone: string;
+    profilePicture: string;
+    birthdate: Date;
+    tokens: string[];
+    status: string;
+    rol: string;
+}
+
+export type TUser = TTimestamps & {
     uuid: string;
     firstName: string;
     lastName: string;
@@ -23,11 +38,17 @@ export class User implements IUser {
     firstName: string;
     lastName: string;
     userName: string;
+
+    @Exclude({ toPlainOnly: true })
     password: string;
+
+    @Exclude({ toPlainOnly: true })
     usedPasswords: string[];
     phone: string;
     profilePicture: string;
     birthdate: Date;
+
+    @Exclude({ toPlainOnly: true })
     tokens: string[];
     status: string;
     rol: string;

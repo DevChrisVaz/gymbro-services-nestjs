@@ -1,10 +1,10 @@
-import { Injectable, OnApplicationBootstrap } from "@nestjs/common";
+import { Injectable } from "@nestjs/common";
 import { DataEncryptionContract } from "./domain/contracts/encryption.contract";
 import { EncryptionServicesContract } from "./domain/contracts/encryption-services.contract";
 import { DataHashingContract } from "./domain/contracts/hashing.contract";
 
 @Injectable()
-export class EncryptionServices implements EncryptionServicesContract {
+export class EncryptionServices {
     constructor(
         private readonly dataEncryption: DataEncryptionContract,
         private readonly dataHashing: DataHashingContract

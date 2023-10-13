@@ -1,8 +1,8 @@
 import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import bcryptConfig, { configProviders } from "./bcrypt.config";
-import { EncryptionServicesContract } from "src/encryption/domain/contracts/encryption-services.contract";
 import { bCryptProvider } from "./bcrypt.provider";
+import { DataHashingContract } from "src/encryption/domain/contracts/hashing.contract";
 
 @Module({
     imports: [
@@ -12,6 +12,6 @@ import { bCryptProvider } from "./bcrypt.provider";
         ...configProviders,
         bCryptProvider,
     ],
-    exports: [EncryptionServicesContract]
+    exports: [DataHashingContract]
 })
 export class BCryptModule {};
