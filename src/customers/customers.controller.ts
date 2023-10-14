@@ -1,7 +1,9 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { CustomersService } from './customers.service';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UsePipes, UseInterceptors } from '@nestjs/common';
 import { CreateCustomerDto, UpdateCustomerDto } from './application/dto';
 import { CreateCustomerUseCase, DeleteCustomerUseCase, FindCustomerUseCase, FindCustomersUseCase, UpdateCustomerUseCase } from './application/usecases';
+import { Public } from 'src/auth/auth.decorators';
+import { AddUuidToBodyPipe } from 'src/core/pipes/add-uuid.pipe';
+import { AddUUIDInterceptor } from 'src/core/interceptors/add-uuid.interceptor';
 
 @Controller('customers')
 export class CustomersController {
@@ -13,6 +15,8 @@ export class CustomersController {
     private readonly deleteCustomerUseCase: DeleteCustomerUseCase
   ) {}
 
+  @Public()
+  @UseInterceptors(AddUUIDInterceptor)
   @Post("register")
   create(@Body() createCustomerDto: CreateCustomerDto) {
     return this.createCustomerUseCase.run(createCustomerDto);
@@ -25,12 +29,12 @@ export class CustomersController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.findCustomersUseCase.run(id);
+    return this.findCustomerUseCase.run(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateCustomerDto: UpdateCustomerDto) {
-    return this.updateCustomerUseCase.run(+id, updateCustomerDto);
+    return this.updateCustomerUseCase.run(id, updateCustomerDto);
   }
 
   @Delete(':id')

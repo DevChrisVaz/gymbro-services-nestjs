@@ -1,6 +1,11 @@
-import { IsDateString, IsEmail, IsNotEmpty, IsPhoneNumber, IsStrongPassword } from "class-validator";
+import { Type } from "class-transformer";
+import { IsDate, IsEmail, IsNotEmpty, IsPhoneNumber, IsStrongPassword, IsUUID } from "class-validator";
 
 export class CreateCustomerDto {
+
+    @IsUUID()
+    @IsNotEmpty()
+    uuid: string;
     
     @IsNotEmpty()
     firstName: string;
@@ -17,10 +22,11 @@ export class CreateCustomerDto {
     password: string;
     
     @IsNotEmpty()
-    @IsPhoneNumber()
-    phone: string;
+    @IsPhoneNumber("MX")
+    phone: string;  
 
+    @Type(() => Date)
     @IsNotEmpty()
-    @IsDateString()
+    @IsDate()
     birthdate: string;
 }
