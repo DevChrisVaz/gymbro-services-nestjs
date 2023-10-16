@@ -9,6 +9,8 @@ import mongodbConfig from './mongodb.config';
 import { DatabaseServicesContract } from 'src/database/domain/contracts/database-services.contract';
 import { AuthModel, AuthSchema } from 'src/auth/frameworks/data/mongodb/models/auth.model';
 import { TokenModel, TokenSchema } from 'src/auth/frameworks/data/mongodb/models/token.model';
+import { PlanModel, PlanSchema } from 'src/plans/frameworks/data/mongodb/models/plan.model';
+import { SubscriptionModel, SubscriptionSchema } from 'src/subscriptions/frameworks/data/mongodb/models/subscription.model';
 
 @Module({
     imports: [
@@ -18,7 +20,9 @@ import { TokenModel, TokenSchema } from 'src/auth/frameworks/data/mongodb/models
             { name: GymModel.name, schema: GymSchema },
             { name: CustomerModel.name, schema: CustomerSchema },
             { name: AuthModel.name, schema: AuthSchema },
-            { name: TokenModel.name, schema: TokenSchema }
+            { name: TokenModel.name, schema: TokenSchema },
+            { name: PlanModel.name, schema: PlanSchema },
+            { name: SubscriptionModel.name, schema: SubscriptionSchema }
         ]),
         MongooseModule.forRootAsync({
             imports: [ConfigModule],

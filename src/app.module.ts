@@ -5,6 +5,8 @@ import { UsersModule } from './users/users.module';
 import { GymsModule } from './gyms/gyms.module';
 import { CustomersModule } from './customers/customers.module';
 import { AuthModule } from './auth/auth.module';
+import { SubscriptionsModule } from './subscriptions/subscriptions.module';
+import { PlansModule } from './plans/plans.module';
 import ConfigModule from './core/config';
 
 @Module({
@@ -13,7 +15,9 @@ import ConfigModule from './core/config';
     UsersModule,
     GymsModule,
     CustomersModule,
-    AuthModule
+    AuthModule,
+    SubscriptionsModule,
+    PlansModule
   ],
   controllers: [
     AppController
