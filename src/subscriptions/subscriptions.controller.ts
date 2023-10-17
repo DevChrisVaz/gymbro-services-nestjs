@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors } from '@nestjs/common';
 import { SubscriptionsService } from './subscriptions.service';
 import { CreateSubscriptionDto } from './application/dto';
 import { UpdateSubscriptionDto } from './application/dto';
@@ -7,17 +7,21 @@ import { FindSubscriptionsUseCase } from './application/usecases/find-suscriptio
 import { FindSubscriptionUseCase } from './application/usecases/find-subscription.usecase';
 import { UpdateSubscriptionUseCase } from './application/usecases/update-subscription.usecase';
 import { DeleteSubscriptionUseCase } from './application/usecases/cancel-subscription.usecase';
+import { AddUUIDInterceptor } from 'src/core/interceptors/add-uuid.interceptor';
+import { FindOneUseCaseContract } from 'src/core/contracts/usecase.contract';
+import { ISubscription } from './domain/entities/subscription.entity';
 
 @Controller('subscriptions')
 export class SubscriptionsController {
   constructor(
     private readonly createSubscriptionUseCase: CreateSubscriptionUseCase,
     private readonly findSubscriptionsUseCase: FindSubscriptionsUseCase,
-    private readonly findSubscriptionUseCase: FindSubscriptionUseCase,
+    private readonly findSubscriptionUseCase: FindOneUseCaseContract<ISubscription>,
     private readonly updateSubscriptionUseCase: UpdateSubscriptionUseCase,
     private readonly deleteSubscriptionUseCase: DeleteSubscriptionUseCase
   ) {}
 
+  @UseInterceptors(AddUUIDInterceptor)
   @Post()
   create(@Body() createSubscriptionDto: CreateSubscriptionDto) {
     return this.createSubscriptionUseCase.run(createSubscriptionDto);

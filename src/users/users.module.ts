@@ -8,14 +8,15 @@ import { UpdateUserUseCase } from './application/usecases/UpdateUserUseCase';
 import { DeleteUserUseCase } from './application/usecases/DeleteUserUseCase';
 import { DatabaseModule } from 'src/database/database.module';
 import { EncryptionModule } from 'src/encryption/encryption.module';
+import { useCaseProviders } from './application/usecases/providers';
 
 @Module({
   imports: [DatabaseModule, EncryptionModule],
   controllers: [UsersController],
   providers: [
     UsersService, 
+    ...useCaseProviders,
     FindUsersUseCase,
-    FindUserUseCase,
     CreateUserUseCase,
     UpdateUserUseCase,
     DeleteUserUseCase

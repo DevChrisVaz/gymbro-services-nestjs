@@ -4,13 +4,16 @@ import { CreateCustomerUseCase, DeleteCustomerUseCase, FindCustomerUseCase, Find
 import { Public } from 'src/auth/auth.decorators';
 import { AddUuidToBodyPipe } from 'src/core/pipes/add-uuid.pipe';
 import { AddUUIDInterceptor } from 'src/core/interceptors/add-uuid.interceptor';
+import { FindOneUseCaseContract } from 'src/core/contracts/usecase.contract';
+import { ICustomer } from './domain/entities/customer.entity';
+import { FindRegistryInterceptor } from 'src/core/interceptors/find-registry.interceptor';
 
 @Controller('customers')
 export class CustomersController {
   constructor(
     private readonly createCustomerUseCase: CreateCustomerUseCase,
     private readonly findCustomersUseCase: FindCustomersUseCase,
-    private readonly findCustomerUseCase: FindCustomerUseCase,
+    private readonly findCustomerUseCase: FindOneUseCaseContract<ICustomer>,
     private readonly updateCustomerUseCase: UpdateCustomerUseCase,
     private readonly deleteCustomerUseCase: DeleteCustomerUseCase
   ) {}
@@ -32,6 +35,7 @@ export class CustomersController {
     return this.findCustomerUseCase.run(id);
   }
 
+  @UseInterceptors(FindRegistryInterceptor<ICustomer>)
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateCustomerDto: UpdateCustomerDto) {
     return this.updateCustomerUseCase.run(id, updateCustomerDto);

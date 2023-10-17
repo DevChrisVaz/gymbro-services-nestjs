@@ -1,21 +1,23 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, ParseUUIDPipe, UsePipes } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseUUIDPipe, UsePipes, UseInterceptors } from '@nestjs/common';
 import { CreateGymDto } from './application/dto/create-gym.dto';
 import { UpdateGymDto } from './application/dto/update-gym.dto';
 import { Public } from 'src/auth/auth.decorators';
 import { CreateGymUseCase, DeleteGymUseCase, FindGymUseCase, FindGymsUseCase, UpdateGymUseCase } from './application/usecases';
-import { AddUuidToBodyPipe } from 'src/core/pipes/add-uuid.pipe';
+import { AddUUIDInterceptor } from 'src/core/interceptors/add-uuid.interceptor';
+import { IGym } from './domain/entities/gym.entity';
+import { FindOneUseCaseContract } from 'src/core/contracts/usecase.contract';
 
 @Controller('gyms')
 export class GymsController {
   constructor(
     private readonly createGymUseCase: CreateGymUseCase,
     private readonly findGymsUseCase: FindGymsUseCase,
-    private readonly findGymUseCase: FindGymUseCase,
+    private readonly findGymUseCase: FindOneUseCaseContract<IGym>,
     private readonly updateGymUseCase: UpdateGymUseCase,
     private readonly deleteGymUseCase: DeleteGymUseCase
   ) {}
 
-  @UsePipes(new AddUuidToBodyPipe())
+  @UseInterceptors(AddUUIDInterceptor)
   @Post()
   create(@Body() createGymDto: CreateGymDto) {
     return this.createGymUseCase.run(createGymDto);

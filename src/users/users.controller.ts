@@ -4,21 +4,22 @@ import { UpdateUserDto } from './application/dto';
 import { CreateUserUseCase } from './application/usecases/CreateUserUseCase';
 import { FindUsersUseCase } from './application/usecases/FindUsersUseCase';
 import { DeleteUserUseCase } from './application/usecases/DeleteUserUseCase';
-import { FindUserUseCase } from './application/usecases/FindUserUseCase';
 import { UpdateUserUseCase } from './application/usecases/UpdateUserUseCase';
-import { AddUuidToBodyPipe } from 'src/core/pipes/add-uuid.pipe';
+import { AddUUIDInterceptor } from 'src/core/interceptors/add-uuid.interceptor';
+import { IUser } from './domain/entities/User';
+import { FindOneUseCaseContract } from 'src/core/contracts/usecase.contract';
 
 @Controller("users")
 export class UsersController {
   constructor(
     private readonly createUserUseCase: CreateUserUseCase,
     private readonly findUsersUseCase: FindUsersUseCase,
-    private readonly findUserUseCase: FindUserUseCase,
+    private readonly findUserUseCase: FindOneUseCaseContract<IUser>,
     private readonly deleteUserUseCase: DeleteUserUseCase,
     private readonly updateUserUseCase: UpdateUserUseCase
   ) {}
 
-  @UsePipes(new AddUuidToBodyPipe())
+  @UseInterceptors(AddUUIDInterceptor)
   @HttpCode(HttpStatus.CREATED)
   @Post()
   create(@Body() createUserDTO: CreateUserDto) {

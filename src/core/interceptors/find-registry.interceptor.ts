@@ -1,7 +1,7 @@
 import { Injectable, NestInterceptor, ExecutionContext, CallHandler } from '@nestjs/common';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { FindOneUseCaseContract, UseCaseContract } from '../contracts/usecase.contract';
+import { FindOneUseCaseContract } from '../contracts/usecase.contract';
 
 @Injectable()
 export class FindRegistryInterceptor<T> implements NestInterceptor<T, any> {
