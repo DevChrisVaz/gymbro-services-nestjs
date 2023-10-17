@@ -41,6 +41,7 @@ export class CustomersController {
     return this.updateCustomerUseCase.run(id, updateCustomerDto);
   }
 
+  @UseInterceptors(FindRegistryInterceptor<ICustomer>)
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.deleteCustomerUseCase.run(id);

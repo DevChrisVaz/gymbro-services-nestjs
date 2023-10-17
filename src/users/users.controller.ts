@@ -8,6 +8,7 @@ import { UpdateUserUseCase } from './application/usecases/UpdateUserUseCase';
 import { AddUUIDInterceptor } from 'src/core/interceptors/add-uuid.interceptor';
 import { IUser } from './domain/entities/User';
 import { FindOneUseCaseContract } from 'src/core/contracts/usecase.contract';
+import { FindRegistryInterceptor } from 'src/core/interceptors/find-registry.interceptor';
 
 @Controller("users")
 export class UsersController {
@@ -36,11 +37,13 @@ export class UsersController {
     return this.findUserUseCase.run(id);
   }
 
+  @UseInterceptors(FindRegistryInterceptor<IUser>)
   @Patch(':id')
   update(@Param('id', ParseUUIDPipe) id: string, @Body() updateUserDto: UpdateUserDto) {
     return this.updateUserUseCase.run(id, updateUserDto);
   }
 
+  @UseInterceptors(FindRegistryInterceptor<IUser>)
   @Delete(':id')
   remove(@Param('id', ParseUUIDPipe) id: string) {
     return this.deleteUserUseCase.run(id);
