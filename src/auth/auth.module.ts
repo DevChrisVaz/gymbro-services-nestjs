@@ -15,20 +15,20 @@ import { AuthGuard } from './auth.guard';
     ConfigModule.forFeature(authConfig),
     JwtModule.register({
       global: true,
-      secret: jwtConstants.secret
+      secret: jwtConstants.secret,
     }),
-    DatabaseModule
+    DatabaseModule,
   ],
   controllers: [AuthController],
   providers: [
-   ...configProviders,
+    ...configProviders,
     AuthService,
     LoginUseCase,
     {
       provide: APP_GUARD,
-      useClass: AuthGuard
-    }
+      useClass: AuthGuard,
+    },
   ],
-  exports: [AuthService]
+  exports: [AuthService],
 })
 export class AuthModule {}

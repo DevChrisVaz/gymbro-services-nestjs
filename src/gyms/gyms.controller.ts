@@ -1,8 +1,8 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, ParseUUIDPipe, UsePipes, UseInterceptors } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseUUIDPipe, UseInterceptors } from '@nestjs/common';
 import { CreateGymDto } from './application/dto/create-gym.dto';
 import { UpdateGymDto } from './application/dto/update-gym.dto';
 import { Public } from 'src/auth/auth.decorators';
-import { CreateGymUseCase, DeleteGymUseCase, FindGymUseCase, FindGymsUseCase, UpdateGymUseCase } from './application/usecases';
+import { CreateGymUseCase, DeleteGymUseCase, FindGymsUseCase, UpdateGymUseCase } from './application/usecases';
 import { AddUUIDInterceptor } from 'src/core/interceptors/add-uuid.interceptor';
 import { IGym } from './domain/entities/gym.entity';
 import { FindOneUseCaseContract } from 'src/core/contracts/usecase.contract';

@@ -1,10 +1,8 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors } from '@nestjs/common';
-import { SubscriptionsService } from './subscriptions.service';
 import { CreateSubscriptionDto } from './application/dto';
 import { UpdateSubscriptionDto } from './application/dto';
 import { CreateSubscriptionUseCase } from './application/usecases/create-subscription.usecase';
 import { FindSubscriptionsUseCase } from './application/usecases/find-suscriptions.usecase';
-import { FindSubscriptionUseCase } from './application/usecases/find-subscription.usecase';
 import { UpdateSubscriptionUseCase } from './application/usecases/update-subscription.usecase';
 import { DeleteSubscriptionUseCase } from './application/usecases/cancel-subscription.usecase';
 import { AddUUIDInterceptor } from 'src/core/interceptors/add-uuid.interceptor';

@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseUUIDPipe, Patch, Post, UseInterceptors, UsePipes } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseUUIDPipe, Patch, Post, UseInterceptors } from '@nestjs/common';
 import { CreateUserDto } from './application/dto';
 import { UpdateUserDto } from './application/dto';
 import { CreateUserUseCase } from './application/usecases/CreateUserUseCase';

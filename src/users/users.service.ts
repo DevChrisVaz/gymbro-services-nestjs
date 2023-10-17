@@ -5,8 +5,6 @@ import { CreateUserDto, UpdateUserDto } from './application/dto';
 
 @Injectable()
 export class UsersService {
-  constructor() { }
-
   mapDtoToUser(dto: CreateUserDto | UpdateUserDto): User {
     return plainToClass(User, dto);
   }

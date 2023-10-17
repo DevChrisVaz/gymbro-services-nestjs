@@ -17,13 +17,9 @@ import ConfigModule from './core/config';
     CustomersModule,
     AuthModule,
     // SubscriptionsModule,
-    PlansModule
+    PlansModule,
   ],
-  controllers: [
-    AppController
-  ],
-  providers: [
-    AppService
-  ],
+  controllers: [AppController],
+  providers: [AppService],
 })
 export class AppModule {}

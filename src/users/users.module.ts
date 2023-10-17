@@ -2,7 +2,6 @@ import { Module } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { UsersController } from './users.controller';
 import { FindUsersUseCase } from './application/usecases/FindUsersUseCase';
-import { FindUserUseCase } from './application/usecases/FindUserUseCase';
 import { CreateUserUseCase } from './application/usecases/CreateUserUseCase';
 import { UpdateUserUseCase } from './application/usecases/UpdateUserUseCase';
 import { DeleteUserUseCase } from './application/usecases/DeleteUserUseCase';
@@ -14,13 +13,13 @@ import { useCaseProviders } from './application/usecases/providers';
   imports: [DatabaseModule, EncryptionModule],
   controllers: [UsersController],
   providers: [
-    UsersService, 
+    UsersService,
     ...useCaseProviders,
     FindUsersUseCase,
     CreateUserUseCase,
     UpdateUserUseCase,
-    DeleteUserUseCase
+    DeleteUserUseCase,
   ],
-  exports: [UsersService]
+  exports: [UsersService],
 })
 export class UsersModule {}

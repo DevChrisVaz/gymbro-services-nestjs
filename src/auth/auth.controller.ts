@@ -1,16 +1,22 @@
-import { Controller, Get, Post, Put, Req, Res, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  // Get,
+  Post,
+  // Put,
+  Req,
+  Res,
+  // UseGuards,
+} from '@nestjs/common';
 import { LogInDto } from './application/dtos';
-import { AuthGuard } from './auth.guard';
+// import { AuthGuard } from './auth.guard';
 import { LoginUseCase } from './application/usecases/login.usecase';
 import { CookieOptions, Request, Response } from 'express';
 
 @Controller('auth')
 export class AuthController {
-  constructor(
-    private readonly loginUseCase: LoginUseCase,
-  ) { }
+  constructor(private readonly loginUseCase: LoginUseCase) {}
 
-  @Post("login")
+  @Post('login')
   async logIn(@Req() req: Request, @Res() res: Response) {
     const logInDto: LogInDto = req.body;
     const { accessToken, refreshToken } = await this.loginUseCase.run(logInDto);
@@ -23,18 +29,18 @@ export class AuthController {
       path: '/token', // La ruta donde se enviará la cookie (ajusta según tus necesidades)
     };
 
-    return res.status(201).json({ token: accessToken }).cookie("token", refreshToken, cookieOptions)
+    return res
+      .status(201)
+      .json({ token: accessToken })
+      .cookie('token', refreshToken, cookieOptions);
   }
 
-  @Put("refresh")
-  async refreshSession(@Req() req: Request, @Res() res: Response) {
+  // @Put('refresh')
+  // async refreshSession(@Req() req: Request, @Res() res: Response) {}
 
-  }
-
-  @UseGuards(AuthGuard)
-  @Get('profile')
-  getProfile(@Req() req) {
-    return req.user;
-  }
-
+  // @UseGuards(AuthGuard)
+  // @Get('profile')
+  // getProfile(@Req() req) {
+  //   return req.user;
+  // }
 }

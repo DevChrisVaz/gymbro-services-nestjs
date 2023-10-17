@@ -1,10 +1,10 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors } from '@nestjs/common';
 import { CreatePlanDto, UpdatePlanDto } from './application/dto';
-import { CreatePlanUseCase, DeletePlanUseCase, FindPlanUseCase, FindPlansUseCase, UpdatePlanUseCase } from './application/usecases';
+import { CreatePlanUseCase, DeletePlanUseCase, FindPlansUseCase, UpdatePlanUseCase } from './application/usecases';
 import { AddUUIDInterceptor } from 'src/core/interceptors/add-uuid.interceptor';
 import { FindRegistryInterceptor } from 'src/core/interceptors/find-registry.interceptor';
 import { IPlan } from './domain/entities/plan.entity';
-import { FindOneUseCaseContract, UseCaseContract } from 'src/core/contracts/usecase.contract';
+import { FindOneUseCaseContract } from 'src/core/contracts/usecase.contract';
 
 @Controller('plans')
 export class PlansController {

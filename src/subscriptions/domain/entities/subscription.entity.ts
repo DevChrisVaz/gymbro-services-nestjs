@@ -1,10 +1,10 @@
-import { ITimestamps } from "src/database/domain/entities/ITimestamps";
+import { ITimestamps } from 'src/database/domain/entities/ITimestamps';
 
 export interface ISubscription extends ITimestamps {
-    uuid: string;
-    customer: string;
-    gym: string;
-    status: string;
+  uuid: string;
+  customer: string;
+  gym: string;
+  status: string;
 }
 
 // export type TSubscription = TTimestamps & {
@@ -15,22 +15,21 @@ export interface ISubscription extends ITimestamps {
 // }
 
 export class Subscription implements ISubscription {
-    uuid: string;
-    customer: string;
-    gym: string;
-    status: string;
-    createdAt: string;
-    updatedAt: string;
+  uuid: string;
+  customer: string;
+  gym: string;
+  status: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export class SerializedSubscription implements ISubscription {
+  uuid: string;
+  customer: string;
+  gym: string;
+  status: string;
 
-    uuid: string;
-    customer: string;
-    gym: string;
-    status: string;
-
-    constructor(partial: Partial<SerializedSubscription>) {
-        Object.assign(this, partial);
-    }
+  constructor(partial: Partial<SerializedSubscription>) {
+    Object.assign(this, partial);
+  }
 }

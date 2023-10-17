@@ -1,8 +1,7 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UsePipes, UseInterceptors } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors } from '@nestjs/common';
 import { CreateCustomerDto, UpdateCustomerDto } from './application/dto';
-import { CreateCustomerUseCase, DeleteCustomerUseCase, FindCustomerUseCase, FindCustomersUseCase, UpdateCustomerUseCase } from './application/usecases';
+import { CreateCustomerUseCase, DeleteCustomerUseCase, FindCustomersUseCase, UpdateCustomerUseCase } from './application/usecases';
 import { Public } from 'src/auth/auth.decorators';
-import { AddUuidToBodyPipe } from 'src/core/pipes/add-uuid.pipe';
 import { AddUUIDInterceptor } from 'src/core/interceptors/add-uuid.interceptor';
 import { FindOneUseCaseContract } from 'src/core/contracts/usecase.contract';
 import { ICustomer } from './domain/entities/customer.entity';

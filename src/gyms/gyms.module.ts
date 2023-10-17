@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { GymsService } from './gyms.service';
 import { GymsController } from './gyms.controller';
-import { FindGymUseCase } from './application/usecases/find-gym.usecase';
 import { FindGymsUseCase } from './application/usecases/find-gyms.usecase';
 import { CreateGymUseCase } from './application/usecases/create-gym.usecase';
 import { UpdateGymUseCase } from './application/usecases/update-gym.usecase';
@@ -18,7 +17,7 @@ import { useCaseProviders } from './application/usecases/providers';
     FindGymsUseCase,
     CreateGymUseCase,
     UpdateGymUseCase,
-    DeleteGymUseCase
-  ]
+    DeleteGymUseCase,
+  ],
 })
 export class GymsModule {}
