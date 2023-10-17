@@ -3,7 +3,6 @@ import { DatabaseServicesContract } from "src/database/domain/contracts/database
 import { PlansService } from "src/plans/plans.service";
 import { UpdatePlanDto } from "../dto";
 import { IPlan } from "src/plans/domain/entities/plan.entity";
-import { PlanNotFoundException } from "src/plans/domain/exceptions/plan-not-found.exception";
 
 @Injectable()
 export class UpdatePlanUseCase {

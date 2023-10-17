@@ -11,9 +11,18 @@ export class PlanModel implements IPlan {
     uuid: string;
 
     @Prop({ required: true })
-    customer: string;
+    title: string;
     
     @Prop({ required: true })
+    description: string;
+
+    @Prop({ required: true })
+    duration: number;
+
+    @Prop({ required: true })
+    price: number;
+
+    @Prop()
     gym: string;
 
     @Prop({ required: true, default: "ACTIVE" })

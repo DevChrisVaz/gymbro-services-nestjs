@@ -4,13 +4,13 @@ import { CreatePlanUseCase, DeletePlanUseCase, FindPlanUseCase, FindPlansUseCase
 import { AddUUIDInterceptor } from 'src/core/interceptors/add-uuid.interceptor';
 import { FindRegistryInterceptor } from 'src/core/interceptors/find-registry.interceptor';
 import { IPlan } from './domain/entities/plan.entity';
-import { UseCaseContract } from 'src/core/contracts/usecase.contract';
+import { FindOneUseCaseContract, UseCaseContract } from 'src/core/contracts/usecase.contract';
 
 @Controller('plans')
 export class PlansController {
   constructor(
     private readonly createPlanUseCase: CreatePlanUseCase,
-    private readonly findPlanUseCase: UseCaseContract<string, Promise<IPlan>>,
+    private readonly findPlanUseCase: FindOneUseCaseContract<IPlan>,
     private readonly findPlansUseCase: FindPlansUseCase,
     private readonly updatePlanUseCase: UpdatePlanUseCase,
     private readonly deletePlanUseCase: DeletePlanUseCase

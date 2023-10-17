@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsUUID } from "class-validator";
+import { IsNotEmpty, IsNumber, IsString, IsUUID } from "class-validator";
 
 export class CreatePlanDto {
 
@@ -7,10 +7,23 @@ export class CreatePlanDto {
     uuid: string;
 
     @IsNotEmpty()
-    @IsUUID()
-    customer: string;
+    @IsString()
+    title: string;
+
+    @IsNotEmpty()
+    @IsString()
+    description: string;
+
+    @IsNotEmpty()
+    @IsNumber()
+    duration: number;
+
+    @IsNotEmpty()
+    @IsNumber()
+    price: number;
 
     @IsNotEmpty()
     @IsUUID()
     gym: string;
+
 }

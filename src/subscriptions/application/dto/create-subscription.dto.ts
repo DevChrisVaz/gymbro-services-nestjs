@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsNumber, IsString, IsUUID } from "class-validator";
+import { IsNotEmpty, IsUUID } from "class-validator";
 
 export class CreateSubscriptionDto {
 
@@ -7,20 +7,8 @@ export class CreateSubscriptionDto {
     uuid: string;
 
     @IsNotEmpty()
-    @IsString()
-    title: string;
-
-    @IsNotEmpty()
-    @IsString()
-    description: string;
-
-    @IsNotEmpty()
-    @IsNumber()
-    duration: number;
-
-    @IsNotEmpty()
-    @IsNumber()
-    price: number;
+    @IsUUID()
+    customer: string;
 
     @IsNotEmpty()
     @IsUUID()

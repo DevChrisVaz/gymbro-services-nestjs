@@ -1,11 +1,11 @@
 import { Injectable, NestInterceptor, ExecutionContext, CallHandler } from '@nestjs/common';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { UseCaseContract } from '../contracts/usecase.contract';
+import { FindOneUseCaseContract, UseCaseContract } from '../contracts/usecase.contract';
 
 @Injectable()
 export class FindRegistryInterceptor<T> implements NestInterceptor<T, any> {
-    constructor(private readonly findRegistryUseCase: UseCaseContract<string, Promise<T>>) { }
+    constructor(private readonly findRegistryUseCase: FindOneUseCaseContract<T>) { }
     async intercept(context: ExecutionContext, next: CallHandler): Promise<Observable<any>> {
         const request = context.switchToHttp().getRequest();
         const id: string = request.params.id;

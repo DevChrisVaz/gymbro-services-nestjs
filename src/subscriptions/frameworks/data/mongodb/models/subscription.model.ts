@@ -11,18 +11,9 @@ export class SubscriptionModel implements ISubscription {
     uuid: string;
 
     @Prop({ required: true })
-    title: string;
-    
-    @Prop({ required: true })
-    description: string;
+    customer: string;
 
     @Prop({ required: true })
-    duration: number;
-
-    @Prop({ required: true })
-    price: number;
-
-    @Prop()
     gym: string;
 
     @Prop({ required: true, default: "ACTIVE" })

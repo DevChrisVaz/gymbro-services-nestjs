@@ -1,3 +1,5 @@
-export abstract class UseCaseContract<Incoming, Outgoing> {
-    abstract run(incoming: Incoming): Outgoing;
+export abstract class UseCaseContract<Input, Output> {
+    abstract run(input: Input): Output;
 }
+
+export abstract class FindOneUseCaseContract<Output> extends UseCaseContract<string, Output> { }
