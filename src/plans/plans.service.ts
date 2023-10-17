@@ -1,26 +1,18 @@
 import { Injectable } from '@nestjs/common';
 import { CreatePlanDto } from './application/dto/create-plan.dto';
 import { UpdatePlanDto } from './application/dto/update-plan.dto';
+import { plainToClass } from 'class-transformer';
+import { IPlan, Plan, SerializedPlan } from './domain/entities/plan.entity';
 
 @Injectable()
 export class PlansService {
-  create(createPlanDto: CreatePlanDto) {
-    return 'This action adds a new plan';
+
+  mapDtoToPlan(dto: CreatePlanDto | UpdatePlanDto): IPlan {
+    return plainToClass(Plan, dto);
   }
 
-  findAll() {
-    return `This action returns all plans`;
+  serializePlan(plan: IPlan): SerializedPlan {
+    return new SerializedPlan(plan);
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} plan`;
-  }
-
-  update(id: number, updatePlanDto: UpdatePlanDto) {
-    return `This action updates a #${id} plan`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} plan`;
-  }
 }

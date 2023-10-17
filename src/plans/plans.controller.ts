@@ -1,33 +1,45 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { PlansService } from './plans.service';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors } from '@nestjs/common';
 import { CreatePlanDto, UpdatePlanDto } from './application/dto';
+import { CreatePlanUseCase, DeletePlanUseCase, FindPlanUseCase, FindPlansUseCase, UpdatePlanUseCase } from './application/usecases';
+import { AddUUIDInterceptor } from 'src/core/interceptors/add-uuid.interceptor';
+import { FindRegistryInterceptor } from 'src/core/interceptors/find-registry.interceptor';
+import { IPlan } from './domain/entities/plan.entity';
+import { UseCaseContract } from 'src/core/contracts/usecase.contract';
 
 @Controller('plans')
 export class PlansController {
-  constructor(private readonly plansService: PlansService) {}
+  constructor(
+    private readonly createPlanUseCase: CreatePlanUseCase,
+    private readonly findPlanUseCase: UseCaseContract<string, Promise<IPlan>>,
+    private readonly findPlansUseCase: FindPlansUseCase,
+    private readonly updatePlanUseCase: UpdatePlanUseCase,
+    private readonly deletePlanUseCase: DeletePlanUseCase
+  ) {}
 
+  @UseInterceptors(AddUUIDInterceptor)
   @Post()
   create(@Body() createPlanDto: CreatePlanDto) {
-    return this.plansService.create(createPlanDto);
+    return this.createPlanUseCase.run(createPlanDto);
   }
 
   @Get()
   findAll() {
-    return this.plansService.findAll();
+    return this.findPlansUseCase.run();
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.plansService.findOne(+id);
+    return this.findPlanUseCase.run(id);
   }
 
+  @UseInterceptors(FindRegistryInterceptor<IPlan>)
   @Patch(':id')
   update(@Param('id') id: string, @Body() updatePlanDto: UpdatePlanDto) {
-    return this.plansService.update(+id, updatePlanDto);
+    return this.updatePlanUseCase.run(id, updatePlanDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.plansService.remove(+id);
+    return this.deletePlanUseCase.run(id);
   }
 }
