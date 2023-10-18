@@ -1,8 +1,7 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UsePipes, UseInterceptors } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, Request, Req } from '@nestjs/common';
 import { CreateCustomerDto, UpdateCustomerDto } from './application/dto';
-import { CreateCustomerUseCase, DeleteCustomerUseCase, FindCustomerUseCase, FindCustomersUseCase, UpdateCustomerUseCase } from './application/usecases';
+import { CreateCustomerUseCase, DeleteCustomerUseCase, FindCustomersUseCase, GetCustomerProfileUseCase, UpdateCustomerUseCase } from './application/usecases';
 import { Public } from 'src/auth/auth.decorators';
-import { AddUuidToBodyPipe } from 'src/core/pipes/add-uuid.pipe';
 import { AddUUIDInterceptor } from 'src/core/interceptors/add-uuid.interceptor';
 import { FindOneUseCaseContract } from 'src/core/contracts/usecase.contract';
 import { ICustomer } from './domain/entities/customer.entity';
@@ -15,7 +14,8 @@ export class CustomersController {
     private readonly findCustomersUseCase: FindCustomersUseCase,
     private readonly findCustomerUseCase: FindOneUseCaseContract<ICustomer>,
     private readonly updateCustomerUseCase: UpdateCustomerUseCase,
-    private readonly deleteCustomerUseCase: DeleteCustomerUseCase
+    private readonly deleteCustomerUseCase: DeleteCustomerUseCase,
+    private readonly getCustomerProfileUseCase: GetCustomerProfileUseCase,
   ) {}
 
   @Public()
@@ -44,5 +44,10 @@ export class CustomersController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.deleteCustomerUseCase.run(id);
+  }
+
+  @Get('profile')
+  getProfile(@Req() req: Request) {
+    return this.getCustomerProfileUseCase.run(req["user"]["email"]);
   }
 }

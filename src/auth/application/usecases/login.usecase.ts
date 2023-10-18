@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, UnauthorizedException } from "@nestjs/common";
 import { AuthService } from "src/auth/auth.service";
 import { Auth } from "src/auth/domain/entities/auth";
 import { InvalidUserNameException } from "src/auth/domain/exceptions/invalid-username.exception";
@@ -15,9 +15,7 @@ export class LoginUseCase {
     ) { }
 
     async run(logInDto: LogInDto): Promise<{ accessToken: string, refreshToken: string }> {
-        let accessToken: string;
-        let refreshToken: string;
-        let ref: string;
+        let accessToken: string, refreshToken: string, ref: string;
         const foundAuth: Auth = await this.dataServices.auth.findOne(logInDto);
         if (!foundAuth) throw new InvalidUserNameException();
 
@@ -26,13 +24,6 @@ export class LoginUseCase {
                 const foundCustomer: Customer = await this.dataServices.customers.findOne({
                     email: foundAuth.userName
                 });
-
-                accessToken = await this.authService.generateAccessToken({
-                    firstName: foundCustomer.firstName,
-                    lastName: foundCustomer.lastName,
-                    email: foundCustomer.email,
-                    profilePicture: foundCustomer.profilePicture
-                }, "2h");
 
                 ref = foundCustomer.uuid;
 
@@ -43,10 +34,10 @@ export class LoginUseCase {
                     profilePicture: foundCustomer.profilePicture
                 }, "2h");
 
-                await this.dataServices.tokens.save({
-                    ref: foundCustomer.uuid,
-                    token: refreshToken
+                refreshToken = await this.authService.generateRefreshToken({
+                    id: foundCustomer.uuid
                 });
+
                 break;
             case "USER":
 
@@ -68,14 +59,16 @@ export class LoginUseCase {
                     id: foundUser.uuid
                 });
 
-                await this.dataServices.tokens.save({
-                    ref: foundUser.uuid,
-                    token: refreshToken
-                });
                 break;
             default:
-                throw new Error();
+                throw new UnauthorizedException();
         }
+
+        await this.dataServices.tokens.save({
+            ref,
+            token: refreshToken
+        });
+
         return { accessToken, refreshToken };
     }
 }
