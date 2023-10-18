@@ -11,11 +11,13 @@ import { LogInDto } from './application/dtos';
 // import { AuthGuard } from './auth.guard';
 import { LoginUseCase } from './application/usecases/login.usecase';
 import { CookieOptions, Request, Response } from 'express';
+import { Public } from './auth.decorators';
 
 @Controller('auth')
 export class AuthController {
   constructor(private readonly loginUseCase: LoginUseCase) {}
 
+  @Public()
   @Post('login')
   async logIn(@Req() req: Request, @Res() res: Response) {
     const logInDto: LogInDto = req.body;
@@ -31,8 +33,8 @@ export class AuthController {
 
     return res
       .status(201)
-      .json({ token: accessToken })
-      .cookie('token', refreshToken, cookieOptions);
+      .cookie('token', refreshToken, cookieOptions)
+      .json({ token: accessToken });
   }
 
   // @Put('refresh')

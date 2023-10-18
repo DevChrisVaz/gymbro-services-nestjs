@@ -8,9 +8,6 @@ export class TokenModel implements TokenContract {
   @Prop({ required: true })
   ref: string;
 
-  @Prop({ required: true, unique: true })
-  uuid: string;
-
   @Prop({ required: true })
   token: string;
 

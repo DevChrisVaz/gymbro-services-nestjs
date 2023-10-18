@@ -8,9 +8,13 @@ import { DatabaseModule } from 'src/database/database.module';
 import { DeleteCustomerUseCase } from './application/usecases/delete-customer.usecase';
 import { useCaseProviders } from './application/usecases/providers';
 import { GetCustomerProfileUseCase } from './application/usecases';
+import { EncryptionModule } from 'src/encryption/encryption.module';
 
 @Module({
-  imports: [DatabaseModule],
+  imports: [
+    DatabaseModule,
+    EncryptionModule
+  ],
   controllers: [CustomersController],
   providers: [
     CustomersService,

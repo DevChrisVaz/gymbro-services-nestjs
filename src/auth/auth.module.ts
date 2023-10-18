@@ -9,6 +9,7 @@ import authConfig, { configProviders } from './auth.config';
 import { ConfigModule } from '@nestjs/config';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from './auth.guard';
+import { EncryptionModule } from 'src/encryption/encryption.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { AuthGuard } from './auth.guard';
       secret: jwtConstants.secret,
     }),
     DatabaseModule,
+    EncryptionModule
   ],
   controllers: [AuthController],
   providers: [
