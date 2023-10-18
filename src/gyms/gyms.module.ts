@@ -7,6 +7,7 @@ import { UpdateGymUseCase } from './application/usecases/update-gym.usecase';
 import { DeleteGymUseCase } from './application/usecases/delete-gym.usecase';
 import { DatabaseModule } from 'src/database/database.module';
 import { useCaseProviders } from './application/usecases/providers';
+import { GetGymWithPlansUseCase } from './application/usecases/get-gym-with-plans.usecase';
 
 @Module({
   imports: [DatabaseModule],
@@ -18,6 +19,7 @@ import { useCaseProviders } from './application/usecases/providers';
     CreateGymUseCase,
     UpdateGymUseCase,
     DeleteGymUseCase,
+    GetGymWithPlansUseCase
   ],
 })
 export class GymsModule {}
