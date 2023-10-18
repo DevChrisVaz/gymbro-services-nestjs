@@ -38,6 +38,7 @@ export class PlansController {
     return this.updatePlanUseCase.run(id, updatePlanDto);
   }
 
+  @UseInterceptors(FindRegistryInterceptor<IPlan>)
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.deletePlanUseCase.run(id);

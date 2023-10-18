@@ -6,6 +6,7 @@ import { CreateGymUseCase, DeleteGymUseCase, FindGymUseCase, FindGymsUseCase, Up
 import { AddUUIDInterceptor } from 'src/core/interceptors/add-uuid.interceptor';
 import { IGym } from './domain/entities/gym.entity';
 import { FindOneUseCaseContract } from 'src/core/contracts/usecase.contract';
+import { FindRegistryInterceptor } from 'src/core/interceptors/find-registry.interceptor';
 
 @Controller('gyms')
 export class GymsController {
@@ -35,11 +36,13 @@ export class GymsController {
     return this.findGymUseCase.run(id);
   }
 
+  @UseInterceptors(FindRegistryInterceptor<IGym>)
   @Patch(':id')
   update(@Param('id', ParseUUIDPipe) id: string, @Body() updateGymDto: UpdateGymDto) {
     return this.updateGymUseCase.run(id, updateGymDto);
   }
 
+  @UseInterceptors(FindRegistryInterceptor<IGym>)
   @Delete(':id')
   remove(@Param('id', ParseUUIDPipe) id: string) {
     return this.deleteGymUseCase.run(id);
