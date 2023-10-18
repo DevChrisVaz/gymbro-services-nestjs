@@ -6,8 +6,6 @@ import { Gym, SerializedGym } from './domain/entities/gym.entity';
 
 @Injectable()
 export class GymsService {
-  constructor() {}
-
   mapDtoToGym(dto: CreateGymDto | UpdateGymDto): Gym {
     return plainToClass(Gym, dto);
   }

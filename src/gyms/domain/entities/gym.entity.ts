@@ -1,33 +1,32 @@
-import { Exclude } from "class-transformer";
-import { ITimestamps } from "src/database/domain/entities/ITimestamps";
+import { Exclude } from 'class-transformer';
+import { ITimestamps } from 'src/database/domain/entities/ITimestamps';
 
 export interface IGym extends ITimestamps {
-    uuid: string;
-    name: string;
-    description: string;
-    logo: string;
-    address: string;
-    status: string;
+  uuid: string;
+  name: string;
+  description: string;
+  logo: string;
+  address: string;
+  status: string;
 }
 
 export class Gym implements IGym {
-    uuid: string;
-    name: string;
-    description: string;
-    logo: string;
-    address: string;
-    status: string;
-    createdAt?: string;
-    updatedAt?: string;
+  uuid: string;
+  name: string;
+  description: string;
+  logo: string;
+  address: string;
+  status: string;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export class SerializedGym extends Gym {
-    
-    @Exclude()
-    override status: string;
+  @Exclude()
+  override status: string;
 
-    constructor(partial: Partial<SerializedGym>) {
-        super();
-        Object.assign(this, partial);
-    }
+  constructor(partial: Partial<SerializedGym>) {
+    super();
+    Object.assign(this, partial);
+  }
 }

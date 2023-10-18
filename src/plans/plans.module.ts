@@ -17,7 +17,7 @@ import { useCaseProviders } from './application/usecases/providers';
     FindPlansUseCase,
     CreatePlanUseCase,
     UpdatePlanUseCase,
-    DeletePlanUseCase
-  ]
+    DeletePlanUseCase,
+  ],
 })
 export class PlansModule {}

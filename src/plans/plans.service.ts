@@ -6,7 +6,6 @@ import { IPlan, Plan, SerializedPlan } from './domain/entities/plan.entity';
 
 @Injectable()
 export class PlansService {
-
   mapDtoToPlan(dto: CreatePlanDto | UpdatePlanDto): IPlan {
     return plainToClass(Plan, dto);
   }
@@ -14,5 +13,4 @@ export class PlansService {
   serializePlan(plan: IPlan): SerializedPlan {
     return new SerializedPlan(plan);
   }
-
 }
