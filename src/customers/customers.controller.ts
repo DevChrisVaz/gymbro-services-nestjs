@@ -1,6 +1,6 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, Request } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, Request, Req } from '@nestjs/common';
 import { CreateCustomerDto, UpdateCustomerDto } from './application/dto';
-import { CreateCustomerUseCase, DeleteCustomerUseCase, FindCustomersUseCase, GetCustomerProfileUseCase, UpdateCustomerUseCase } from './application/usecases';
+import { CreateCustomerUseCase, DeleteCustomerUseCase, FindCustomersUseCase, GetCustomerProfileUseCase, GetCustomerSubscriptionsUseCase, UpdateCustomerUseCase } from './application/usecases';
 import { Public } from 'src/auth/auth.decorators';
 import { AddUUIDInterceptor } from 'src/core/interceptors/add-uuid.interceptor';
 import { FindOneUseCaseContract } from 'src/core/contracts/usecase.contract';
@@ -16,6 +16,7 @@ export class CustomersController {
     private readonly updateCustomerUseCase: UpdateCustomerUseCase,
     private readonly deleteCustomerUseCase: DeleteCustomerUseCase,
     private readonly getCustomerProfileUseCase: GetCustomerProfileUseCase,
+    private readonly getCustomerSubscriptionsUseCase: GetCustomerSubscriptionsUseCase
   ) {}
 
   @Public()
@@ -50,5 +51,10 @@ export class CustomersController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.deleteCustomerUseCase.run(id);
+  }
+
+  @Get(':id/subscriptions')
+  getSubscriptions(@Param('id') id: string) {
+    return this.getCustomerSubscriptionsUseCase.run(id);
   }
 }

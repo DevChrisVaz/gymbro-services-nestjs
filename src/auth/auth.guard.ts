@@ -8,14 +8,17 @@ import {
 import { Reflector } from '@nestjs/core';
 import { JwtService } from '@nestjs/jwt';
 import { isArray } from 'class-validator';
-import { Request } from 'express';
+import { CookieOptions, Request } from 'express';
 import { IS_PUBLIC_KEY } from './auth.decorators';
+import { RefreshSessionUseCase } from './application/usecases/refresh-session.usecase';
+import { ITokens } from './domain/entities/tokens';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
   constructor(
     private jwtService: JwtService,
     private reflector: Reflector,
+    private refreshTokenUseCase: RefreshSessionUseCase,
     @Inject('APIKEY') private apiKey: string,
   ) {}
 
@@ -45,7 +48,18 @@ export class AuthGuard implements CanActivate {
       request.user = payload;
       return true;
     } catch {
-      throw new UnauthorizedException();
+      if(!request.cookies.token) throw new UnauthorizedException();
+      const tokens: ITokens = await this.refreshTokenUseCase.run({ accessToken: token, refreshToken: request.cookies.token });
+      const response = context.switchToHttp().getResponse();
+      const cookieOptions: CookieOptions = {
+        httpOnly: true, 
+        secure: true, 
+        sameSite: 'strict', 
+        maxAge: 7 * 24 * 60 * 60,
+        path: '/token', 
+      };
+      response.cookie('token', tokens.refreshToken, cookieOptions);
+      response.token = tokens.accessToken;
     }
   }
 

@@ -1,14 +1,11 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, Request } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, Request, Req } from '@nestjs/common';
 import { CreateSubscriptionDto } from './application/dto';
 import { UpdateSubscriptionDto } from './application/dto';
-import { CreateSubscriptionUseCase } from './application/usecases/create-subscription.usecase';
-import { FindSubscriptionsUseCase } from './application/usecases/find-suscriptions.usecase';
-import { UpdateSubscriptionUseCase } from './application/usecases/update-subscription.usecase';
-import { DeleteSubscriptionUseCase } from './application/usecases/cancel-subscription.usecase';
 import { AddUUIDInterceptor } from 'src/core/interceptors/add-uuid.interceptor';
 import { FindOneUseCaseContract } from 'src/core/contracts/usecase.contract';
 import { ISubscription } from './domain/entities/subscription.entity';
 import { FindRegistryInterceptor } from 'src/core/interceptors/find-registry.interceptor';
+import { CreateSubscriptionUseCase, DeleteSubscriptionUseCase, FindSubscriptionsUseCase, GetCustomerSubscriptionsUseCase, UpdateSubscriptionUseCase } from './application/usecases';
 
 @Controller('subscriptions')
 export class SubscriptionsController {
@@ -17,19 +14,25 @@ export class SubscriptionsController {
     private readonly findSubscriptionsUseCase: FindSubscriptionsUseCase,
     private readonly findSubscriptionUseCase: FindOneUseCaseContract<ISubscription>,
     private readonly updateSubscriptionUseCase: UpdateSubscriptionUseCase,
-    private readonly deleteSubscriptionUseCase: DeleteSubscriptionUseCase
+    private readonly deleteSubscriptionUseCase: DeleteSubscriptionUseCase,
+    private readonly getCustomerSubscriptionsUseCase: GetCustomerSubscriptionsUseCase
   ) {}
 
   @UseInterceptors(AddUUIDInterceptor)
   @Post()
   create(@Body() createSubscriptionDto: CreateSubscriptionDto, @Request() req) {
-    createSubscriptionDto.customer = req.user.uuid;
+    createSubscriptionDto.customer = req.user.id;
     return this.createSubscriptionUseCase.run(createSubscriptionDto);
   }
 
   @Get()
   findAll() {
     return this.findSubscriptionsUseCase.run();
+  }
+
+  @Get('customer')
+  getCustomerSubscriptions(@Req() req) {
+    return this.getCustomerSubscriptionsUseCase.run(req.user.id);
   }
 
   @Get(':id')

@@ -13,7 +13,7 @@ export class AuthService {
 
   async generateRefreshToken(payload: any): Promise<any> {
     return await this.jwtService.signAsync(payload, {
-      expiresIn: '1d',
+      expiresIn: '7d',
     });
   }
 }

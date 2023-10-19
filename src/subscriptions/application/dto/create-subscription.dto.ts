@@ -10,6 +10,6 @@ export class CreateSubscriptionDto {
 
   @IsNotEmpty()
   @IsUUID()
-  gym: string;
+  plan: string;
 
 }

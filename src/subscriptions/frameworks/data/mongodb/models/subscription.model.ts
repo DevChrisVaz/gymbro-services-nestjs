@@ -13,7 +13,7 @@ export class SubscriptionModel implements ISubscription {
   customer: string;
 
   @Prop({ required: true })
-  gym: string;
+  plan: string;
 
   @Prop({ required: true, default: 'ACTIVE' })
   status: string;

@@ -10,6 +10,7 @@ import { ConfigModule } from '@nestjs/config';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from './auth.guard';
 import { EncryptionModule } from 'src/encryption/encryption.module';
+import { RefreshSessionUseCase } from './application/usecases/refresh-session.usecase';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { EncryptionModule } from 'src/encryption/encryption.module';
     ...configProviders,
     AuthService,
     LoginUseCase,
+    RefreshSessionUseCase,
     {
       provide: APP_GUARD,
       useClass: AuthGuard,

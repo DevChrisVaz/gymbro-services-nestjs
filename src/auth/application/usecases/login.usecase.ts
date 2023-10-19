@@ -42,9 +42,7 @@ export class LoginUseCase {
           '2h',
         );
 
-        refreshToken = await this.authService.generateRefreshToken({
-          id: foundCustomer.uuid
-        });
+        refreshToken = await this.authService.generateRefreshToken(accessToken);
 
         break;
       case 'USER':
@@ -66,9 +64,7 @@ export class LoginUseCase {
           '15m',
         );
 
-        refreshToken = await this.authService.generateRefreshToken({
-          id: foundUser.uuid,
-        });
+        refreshToken = await this.authService.generateRefreshToken(accessToken);
 
         break;
       default:
