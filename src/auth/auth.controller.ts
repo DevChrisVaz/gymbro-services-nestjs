@@ -1,16 +1,12 @@
 import {
+  Body,
   Controller,
-  // Get,
   Post,
-  // Put,
-  Req,
   Res,
-  // UseGuards,
 } from '@nestjs/common';
 import { LogInDto } from './application/dtos';
-// import { AuthGuard } from './auth.guard';
 import { LoginUseCase } from './application/usecases/login.usecase';
-import { CookieOptions, Request, Response } from 'express';
+import { CookieOptions, Response } from 'express';
 import { Public } from './auth.decorators';
 
 @Controller('auth')
@@ -19,8 +15,7 @@ export class AuthController {
 
   @Public()
   @Post('login')
-  async logIn(@Req() req: Request, @Res() res: Response) {
-    const logInDto: LogInDto = req.body;
+  async logIn(@Body() logInDto: LogInDto, @Res() res: Response) {
     const { accessToken, refreshToken } = await this.loginUseCase.run(logInDto);
 
     const cookieOptions: CookieOptions = {

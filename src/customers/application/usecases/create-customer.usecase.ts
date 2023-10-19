@@ -16,16 +16,12 @@ export class CreateCustomerUseCase {
 
   async run(dto: CreateCustomerDto): Promise<Customer> {
     const customer = this.customersService.mapDtoToCustomer(dto);
-    const createdCustomer: Customer = await this.dataServices.customers.save(
-      {
-        ...customer,
-        password: await this.dataHashingService.hash(customer.password),
-      },
-    );
+    customer.password = await this.dataHashingService.hash(customer.password);
+    const createdCustomer: Customer = await this.dataServices.customers.save(customer);
     const auth: Auth = {
       ref: 'CUSTOMER',
       userName: customer.email,
-      password: await this.dataHashingService.hash(customer.password),
+      password: customer.password,
     };
     await this.dataServices.auth.save(auth);
     return this.customersService.serializeCustomer(createdCustomer);

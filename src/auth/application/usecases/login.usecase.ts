@@ -33,6 +33,7 @@ export class LoginUseCase {
         ref = foundCustomer.uuid;
         accessToken = await this.authService.generateAccessToken(
           {
+            id: foundCustomer.uuid,
             firstName: foundCustomer.firstName,
             lastName: foundCustomer.lastName,
             email: foundCustomer.email,
@@ -55,6 +56,7 @@ export class LoginUseCase {
 
         accessToken = await this.authService.generateAccessToken(
           {
+            id: foundUser.uuid,
             firstName: foundUser.firstName,
             lastName: foundUser.lastName,
             userName: foundUser.userName,

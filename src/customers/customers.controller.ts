@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, Request, Req } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, Request } from '@nestjs/common';
 import { CreateCustomerDto, UpdateCustomerDto } from './application/dto';
 import { CreateCustomerUseCase, DeleteCustomerUseCase, FindCustomersUseCase, GetCustomerProfileUseCase, UpdateCustomerUseCase } from './application/usecases';
 import { Public } from 'src/auth/auth.decorators';
@@ -30,6 +30,11 @@ export class CustomersController {
     return this.findCustomersUseCase.run();
   }
 
+  @Get('profile')
+  getProfile(@Request() req) {
+    return this.getCustomerProfileUseCase.run(req.user.email);
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.findCustomerUseCase.run(id);
@@ -45,10 +50,5 @@ export class CustomersController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.deleteCustomerUseCase.run(id);
-  }
-
-  @Get('profile')
-  getProfile(@Req() req: Request) {
-    return this.getCustomerProfileUseCase.run(req["user"]["email"]);
   }
 }

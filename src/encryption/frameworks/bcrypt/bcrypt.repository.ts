@@ -9,7 +9,7 @@ export class BCryptRepository implements DataHashingContract {
     return bcrypt.hash(data, this.salt);
   }
 
-  compare(hashedData: string, comparison: string): Promise<boolean> {
+  compare(comparison: string, hashedData: string): Promise<boolean> {
     return bcrypt.compare(comparison, hashedData);
   }
 }

@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, Request } from '@nestjs/common';
 import { CreateSubscriptionDto } from './application/dto';
 import { UpdateSubscriptionDto } from './application/dto';
 import { CreateSubscriptionUseCase } from './application/usecases/create-subscription.usecase';
@@ -22,7 +22,8 @@ export class SubscriptionsController {
 
   @UseInterceptors(AddUUIDInterceptor)
   @Post()
-  create(@Body() createSubscriptionDto: CreateSubscriptionDto) {
+  create(@Body() createSubscriptionDto: CreateSubscriptionDto, @Request() req) {
+    createSubscriptionDto.customer = req.user.uuid;
     return this.createSubscriptionUseCase.run(createSubscriptionDto);
   }
 

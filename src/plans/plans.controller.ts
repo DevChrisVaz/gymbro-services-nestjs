@@ -5,6 +5,7 @@ import { AddUUIDInterceptor } from 'src/core/interceptors/add-uuid.interceptor';
 import { FindRegistryInterceptor } from 'src/core/interceptors/find-registry.interceptor';
 import { IPlan } from './domain/entities/plan.entity';
 import { FindOneUseCaseContract } from 'src/core/contracts/usecase.contract';
+import { Public } from 'src/auth/auth.decorators';
 
 @Controller('plans')
 export class PlansController {
@@ -22,11 +23,13 @@ export class PlansController {
     return this.createPlanUseCase.run(createPlanDto);
   }
 
+  @Public()
   @Get()
   findAll() {
     return this.findPlansUseCase.run();
   }
 
+  @Public()
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.findPlanUseCase.run(id);

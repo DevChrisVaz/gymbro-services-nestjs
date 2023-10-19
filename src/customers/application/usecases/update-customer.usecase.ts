@@ -10,20 +10,12 @@ export class UpdateCustomerUseCase {
   constructor(
     private readonly customersService: CustomersService,
     private dataServices: DatabaseServicesContract,
-  ) {}
+  ) { }
 
   async run(uuid: string, dto: UpdateCustomerDto): Promise<Customer> {
-    const foundCustomer = await this.dataServices.customers.findOne({ uuid });
-    if (foundCustomer) {
-      const dataToUpdate = this.customersService.mapDtoToCustomer(dto);
-      const updatedCustomer: Customer =
-        await this.dataServices.customers.update(
-          foundCustomer.uuid,
-          dataToUpdate,
-        );
-      return this.customersService.serializeCustomer(updatedCustomer);
-    }
-
-    throw new CustomerNotFoundException();
+    const dataToUpdate = this.customersService.mapDtoToCustomer(dto);
+    const updatedCustomer: Customer =
+      await this.dataServices.customers.update(uuid, dataToUpdate);
+    return this.customersService.serializeCustomer(updatedCustomer);
   }
 }
