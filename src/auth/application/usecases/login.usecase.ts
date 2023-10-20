@@ -39,10 +39,10 @@ export class LoginUseCase {
             email: foundCustomer.email,
             profilePicture: foundCustomer.profilePicture,
           },
-          '2h',
+          '10s',
         );
 
-        refreshToken = await this.authService.generateRefreshToken(accessToken);
+        refreshToken = await this.authService.generateRefreshToken({ token: accessToken });
 
         break;
       case 'USER':
@@ -64,7 +64,7 @@ export class LoginUseCase {
           '15m',
         );
 
-        refreshToken = await this.authService.generateRefreshToken(accessToken);
+        refreshToken = await this.authService.generateRefreshToken({ token: accessToken });
 
         break;
       default:

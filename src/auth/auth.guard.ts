@@ -33,9 +33,9 @@ export class AuthGuard implements CanActivate {
 
     const request = context.switchToHttp().getRequest();
     const token = this.extractTokenFromHeader(request);
-    const apikey = this.extractApiKeyFromHeader(request);
-
+    
     if (!token) {
+      const apikey = this.extractApiKeyFromHeader(request);
       if (apikey) {
         if (apikey === this.apiKey) return true;
       } else {
@@ -58,6 +58,7 @@ export class AuthGuard implements CanActivate {
         maxAge: 7 * 24 * 60 * 60,
         path: '/token', 
       };
+      request.user = this.jwtService.decode(tokens.accessToken);
       response.cookie('token', tokens.refreshToken, cookieOptions);
       response.token = tokens.accessToken;
     }

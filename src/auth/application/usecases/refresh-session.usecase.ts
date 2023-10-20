@@ -22,14 +22,14 @@ export class RefreshSessionUseCase {
             throw new SessionExpiredException();
         });
 
-        if (!tokens.accessToken === refreshTokenPayload) {
+        if (!tokens.accessToken === refreshTokenPayload.token) {
             throw new UnauthorizedException();
         }
 
         await this.databaseServices.tokens.delete(tokens.refreshToken);
         
         const accessToken: string = await this.authService.generateAccessToken(accessTokenPayload, "2h");
-        const refreshToken: string = await this.authService.generateRefreshToken(accessToken);
+        const refreshToken: string = await this.authService.generateRefreshToken({ token: accessToken });
 
         await this.databaseServices.tokens.save({
             ref: accessTokenPayload["id"],
