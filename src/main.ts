@@ -14,8 +14,8 @@ async function bootstrap() {
   app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
 
   const config = new DocumentBuilder()
-    .setTitle('Cats example')
-    .setDescription('The cats API description')
+    .setTitle('GYMBRO')
+    .setDescription('GYMBRO api endpoints documentation')
     .setVersion('1.0')
     .addTag('cats')
     .build();
