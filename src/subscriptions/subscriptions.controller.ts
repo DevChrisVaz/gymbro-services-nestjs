@@ -6,7 +6,9 @@ import { FindOneUseCaseContract } from 'src/core/contracts/usecase.contract';
 import { ISubscription } from './domain/entities/subscription.entity';
 import { FindRegistryInterceptor } from 'src/core/interceptors/find-registry.interceptor';
 import { CreateSubscriptionUseCase, DeleteSubscriptionUseCase, FindSubscriptionsUseCase, GetCustomerSubscriptionsUseCase, UpdateSubscriptionUseCase } from './application/usecases';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags("Subscriptions")
 @Controller('subscriptions')
 export class SubscriptionsController {
   constructor(

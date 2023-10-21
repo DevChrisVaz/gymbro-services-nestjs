@@ -6,7 +6,9 @@ import { AddUUIDInterceptor } from 'src/core/interceptors/add-uuid.interceptor';
 import { FindOneUseCaseContract } from 'src/core/contracts/usecase.contract';
 import { ICustomer } from './domain/entities/customer.entity';
 import { FindRegistryInterceptor } from 'src/core/interceptors/find-registry.interceptor';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags("Customers")
 @Controller('customers')
 export class CustomersController {
   constructor(

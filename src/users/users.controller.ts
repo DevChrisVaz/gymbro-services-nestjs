@@ -9,7 +9,9 @@ import { AddUUIDInterceptor } from 'src/core/interceptors/add-uuid.interceptor';
 import { IUser } from './domain/entities/User';
 import { FindOneUseCaseContract } from 'src/core/contracts/usecase.contract';
 import { FindRegistryInterceptor } from 'src/core/interceptors/find-registry.interceptor';
+import { ApiHeader, ApiHeaders, ApiTags } from '@nestjs/swagger';
 
+@ApiTags("Users")
 @Controller("users")
 export class UsersController {
   constructor(
@@ -27,6 +29,18 @@ export class UsersController {
     return this.createUserUseCase.run(createUserDTO);
   }
 
+  @ApiHeaders([
+    {
+      name: "token",
+      description: "Token returned by login"
+    },
+    {
+      name: "key",
+      allowEmptyValue: true,
+      required: false,
+      description: "Secret API Key"
+    }
+  ])
   @Get()
   findAll() {
     return this.findUsersUseCase.run();
