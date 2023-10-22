@@ -39,7 +39,7 @@ export class LoginUseCase {
             email: foundCustomer.email,
             profilePicture: foundCustomer.profilePicture,
           },
-          '2h',
+          '10s',
         );
 
         refreshToken = await this.authService.generateRefreshToken({ token: accessToken });

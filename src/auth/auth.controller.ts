@@ -19,11 +19,11 @@ export class AuthController {
     const { accessToken, refreshToken } = await this.loginUseCase.run(logInDto);
 
     const cookieOptions: CookieOptions = {
-      httpOnly: true, // La cookie solo es accesible desde el servidor
-      secure: true, // Solo se envía sobre conexiones HTTPS
-      sameSite: 'strict', // Protege contra ataques CSRF
-      maxAge: 7 * 24 * 60 * 60, // Tiempo de expiración en segundos (por ejemplo, 30 días)
-      path: '/token', // La ruta donde se enviará la cookie (ajusta según tus necesidades)
+      httpOnly: true,
+      secure: true,
+      sameSite: 'none',
+      maxAge: 7 * 24 * 60 * 60,
+      path: '/token',
     };
 
     res.cookie('token', refreshToken, cookieOptions);

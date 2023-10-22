@@ -48,13 +48,14 @@ export class AuthGuard implements CanActivate {
       request.user = payload;
       return true;
     } catch {
+      console.log(request.cookies.token)
       if(!request.cookies.token) throw new UnauthorizedException();
       const tokens: ITokens = await this.refreshTokenUseCase.run({ accessToken: token, refreshToken: request.cookies.token });
       const response = context.switchToHttp().getResponse();
       const cookieOptions: CookieOptions = {
         httpOnly: true, 
         secure: true, 
-        sameSite: 'strict', 
+        sameSite: 'none', 
         maxAge: 7 * 24 * 60 * 60,
         path: '/token', 
       };
@@ -70,7 +71,7 @@ export class AuthGuard implements CanActivate {
   }
 
   private extractApiKeyFromHeader(request: Request): string | undefined {
-    const apikey = request.headers.key;
+    const apikey = request.headers.api_key;
     return isArray(apikey) ? apikey[0] : apikey;
   }
 }
