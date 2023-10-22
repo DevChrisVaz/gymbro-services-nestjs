@@ -6,8 +6,10 @@ import { FindRegistryInterceptor } from 'src/core/interceptors/find-registry.int
 import { IPlan } from './domain/entities/plan.entity';
 import { FindOneUseCaseContract } from 'src/core/contracts/usecase.contract';
 import { Public } from 'src/auth/auth.decorators';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiSecurity, ApiTags } from '@nestjs/swagger';
 
+@ApiSecurity("api_key")
+@ApiBearerAuth()
 @ApiTags("Plans")
 @Controller('plans')
 export class PlansController {

@@ -1,9 +1,9 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiHideProperty, ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsUUID } from 'class-validator';
 
 export class CreateSubscriptionDto {
 
-  @ApiProperty()
+  @ApiHideProperty()
   @IsNotEmpty()
   @IsUUID()
   uuid: string;

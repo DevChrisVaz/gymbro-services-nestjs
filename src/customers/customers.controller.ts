@@ -8,6 +8,8 @@ import { ICustomer } from './domain/entities/customer.entity';
 import { FindRegistryInterceptor } from 'src/core/interceptors/find-registry.interceptor';
 import { ApiBearerAuth, ApiCreatedResponse, ApiSecurity, ApiTags } from '@nestjs/swagger';
 
+@ApiSecurity("api_key")
+@ApiBearerAuth()
 @ApiTags("Customers")
 @Controller('customers')
 export class CustomersController {
@@ -29,19 +31,16 @@ export class CustomersController {
     return this.createCustomerUseCase.run(createCustomerDto);
   }
 
-  @ApiSecurity("api_key")
   @Get()
   findAll() {
     return this.findCustomersUseCase.run();
   }
 
-  @ApiBearerAuth()
   @Get('profile')
   getProfile(@Request() req) {
     return this.getCustomerProfileUseCase.run(req.user.email);
   }
 
-  @ApiSecurity("api_key")
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.findCustomerUseCase.run(id);

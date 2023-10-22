@@ -8,8 +8,10 @@ import { IGym } from './domain/entities/gym.entity';
 import { FindOneUseCaseContract } from 'src/core/contracts/usecase.contract';
 import { FindRegistryInterceptor } from 'src/core/interceptors/find-registry.interceptor';
 import { GetGymWithPlansUseCase } from './application/usecases/get-gym-with-plans.usecase';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiSecurity, ApiTags } from '@nestjs/swagger';
 
+@ApiSecurity("api_key")
+@ApiBearerAuth()
 @ApiTags("GYMs")
 @Controller('gyms')
 export class GymsController {

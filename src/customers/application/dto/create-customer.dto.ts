@@ -1,4 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiHideProperty, ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import {
   IsDate,
@@ -12,7 +12,7 @@ import {
 
 export class CreateCustomerDto {
 
-  @ApiProperty()
+  @ApiHideProperty()
   @IsUUID()
   @IsNotEmpty()
   uuid: string;

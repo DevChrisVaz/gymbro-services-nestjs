@@ -36,16 +36,16 @@ export class UserModel implements User {
   @Prop([String])
   tokens: string[];
 
-  @Prop({ required: true })
+  @Prop({ required: true, default: "ADMIN" })
   rol: string;
 
   @Prop({ required: true, default: 'ACTIVE' })
   status: string;
 
-  @Prop({ default: now() })
+  @Prop()
   createdAt: string;
 
-  @Prop({ default: now() })
+  @Prop()
   updatedAt: string;
 }
 

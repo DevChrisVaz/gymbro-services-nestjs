@@ -9,8 +9,10 @@ import { AddUUIDInterceptor } from 'src/core/interceptors/add-uuid.interceptor';
 import { IUser } from './domain/entities/User';
 import { FindOneUseCaseContract } from 'src/core/contracts/usecase.contract';
 import { FindRegistryInterceptor } from 'src/core/interceptors/find-registry.interceptor';
-import { ApiHeader, ApiHeaders, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiHeaders, ApiSecurity, ApiTags } from '@nestjs/swagger';
 
+@ApiSecurity("api_key")
+@ApiBearerAuth()
 @ApiTags("Users")
 @Controller("users")
 export class UsersController {
