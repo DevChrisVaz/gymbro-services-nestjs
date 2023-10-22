@@ -18,6 +18,7 @@ export class LoginUseCase {
 
   async run(logInDto: LogInDto): Promise<{ accessToken: string, refreshToken: string }> {
     let accessToken: string, refreshToken: string, ref: string;
+    console.log(logInDto.userName)
     const foundAuth: Auth = await this.dataServices.auth.findOne({ userName: logInDto.userName });
     if (!foundAuth) throw new InvalidUserNameException();
     if(!await this.dataHashingService.compare(logInDto.password, foundAuth.password)) throw new BadRequestException("Invalid password");

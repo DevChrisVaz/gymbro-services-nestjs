@@ -31,18 +31,6 @@ export class UsersController {
     return this.createUserUseCase.run(createUserDTO);
   }
 
-  @ApiHeaders([
-    {
-      name: "token",
-      description: "Token returned by login"
-    },
-    {
-      name: "key",
-      allowEmptyValue: true,
-      required: false,
-      description: "Secret API Key"
-    }
-  ])
   @Get()
   findAll() {
     return this.findUsersUseCase.run();
