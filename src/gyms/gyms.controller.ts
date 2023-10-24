@@ -60,4 +60,10 @@ export class GymsController {
   getPlans(@Param('id', ParseUUIDPipe) id: string) {
     return this.getGymWithPlansUseCase.run(id);
   }
+
+  @UseInterceptors(FindRegistryInterceptor<IGym>)
+  @Patch(":id/activate")
+  activate(@Param("id", ParseUUIDPipe) id: string) {
+
+  }
 }

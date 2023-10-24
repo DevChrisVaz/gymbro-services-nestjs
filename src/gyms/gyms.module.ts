@@ -9,11 +9,13 @@ import { DatabaseModule } from 'src/database/database.module';
 import { useCaseProviders } from './application/usecases/providers';
 import { GetGymWithPlansUseCase } from './application/usecases/get-gym-with-plans.usecase';
 import { UsersModule } from 'src/users/users.module';
+import { MailingModule } from 'src/mailing/mailing.module';
 
 @Module({
   imports: [
     DatabaseModule,
-    UsersModule
+    UsersModule,
+    MailingModule
   ],
   controllers: [GymsController],
   providers: [

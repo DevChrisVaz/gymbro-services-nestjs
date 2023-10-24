@@ -21,7 +21,7 @@ import { AddressesModule } from './addresses/addresses.module';
     SubscriptionsModule,
     PlansModule,
     BranchesModule,
-    AddressesModule,
+    AddressesModule
   ],
   controllers: [AppController],
   providers: [AppService],

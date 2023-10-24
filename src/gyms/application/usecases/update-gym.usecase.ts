@@ -10,18 +10,15 @@ export class UpdateGymUseCase {
   constructor(
     private readonly gymsService: GymsService,
     private dataServices: DatabaseServicesContract,
-  ) {}
+  ) { }
 
   async run(uuid: string, updateGymDto: UpdateGymDto): Promise<IGym> {
     const foundGym: IGym = await this.dataServices.gyms.findOne({ uuid });
-    if (foundGym) {
-      const dataToUpdate = this.gymsService.mapDtoToGym(updateGymDto);
-      const updatedGym = await this.dataServices.gyms.update(
-        foundGym.uuid,
-        dataToUpdate,
-      );
-      return this.gymsService.serializeGym(updatedGym);
-    }
-    throw new GymNotFoundException();
+    const dataToUpdate = this.gymsService.mapDtoToGym(updateGymDto);
+    const updatedGym = await this.dataServices.gyms.update(
+      foundGym.uuid,
+      dataToUpdate,
+    );
+    return this.gymsService.serializeGym(updatedGym);
   }
 }
