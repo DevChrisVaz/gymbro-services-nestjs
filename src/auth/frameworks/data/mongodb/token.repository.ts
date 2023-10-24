@@ -6,8 +6,8 @@ export class TokenRepository
   extends MongoDBRepository<TokenContract>
   implements TokenRepositoryContract {
 
-    override delete(token: string): Promise<TokenContract> {
-      return this._repository.findOneAndDelete({ token })    
-    } 
-
+  override delete(token: string): Promise<TokenContract> {
+    return this._repository.findOneAndDelete({ token })
   }
+
+}

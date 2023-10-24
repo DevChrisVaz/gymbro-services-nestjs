@@ -10,6 +10,7 @@ import ConfigModule from './core/config';
 import { SubscriptionsModule } from './subscriptions/subscriptions.module';
 import { BranchesModule } from './branches/branches.module';
 import { AddressesModule } from './addresses/addresses.module';
+import { PermitionsModule } from './permitions/permitions.module';
 
 @Module({
   imports: [
@@ -21,7 +22,8 @@ import { AddressesModule } from './addresses/addresses.module';
     SubscriptionsModule,
     PlansModule,
     BranchesModule,
-    AddressesModule
+    AddressesModule,
+    PermitionsModule
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -11,7 +11,7 @@ import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from './guards/auth.guard';
 import { EncryptionModule } from 'src/encryption/encryption.module';
 import { RefreshSessionUseCase } from './application/usecases/refresh-session.usecase';
-import { RolesGuard } from './guards/roles.guard';
+import { RolesGuard } from '../permitions/guards/roles.guard';
 
 @Module({
   imports: [

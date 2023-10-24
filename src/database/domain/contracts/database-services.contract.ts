@@ -8,6 +8,7 @@ import { IPlan } from 'src/plans/domain/entities/plan.entity';
 import { ISubscription } from 'src/subscriptions/domain/entities/subscription.entity';
 import { IBranch } from 'src/branches/domain/entities/branch.entity';
 import { IAddress } from 'src/addresses/domain/entities/address.entity';
+import { IPermition } from 'src/permitions/domain/entities/permition.entity';
 
 export abstract class DatabaseServicesContract {
   abstract users: RepositoryContract<User>;
@@ -19,4 +20,5 @@ export abstract class DatabaseServicesContract {
   abstract subscriptions: RepositoryContract<ISubscription>;
   abstract branches: RepositoryContract<IBranch>;
   abstract addresses: RepositoryContract<IAddress>;
+  abstract permitions: RepositoryContract<IPermition>
 }

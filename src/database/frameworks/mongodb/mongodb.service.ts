@@ -47,6 +47,9 @@ import { IBranch } from 'src/branches/domain/entities/branch.entity';
 import { IAddress } from 'src/addresses/domain/entities/address.entity';
 import { AddressDocument, AddressModel } from 'src/addresses/frameworks/data/mongodb/models/address.model';
 import { AddressRepositoryImpl } from 'src/addresses/frameworks/data/mongodb/address.repository';
+import { IPermition } from 'src/permitions/domain/entities/permition.entity';
+import { PermitionDocument, PermitionModel } from 'src/permitions/frameworks/data/mongodb/models/permition.model';
+import { PermitionRepositoryImpl } from 'src/permitions/frameworks/data/mongodb/permition.repository';
 
 @Injectable()
 export class MongoDBServices
@@ -59,8 +62,9 @@ export class MongoDBServices
   auth: AuthRepository;
   plans: RepositoryContract<IPlan>;
   subscriptions: RepositoryContract<ISubscription>;
-  branches: RepositoryContract<IBranch>
+  branches: RepositoryContract<IBranch>;
   addresses: RepositoryContract<IAddress>;
+  permitions: RepositoryContract<IPermition>;
 
   constructor(
     @InjectModel(UserModel.name)
@@ -80,7 +84,9 @@ export class MongoDBServices
     @InjectModel(BranchModel.name)
     private branchRepository: Model<BranchDocument>,
     @InjectModel(AddressModel.name)
-    private addressRepository: Model<AddressDocument>
+    private addressRepository: Model<AddressDocument>,
+    @InjectModel(PermitionModel.name)
+    private permitionRepository: Model<PermitionDocument>
   ) {}
 
   onApplicationBootstrap() {
@@ -95,9 +101,12 @@ export class MongoDBServices
     );
     this.branches = new BranchRepositoryImpl(
       this.branchRepository
-    ),
+    );
     this.addresses = new AddressRepositoryImpl(
       this.addressRepository
+    );
+    this.permitions = new PermitionRepositoryImpl(
+      this.permitionRepository
     )
   }
 }
