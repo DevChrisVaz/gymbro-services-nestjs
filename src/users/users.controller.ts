@@ -22,10 +22,9 @@ export class UsersController {
     private readonly findUserUseCase: FindOneUseCaseContract<IUser>,
     private readonly deleteUserUseCase: DeleteUserUseCase,
     private readonly updateUserUseCase: UpdateUserUseCase
-  ) {}
+  ) { }
 
   @UseInterceptors(AddUUIDInterceptor)
-  @HttpCode(HttpStatus.CREATED)
   @Post()
   create(@Body() createUserDTO: CreateUserDto) {
     return this.createUserUseCase.run(createUserDTO);

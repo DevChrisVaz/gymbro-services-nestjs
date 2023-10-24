@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { CustomersService } from 'src/customers/customers.service';
 import { Customer } from 'src/customers/domain/entities/customer.entity';
-import { CustomerNotFoundException } from 'src/customers/domain/exceptions/customer-not-found.exception';
 import { DatabaseServicesContract } from 'src/database/domain/contracts/database-services.contract';
 import { UpdateCustomerDto } from '../dto';
 

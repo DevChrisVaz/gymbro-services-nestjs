@@ -17,9 +17,6 @@ export class GymModel implements IGym {
   @Prop()
   logo: string;
 
-  @Prop()
-  address: string;
-
   @Prop({ default: 'UNVERIFIED' })
   status: string;
 

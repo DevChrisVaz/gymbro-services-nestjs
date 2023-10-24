@@ -8,9 +8,10 @@ import { DatabaseModule } from 'src/database/database.module';
 import authConfig, { configProviders } from './auth.config';
 import { ConfigModule } from '@nestjs/config';
 import { APP_GUARD } from '@nestjs/core';
-import { AuthGuard } from './auth.guard';
+import { AuthGuard } from './guards/auth.guard';
 import { EncryptionModule } from 'src/encryption/encryption.module';
 import { RefreshSessionUseCase } from './application/usecases/refresh-session.usecase';
+import { RolesGuard } from './guards/roles.guard';
 
 @Module({
   imports: [
@@ -31,6 +32,10 @@ import { RefreshSessionUseCase } from './application/usecases/refresh-session.us
     {
       provide: APP_GUARD,
       useClass: AuthGuard,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: RolesGuard,
     },
   ],
   exports: [AuthService],

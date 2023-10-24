@@ -5,8 +5,8 @@ import { AddUUIDInterceptor } from 'src/core/interceptors/add-uuid.interceptor';
 import { FindRegistryInterceptor } from 'src/core/interceptors/find-registry.interceptor';
 import { IPlan } from './domain/entities/plan.entity';
 import { FindOneUseCaseContract } from 'src/core/contracts/usecase.contract';
-import { Public } from 'src/auth/auth.decorators';
 import { ApiBearerAuth, ApiSecurity, ApiTags } from '@nestjs/swagger';
+import { Public } from 'src/auth/decorators/public.decorator';
 
 @ApiSecurity("api_key")
 @ApiBearerAuth()

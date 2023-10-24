@@ -8,9 +8,13 @@ import { DeleteGymUseCase } from './application/usecases/delete-gym.usecase';
 import { DatabaseModule } from 'src/database/database.module';
 import { useCaseProviders } from './application/usecases/providers';
 import { GetGymWithPlansUseCase } from './application/usecases/get-gym-with-plans.usecase';
+import { UsersModule } from 'src/users/users.module';
 
 @Module({
-  imports: [DatabaseModule],
+  imports: [
+    DatabaseModule,
+    UsersModule
+  ],
   controllers: [GymsController],
   providers: [
     GymsService,

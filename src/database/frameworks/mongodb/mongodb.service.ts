@@ -41,6 +41,12 @@ import {
 } from 'src/plans/frameworks/data/mongodb/models/plan.model';
 import { PlanRepositoryImpl } from 'src/plans/frameworks/data/mongodb/plan.repository';
 import { SubscriptionRepositoryImpl } from 'src/subscriptions/frameworks/data/mongodb/subscription.repository';
+import { BranchDocument, BranchModel } from 'src/branches/frameworks/data/mongodb/models/branch.model';
+import { BranchRepositoryImpl } from 'src/branches/frameworks/data/mongodb/branch.repository';
+import { IBranch } from 'src/branches/domain/entities/branch.entity';
+import { IAddress } from 'src/addresses/domain/entities/address.entity';
+import { AddressDocument, AddressModel } from 'src/addresses/frameworks/data/mongodb/models/address.model';
+import { AddressRepositoryImpl } from 'src/addresses/frameworks/data/mongodb/address.repository';
 
 @Injectable()
 export class MongoDBServices
@@ -53,6 +59,8 @@ export class MongoDBServices
   auth: AuthRepository;
   plans: RepositoryContract<IPlan>;
   subscriptions: RepositoryContract<ISubscription>;
+  branches: RepositoryContract<IBranch>
+  addresses: RepositoryContract<IAddress>;
 
   constructor(
     @InjectModel(UserModel.name)
@@ -69,6 +77,10 @@ export class MongoDBServices
     private planRepository: Model<PlanDocument>,
     @InjectModel(SubscriptionModel.name)
     private subscriptionRepository: Model<SubscriptionDocument>,
+    @InjectModel(BranchModel.name)
+    private branchRepository: Model<BranchDocument>,
+    @InjectModel(AddressModel.name)
+    private addressRepository: Model<AddressDocument>
   ) {}
 
   onApplicationBootstrap() {
@@ -81,5 +93,11 @@ export class MongoDBServices
     this.subscriptions = new SubscriptionRepositoryImpl(
       this.subscriptionRepository,
     );
+    this.branches = new BranchRepositoryImpl(
+      this.branchRepository
+    ),
+    this.addresses = new AddressRepositoryImpl(
+      this.addressRepository
+    )
   }
 }

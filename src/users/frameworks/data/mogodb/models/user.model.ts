@@ -1,5 +1,4 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { now } from 'mongoose';
 import { User } from 'src/users/domain/entities/User';
 
 export type UserDocument = UserModel & Document;
@@ -15,7 +14,10 @@ export class UserModel implements User {
   @Prop({ required: true })
   lastName: string;
 
-  @Prop({ required: true })
+  @Prop({ required: true, unique: true })
+  email: string;
+
+  @Prop({ required: true, unique: true })
   userName: string;
 
   @Prop({ required: true })

@@ -1,12 +1,12 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, Request, Req } from '@nestjs/common';
 import { CreateCustomerDto, UpdateCustomerDto } from './application/dto';
 import { CreateCustomerUseCase, DeleteCustomerUseCase, FindCustomersUseCase, GetCustomerProfileUseCase, GetCustomerSubscriptionsUseCase, UpdateCustomerUseCase } from './application/usecases';
-import { Public } from 'src/auth/auth.decorators';
 import { AddUUIDInterceptor } from 'src/core/interceptors/add-uuid.interceptor';
 import { FindOneUseCaseContract } from 'src/core/contracts/usecase.contract';
 import { ICustomer } from './domain/entities/customer.entity';
 import { FindRegistryInterceptor } from 'src/core/interceptors/find-registry.interceptor';
 import { ApiBearerAuth, ApiCreatedResponse, ApiSecurity, ApiTags } from '@nestjs/swagger';
+import { Public } from 'src/auth/decorators/public.decorator';
 
 @ApiSecurity("api_key")
 @ApiBearerAuth()

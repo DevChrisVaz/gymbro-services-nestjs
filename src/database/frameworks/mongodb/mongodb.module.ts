@@ -32,6 +32,8 @@ import {
   SubscriptionModel,
   SubscriptionSchema,
 } from 'src/subscriptions/frameworks/data/mongodb/models/subscription.model';
+import { BranchModel, BranchSchema } from 'src/branches/frameworks/data/mongodb/models/branch.model';
+import { AddressModel, AddressSchema } from 'src/addresses/frameworks/data/mongodb/models/address.model';
 
 @Module({
   imports: [
@@ -44,6 +46,8 @@ import {
       { name: TokenModel.name, schema: TokenSchema },
       { name: PlanModel.name, schema: PlanSchema },
       { name: SubscriptionModel.name, schema: SubscriptionSchema },
+      { name: BranchModel.name, schema: BranchSchema },
+      { name: AddressModel.name, schema: AddressSchema }
     ]),
     MongooseModule.forRootAsync({
       imports: [ConfigModule],

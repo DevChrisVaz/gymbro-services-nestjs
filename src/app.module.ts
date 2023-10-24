@@ -8,6 +8,8 @@ import { AuthModule } from './auth/auth.module';
 import { PlansModule } from './plans/plans.module';
 import ConfigModule from './core/config';
 import { SubscriptionsModule } from './subscriptions/subscriptions.module';
+import { BranchesModule } from './branches/branches.module';
+import { AddressesModule } from './addresses/addresses.module';
 
 @Module({
   imports: [
@@ -18,6 +20,8 @@ import { SubscriptionsModule } from './subscriptions/subscriptions.module';
     AuthModule,
     SubscriptionsModule,
     PlansModule,
+    BranchesModule,
+    AddressesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

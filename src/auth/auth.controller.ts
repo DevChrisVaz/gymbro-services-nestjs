@@ -7,7 +7,7 @@ import {
 import { LogInDto } from './application/dtos';
 import { LoginUseCase } from './application/usecases/login.usecase';
 import { CookieOptions, Response } from 'express';
-import { Public } from './auth.decorators';
+import { Public } from './decorators/public.decorator';
 
 @Controller('auth')
 export class AuthController {

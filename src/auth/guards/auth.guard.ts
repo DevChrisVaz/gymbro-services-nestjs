@@ -9,9 +9,9 @@ import { Reflector } from '@nestjs/core';
 import { JwtService } from '@nestjs/jwt';
 import { isArray } from 'class-validator';
 import { CookieOptions, Request } from 'express';
-import { IS_PUBLIC_KEY } from './auth.decorators';
-import { RefreshSessionUseCase } from './application/usecases/refresh-session.usecase';
-import { ITokens } from './domain/entities/tokens';
+import { RefreshSessionUseCase } from '../application/usecases/refresh-session.usecase';
+import { ITokens } from '../domain/entities/tokens';
+import { IS_PUBLIC_KEY } from '../decorators/public.decorator';
 
 @Injectable()
 export class AuthGuard implements CanActivate {

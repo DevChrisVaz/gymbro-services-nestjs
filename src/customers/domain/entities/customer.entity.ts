@@ -27,6 +27,8 @@ export class Customer implements ICustomer {
   profilePicture: string;
   tokens: string[];
   status: string;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export class SerializedCustomer implements ICustomer {

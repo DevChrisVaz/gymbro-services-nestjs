@@ -1,7 +1,6 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, ParseUUIDPipe, UseInterceptors } from '@nestjs/common';
 import { CreateGymDto } from './application/dto/create-gym.dto';
 import { UpdateGymDto } from './application/dto/update-gym.dto';
-import { Public } from 'src/auth/auth.decorators';
 import { CreateGymUseCase, DeleteGymUseCase, FindGymsUseCase, UpdateGymUseCase } from './application/usecases';
 import { AddUUIDInterceptor } from 'src/core/interceptors/add-uuid.interceptor';
 import { IGym } from './domain/entities/gym.entity';
@@ -9,6 +8,7 @@ import { FindOneUseCaseContract } from 'src/core/contracts/usecase.contract';
 import { FindRegistryInterceptor } from 'src/core/interceptors/find-registry.interceptor';
 import { GetGymWithPlansUseCase } from './application/usecases/get-gym-with-plans.usecase';
 import { ApiBearerAuth, ApiSecurity, ApiTags } from '@nestjs/swagger';
+import { Public } from 'src/auth/decorators/public.decorator';
 
 @ApiSecurity("api_key")
 @ApiBearerAuth()
