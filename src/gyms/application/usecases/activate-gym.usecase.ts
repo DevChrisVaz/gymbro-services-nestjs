@@ -20,10 +20,10 @@ export class ActivateGymUseCase {
         status: "ACTIVE"
       },
     );
-    this.mailer.sendMail({
-        from: '"GYMBRO Team" <team@gymbro.com>',
-        to: ""
-    });
+    // this.mailer.sendMail({
+    //     from: '"GYMBRO Team" <team@gymbro.com>',
+    //     to: ""
+    // });
     return;
   }
 }

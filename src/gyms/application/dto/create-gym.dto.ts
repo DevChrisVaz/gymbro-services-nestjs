@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsString, ValidateNested } from 'class-validator';
-import { CreateUserDto } from 'src/users/application/dto';
+import { AddNewUserDto } from './add-new-user.dto';
 
 export class CreateGymDto {
 
@@ -15,10 +15,10 @@ export class CreateGymDto {
   description: string;
 
   @ApiProperty({
-    type: CreateUserDto
+    type: AddNewUserDto 
   })
   @IsNotEmpty()
   @ValidateNested()
-  user: CreateUserDto
+  user: AddNewUserDto
 
 }

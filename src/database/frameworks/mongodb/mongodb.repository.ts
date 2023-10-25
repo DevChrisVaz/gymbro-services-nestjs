@@ -3,9 +3,9 @@ import { RepositoryContract } from 'src/database/domain/contracts/repository.con
 
 export abstract class MongoDBRepository<T> implements RepositoryContract<T> {
   readonly _repository: Model<T>;
-  private readonly _populateOnFind: string[];
+  private readonly _populateOnFind?: any;
 
-  constructor(repository: Model<T>, populateOnFind: string[] = []) {
+  constructor(repository: Model<T>, populateOnFind?: any) {
     (this._repository = repository), (this._populateOnFind = populateOnFind);
   }
   find(filter: FilterQuery<T>): Promise<T[]> {

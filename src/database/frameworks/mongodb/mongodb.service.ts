@@ -50,6 +50,9 @@ import { AddressRepositoryImpl } from 'src/addresses/frameworks/data/mongodb/add
 import { IPermition } from 'src/permitions/domain/entities/permition.entity';
 import { PermitionDocument, PermitionModel } from 'src/permitions/frameworks/data/mongodb/models/permition.model';
 import { PermitionRepositoryImpl } from 'src/permitions/frameworks/data/mongodb/permition.repository';
+import { GYMUserRepositoryContract } from 'src/gyms/domain/repositories/gym-user.repository';
+import { GYMUserDocument, GYMUserModel } from 'src/gyms/frameworks/data/mongodb/models/gym-user.model';
+import { GYMUserRepositoryImpl } from 'src/gyms/frameworks/data/mongodb/gym-user.repository';
 
 @Injectable()
 export class MongoDBServices
@@ -57,6 +60,7 @@ export class MongoDBServices
 {
   users: UserRepositoryImpl;
   gyms: GymRepositoryImpl;
+  GYMUsers: GYMUserRepositoryContract;
   customers: CustomerRepositoryImpl;
   tokens: TokenRepository;
   auth: AuthRepository;
@@ -71,6 +75,8 @@ export class MongoDBServices
     private userRepository: Model<UserDocument>,
     @InjectModel(GymModel.name)
     private gymRepository: Model<GymDocument>,
+    @InjectModel(GYMUserModel.name)
+    private GYMUserRepository: Model<GYMUserDocument>,
     @InjectModel(CustomerModel.name)
     private customerRepository: Model<CustomerDocument>,
     @InjectModel(TokenModel.name)
@@ -92,6 +98,7 @@ export class MongoDBServices
   onApplicationBootstrap() {
     this.users = new UserRepositoryImpl(this.userRepository);
     this.gyms = new GymRepositoryImpl(this.gymRepository);
+    this.GYMUsers = new GYMUserRepositoryImpl(this.GYMUserRepository, ["useRef"])
     this.customers = new CustomerRepositoryImpl(this.customerRepository);
     this.tokens = new TokenRepository(this.tokenRepository);
     this.auth = new AuthRepositoryImpl(this.authRepository);

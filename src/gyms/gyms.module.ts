@@ -9,13 +9,17 @@ import { DatabaseModule } from 'src/database/database.module';
 import { useCaseProviders } from './application/usecases/providers';
 import { GetGymWithPlansUseCase } from './application/usecases/get-gym-with-plans.usecase';
 import { UsersModule } from 'src/users/users.module';
-import { MailingModule } from 'src/mailing/mailing.module';
+import { EncryptionModule } from 'src/encryption/encryption.module';
+import { AddNewUserUseCase } from './application/usecases/add-new-user.usecase';
+import { FindGYMUsersUseCase } from './application/usecases/find-gym-users.usecase';
+// import { MailingModule } from 'src/mailing/mailing.module';
 
 @Module({
   imports: [
     DatabaseModule,
     UsersModule,
-    MailingModule
+    EncryptionModule
+    // MailingModule
   ],
   controllers: [GymsController],
   providers: [
@@ -25,7 +29,10 @@ import { MailingModule } from 'src/mailing/mailing.module';
     CreateGymUseCase,
     UpdateGymUseCase,
     DeleteGymUseCase,
-    GetGymWithPlansUseCase
+    GetGymWithPlansUseCase,
+    AddNewUserUseCase,
+    CreateGymUseCase,
+    FindGYMUsersUseCase
   ],
 })
 export class GymsModule {}

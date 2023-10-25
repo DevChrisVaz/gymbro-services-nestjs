@@ -7,6 +7,7 @@ import { DatabaseServicesContract } from "src/database/domain/contracts/database
 import { User } from "src/users/domain/entities/User";
 import { LogInDto } from "../dtos";
 import { DataHashingContract } from "src/encryption/domain/contracts/hashing.contract";
+import { IGYMUser } from "src/gyms/domain/entities/gym-user.entity";
 
 @Injectable()
 export class LoginUseCase {
@@ -46,9 +47,13 @@ export class LoginUseCase {
         refreshToken = await this.authService.generateRefreshToken({ token: accessToken });
 
         break;
-      case 'USER':
-        const foundUser: User = await this.dataServices.users.findOne({
+      case 'GYM_USER':
+        const  foundGYMUser: IGYMUser = await this.dataServices.GYMUsers.findOne({
           userName: foundAuth.userName,
+        });
+
+        const foundUser: User = await this.dataServices.users.findOne({
+          uuid: foundGYMUser.user
         });
 
         ref = foundUser.uuid;
@@ -58,9 +63,9 @@ export class LoginUseCase {
             id: foundUser.uuid,
             firstName: foundUser.firstName,
             lastName: foundUser.lastName,
-            userName: foundUser.userName,
+            userName: foundGYMUser.userName,
             profilePicture: foundUser.profilePicture,
-            rol: foundUser.rol,
+            rol: foundGYMUser.rol,
           },
           '15m',
         );

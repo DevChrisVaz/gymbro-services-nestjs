@@ -9,6 +9,9 @@ import { FindRegistryInterceptor } from 'src/core/interceptors/find-registry.int
 import { GetGymWithPlansUseCase } from './application/usecases/get-gym-with-plans.usecase';
 import { ApiBearerAuth, ApiSecurity, ApiTags } from '@nestjs/swagger';
 import { Public } from 'src/auth/decorators/public.decorator';
+import { AddNewUserUseCase } from './application/usecases/add-new-user.usecase';
+import { FindGYMUsersUseCase } from './application/usecases/find-gym-users.usecase';
+import { AddNewUserDto } from './application/dto/add-new-user.dto';
 
 @ApiSecurity("api_key")
 @ApiBearerAuth()
@@ -21,8 +24,10 @@ export class GymsController {
     private readonly findGymUseCase: FindOneUseCaseContract<IGym>,
     private readonly updateGymUseCase: UpdateGymUseCase,
     private readonly deleteGymUseCase: DeleteGymUseCase,
-    private readonly getGymWithPlansUseCase: GetGymWithPlansUseCase
-  ) {}
+    private readonly getGymWithPlansUseCase: GetGymWithPlansUseCase,
+    private readonly addNewUserUseCase: AddNewUserUseCase,
+    private readonly findGYMUsersUseCase: FindGYMUsersUseCase
+  ) { }
 
   @UseInterceptors(AddUUIDInterceptor)
   @Post()
@@ -65,5 +70,17 @@ export class GymsController {
   @Patch(":id/activate")
   activate(@Param("id", ParseUUIDPipe) id: string) {
 
+  }
+
+  @UseInterceptors(FindRegistryInterceptor<IGym>)
+  @Post(":id/users")
+  addNewUser(@Body() addNewUserDto: AddNewUserDto) {
+    return this.addNewUserUseCase.run(addNewUserDto);
+  }
+
+  @UseInterceptors(FindRegistryInterceptor<IGym>)
+  @Get(":id/users")
+  getUsers(@Param("id", ParseUUIDPipe) gymId: string) {
+    return this.findGYMUsersUseCase.run(gymId);
   }
 }

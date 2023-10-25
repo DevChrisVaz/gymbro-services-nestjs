@@ -9,10 +9,12 @@ import { ISubscription } from 'src/subscriptions/domain/entities/subscription.en
 import { IBranch } from 'src/branches/domain/entities/branch.entity';
 import { IAddress } from 'src/addresses/domain/entities/address.entity';
 import { IPermition } from 'src/permitions/domain/entities/permition.entity';
+import { IGYMUser } from 'src/gyms/domain/entities/gym-user.entity';
 
 export abstract class DatabaseServicesContract {
   abstract users: RepositoryContract<User>;
   abstract gyms: RepositoryContract<IGym>;
+  abstract GYMUsers: RepositoryContract<IGYMUser>
   abstract customers: RepositoryContract<Customer>;
   abstract tokens: RepositoryContract<TokenContract>;
   abstract auth: RepositoryContract<IAuth>;

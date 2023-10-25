@@ -35,6 +35,7 @@ import {
 import { BranchModel, BranchSchema } from 'src/branches/frameworks/data/mongodb/models/branch.model';
 import { AddressModel, AddressSchema } from 'src/addresses/frameworks/data/mongodb/models/address.model';
 import { PermitionModel, PermitionSchema } from 'src/permitions/frameworks/data/mongodb/models/permition.model';
+import { GYMUserModel, GYMUserSchema } from 'src/gyms/frameworks/data/mongodb/models/gym-user.model';
 
 @Module({
   imports: [
@@ -42,6 +43,7 @@ import { PermitionModel, PermitionSchema } from 'src/permitions/frameworks/data/
     MongooseModule.forFeature([
       { name: UserModel.name, schema: UserSchema },
       { name: GymModel.name, schema: GymSchema },
+      { name: GYMUserModel.name, schema: GYMUserSchema },
       { name: CustomerModel.name, schema: CustomerSchema },
       { name: AuthModel.name, schema: AuthSchema },
       { name: TokenModel.name, schema: TokenSchema },
