@@ -1,9 +1,15 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsString, ValidateNested } from 'class-validator';
+import { ApiHideProperty, ApiProperty, OmitType } from '@nestjs/swagger';
+import { IsNotEmpty, IsString, IsUUID, ValidateNested } from 'class-validator';
 import { AddNewUserDto } from './add-new-user.dto';
-import { PickType } from '@nestjs/mapped-types';
+import { Type } from 'class-transformer';
 
 export class CreateGymDto {
+  
+  @ApiHideProperty()
+  @IsUUID()
+  @IsNotEmpty()
+  uuid: string;
+
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
@@ -15,9 +21,10 @@ export class CreateGymDto {
   description: string;
 
   @ApiProperty({
-    type: PickType(AddNewUserDto, ["userName", "password"] as const),
+    type: OmitType(AddNewUserDto, ["user", "status", "rol", "uuid", "gym"]),
   })
   @IsNotEmpty()
   @ValidateNested()
+  @Type(() => OmitType(AddNewUserDto, ["gym"]))
   user: AddNewUserDto;
 }

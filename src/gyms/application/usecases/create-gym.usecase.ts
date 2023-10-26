@@ -15,16 +15,21 @@ export class CreateGymUseCase {
     private readonly usersService: UsersService,
     private dataServices: DatabaseServicesContract,
     private readonly dataHashing: DataHashingContract,
-  ) {}
+  ) { }
 
   async run(createGymDto: CreateGymDto): Promise<IGym> {
     const gym: IGym = this.gymsService.mapDtoToGym(createGymDto);
     const user: IUser = this.usersService.mapDtoToUser(createGymDto.user);
-    const gymUser: IGYMUser = this.gymsService.mapDtoToGYMUser(
+    let gymUser: IGYMUser = this.gymsService.mapDtoToGYMUser(
       createGymDto.user,
     );
     const createdGym: IGym = await this.dataServices.gyms.save(gym);
-    await this.dataServices.users.save(user);
+    const createdUser = await this.dataServices.users.save(user);
+    gymUser = {
+      ...gymUser,
+      gym: createdGym.uuid,
+      user: createdUser.uuid
+    }
     await this.dataServices.GYMUsers.save(gymUser);
     await this.dataServices.auth.save({
       ref: 'GYM_USER',

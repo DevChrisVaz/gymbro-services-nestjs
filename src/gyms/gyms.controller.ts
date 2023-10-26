@@ -34,6 +34,7 @@ import { AddNewUserUseCase } from './application/usecases/add-new-user.usecase';
 import { FindGYMUsersUseCase } from './application/usecases/find-gym-users.usecase';
 import { AddNewUserDto } from './application/dto/add-new-user.dto';
 import { GYMUserResponseDTO } from './application/dto/response/gym-user-response.dto';
+import { AddUserUUIDInterceptor } from 'src/users/interceptors/add-user-uuid.interceptor';
 
 @ApiSecurity('api_key')
 @ApiBearerAuth()
@@ -52,8 +53,10 @@ export class GymsController {
   ) {}
 
   @UseInterceptors(AddUUIDInterceptor)
+  @UseInterceptors(AddUserUUIDInterceptor)
   @Post()
   create(@Body() createGymDto: CreateGymDto) {
+    console.log(createGymDto)
     return this.createGymUseCase.run(createGymDto);
   }
 
