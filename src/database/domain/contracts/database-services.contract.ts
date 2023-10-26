@@ -22,5 +22,5 @@ export abstract class DatabaseServicesContract {
   abstract subscriptions: RepositoryContract<ISubscription>;
   abstract branches: RepositoryContract<IBranch>;
   abstract addresses: RepositoryContract<IAddress>;
-  abstract permitions: RepositoryContract<IBranchPermition>;
+  abstract branchPermitions: RepositoryContract<IBranchPermition>;
 }

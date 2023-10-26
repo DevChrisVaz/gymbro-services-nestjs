@@ -7,9 +7,13 @@ import { CreatePlanUseCase } from './application/usecases/create-plan.usecase';
 import { UpdatePlanUseCase } from './application/usecases/update-plan.usecase';
 import { DeletePlanUseCase } from './application/usecases/delete-plan.usecase';
 import { useCaseProviders } from './application/usecases/providers';
+import { CaslModule } from 'src/casl/casl.module';
 
 @Module({
-  imports: [DatabaseModule],
+  imports: [
+    DatabaseModule,
+    CaslModule
+  ],
   controllers: [PlansController],
   providers: [
     PlansService,

@@ -11,6 +11,7 @@ import { SubscriptionsModule } from './subscriptions/subscriptions.module';
 import { BranchesModule } from './branches/branches.module';
 import { AddressesModule } from './addresses/addresses.module';
 import { PermitionsModule } from './permitions/permitions.module';
+import { CaslModule } from './casl/casl.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { PermitionsModule } from './permitions/permitions.module';
     BranchesModule,
     AddressesModule,
     PermitionsModule,
+    CaslModule,
   ],
   controllers: [AppController],
   providers: [AppService],
