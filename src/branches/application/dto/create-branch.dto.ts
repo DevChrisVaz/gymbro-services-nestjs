@@ -1,4 +1,5 @@
 import { ApiHideProperty, ApiProperty } from '@nestjs/swagger';
+import { Type } from 'class-transformer';
 import {
   IsEmail,
   IsNotEmpty,
@@ -25,11 +26,12 @@ export class CreateBranchDto {
   })
   @IsNotEmpty()
   @ValidateNested()
+  @Type(() => CreateAddressDto)
   address: CreateAddressDto;
 
   @ApiProperty()
   @IsNotEmpty()
-  @IsPhoneNumber()
+  @IsPhoneNumber("MX")
   phone: string;
 
   @ApiProperty()

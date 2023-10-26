@@ -5,6 +5,9 @@ export interface IAddress extends ITimestamps {
   street: string;
   building: string;
   zip: string;
+  neighborhood: string;
+  city: string;
+  state: string;
   country: string;
   status: string;
 }
@@ -14,6 +17,9 @@ export class Address implements IAddress {
   street: string;
   building: string;
   zip: string;
+  neighborhood: string;
+  city: string;
+  state: string;
   country: string;
   status: string;
   createdAt?: string;

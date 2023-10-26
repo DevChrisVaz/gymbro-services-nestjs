@@ -9,9 +9,13 @@ import {
   UpdateBranchUseCase,
   useCaseProviders,
 } from './application/usecases';
+import { AddressesModule } from 'src/addresses/addresses.module';
 
 @Module({
-  imports: [DatabaseModule],
+  imports: [
+    DatabaseModule,
+    AddressesModule
+  ],
   controllers: [BranchesController],
   providers: [
     BranchesService,

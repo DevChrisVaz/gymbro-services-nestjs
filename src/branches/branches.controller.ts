@@ -21,6 +21,7 @@ import { IBranch } from './domain/entities/branch.entity';
 import { ApiBearerAuth, ApiSecurity, ApiTags } from '@nestjs/swagger';
 import { FindRegistryInterceptor } from 'src/core/interceptors/find-registry.interceptor';
 import { AddUUIDInterceptor } from 'src/core/interceptors/add-uuid.interceptor';
+import { AddAddressUUIDInterceptor } from 'src/addresses/interceptors/add-address-uuid.interceptor';
 
 @ApiSecurity('api_key')
 @ApiBearerAuth()
@@ -36,6 +37,7 @@ export class BranchesController {
   ) {}
 
   @UseInterceptors(AddUUIDInterceptor)
+  @UseInterceptors(AddAddressUUIDInterceptor)
   @Post()
   create(@Body() createBranchDto: CreateBranchDto) {
     return this.createBranchUseCase.run(createBranchDto);

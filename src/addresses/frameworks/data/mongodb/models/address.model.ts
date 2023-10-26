@@ -18,6 +18,15 @@ export class AddressModel implements IAddress {
   zip: string;
 
   @Prop({ required: true })
+  neighborhood: string;
+
+  @Prop({ required: true })
+  city: string;
+
+  @Prop({ required: true })
+  state: string;
+
+  @Prop({ required: true })
   country: string;
 
   @Prop()
