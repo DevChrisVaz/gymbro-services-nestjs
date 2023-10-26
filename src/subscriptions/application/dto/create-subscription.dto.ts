@@ -2,7 +2,6 @@ import { ApiHideProperty, ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsUUID } from 'class-validator';
 
 export class CreateSubscriptionDto {
-
   @ApiHideProperty()
   @IsNotEmpty()
   @IsUUID()
@@ -14,5 +13,4 @@ export class CreateSubscriptionDto {
   @IsNotEmpty()
   @IsUUID()
   plan: string;
-
 }

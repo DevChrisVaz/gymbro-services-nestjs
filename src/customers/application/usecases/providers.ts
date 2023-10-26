@@ -1,11 +1,11 @@
-import { Provider } from "@nestjs/common";
-import { FindOneUseCaseContract } from "src/core/contracts/usecase.contract";
-import { ICustomer } from "src/customers/domain/entities/customer.entity";
-import { FindCustomerUseCase } from "./find-customer.usecase";
+import { Provider } from '@nestjs/common';
+import { FindOneUseCaseContract } from 'src/core/contracts/usecase.contract';
+import { FindCustomerUseCase } from './find-customer.usecase';
+import { CustomerResponseDTO } from '../dto/response/customer-response.dto';
 
 export const useCaseProviders: Provider[] = [
-    {
-        provide: FindOneUseCaseContract<ICustomer>,
-        useClass: FindCustomerUseCase
-    }
-]
+  {
+    provide: FindOneUseCaseContract<Promise<CustomerResponseDTO>>,
+    useClass: FindCustomerUseCase,
+  },
+];

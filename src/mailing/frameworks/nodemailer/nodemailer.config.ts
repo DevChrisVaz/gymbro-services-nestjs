@@ -1,4 +1,4 @@
-import nodemailer from "nodemailer";
+import nodemailer from 'nodemailer';
 
 // class Nodemailer {
 //     constructor(
@@ -10,14 +10,14 @@ import nodemailer from "nodemailer";
 //     }
 // }
 
-let transporter = nodemailer.createTransport({
-    host: "",
-    port: 0,
-    secure: false,
-    auth: {
-        user: "",
-        pass: ""
-    }
+const transporter = nodemailer.createTransport({
+  host: '',
+  port: 0,
+  secure: false,
+  auth: {
+    user: '',
+    pass: '',
+  },
 });
 
 export default transporter;

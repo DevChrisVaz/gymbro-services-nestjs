@@ -1,5 +1,5 @@
-import { IMail } from "../entities/mail.entity";
+import { IMail } from '../entities/mail.entity';
 
 export abstract class MailerRepositoryContract {
-    abstract sendMail(mail: IMail): any;
+  abstract sendMail(mail: IMail): any;
 }

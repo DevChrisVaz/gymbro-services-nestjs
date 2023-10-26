@@ -5,9 +5,7 @@ import { EncryptionModule } from 'src/encryption/encryption.module';
 
 @Module({
   imports: [DatabaseModule, EncryptionModule],
-  providers: [
-    UsersService
-  ],
+  providers: [UsersService],
   exports: [UsersService],
 })
 export class UsersModule {}

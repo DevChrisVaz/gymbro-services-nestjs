@@ -1,15 +1,32 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, Request, Req } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UseInterceptors,
+  Request,
+  ParseUUIDPipe,
+} from '@nestjs/common';
 import { CreateSubscriptionDto } from './application/dto';
 import { UpdateSubscriptionDto } from './application/dto';
 import { AddUUIDInterceptor } from 'src/core/interceptors/add-uuid.interceptor';
 import { FindOneUseCaseContract } from 'src/core/contracts/usecase.contract';
 import { ISubscription } from './domain/entities/subscription.entity';
 import { FindRegistryInterceptor } from 'src/core/interceptors/find-registry.interceptor';
-import { CreateSubscriptionUseCase, DeleteSubscriptionUseCase, FindSubscriptionsUseCase, GetCustomerSubscriptionsUseCase, UpdateSubscriptionUseCase } from './application/usecases';
+import {
+  CreateSubscriptionUseCase,
+  DeleteSubscriptionUseCase,
+  FindSubscriptionsUseCase,
+  GetCustomerSubscriptionsUseCase,
+  UpdateSubscriptionUseCase,
+} from './application/usecases';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
 @ApiBearerAuth()
-@ApiTags("Subscriptions")
+@ApiTags('Subscriptions')
 @Controller('subscriptions')
 export class SubscriptionsController {
   constructor(
@@ -18,7 +35,7 @@ export class SubscriptionsController {
     private readonly findSubscriptionUseCase: FindOneUseCaseContract<ISubscription>,
     private readonly updateSubscriptionUseCase: UpdateSubscriptionUseCase,
     private readonly deleteSubscriptionUseCase: DeleteSubscriptionUseCase,
-    private readonly getCustomerSubscriptionsUseCase: GetCustomerSubscriptionsUseCase
+    private readonly getCustomerSubscriptionsUseCase: GetCustomerSubscriptionsUseCase,
   ) {}
 
   @UseInterceptors(AddUUIDInterceptor)
@@ -33,9 +50,9 @@ export class SubscriptionsController {
     return this.findSubscriptionsUseCase.run();
   }
 
-  @Get('customer')
-  getCustomerSubscriptions(@Req() req) {
-    return this.getCustomerSubscriptionsUseCase.run(req.user.id);
+  @Get('customers/:id')
+  getCustomerSubscriptions(@Param('id', ParseUUIDPipe) id: string) {
+    return this.getCustomerSubscriptionsUseCase.run(id);
   }
 
   @Get(':id')
@@ -45,7 +62,10 @@ export class SubscriptionsController {
 
   @UseInterceptors(FindRegistryInterceptor<ISubscription>)
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateSubscriptionDto: UpdateSubscriptionDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateSubscriptionDto: UpdateSubscriptionDto,
+  ) {
     return this.updateSubscriptionUseCase.run(id, updateSubscriptionDto);
   }
 

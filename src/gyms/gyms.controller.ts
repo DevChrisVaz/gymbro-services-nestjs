@@ -1,21 +1,43 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, ParseUUIDPipe, UseInterceptors } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  ParseUUIDPipe,
+  UseInterceptors,
+  HttpStatus,
+} from '@nestjs/common';
 import { CreateGymDto } from './application/dto/create-gym.dto';
 import { UpdateGymDto } from './application/dto/update-gym.dto';
-import { CreateGymUseCase, DeleteGymUseCase, FindGymsUseCase, UpdateGymUseCase } from './application/usecases';
+import {
+  CreateGymUseCase,
+  DeleteGymUseCase,
+  FindGymsUseCase,
+  UpdateGymUseCase,
+} from './application/usecases';
 import { AddUUIDInterceptor } from 'src/core/interceptors/add-uuid.interceptor';
 import { IGym } from './domain/entities/gym.entity';
 import { FindOneUseCaseContract } from 'src/core/contracts/usecase.contract';
 import { FindRegistryInterceptor } from 'src/core/interceptors/find-registry.interceptor';
 import { GetGymWithPlansUseCase } from './application/usecases/get-gym-with-plans.usecase';
-import { ApiBearerAuth, ApiSecurity, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiResponse,
+  ApiSecurity,
+  ApiTags,
+} from '@nestjs/swagger';
 import { Public } from 'src/auth/decorators/public.decorator';
 import { AddNewUserUseCase } from './application/usecases/add-new-user.usecase';
 import { FindGYMUsersUseCase } from './application/usecases/find-gym-users.usecase';
 import { AddNewUserDto } from './application/dto/add-new-user.dto';
+import { GYMUserResponseDTO } from './application/dto/response/gym-user-response.dto';
 
-@ApiSecurity("api_key")
+@ApiSecurity('api_key')
 @ApiBearerAuth()
-@ApiTags("GYMs")
+@ApiTags('GYMs')
 @Controller('gyms')
 export class GymsController {
   constructor(
@@ -26,8 +48,8 @@ export class GymsController {
     private readonly deleteGymUseCase: DeleteGymUseCase,
     private readonly getGymWithPlansUseCase: GetGymWithPlansUseCase,
     private readonly addNewUserUseCase: AddNewUserUseCase,
-    private readonly findGYMUsersUseCase: FindGYMUsersUseCase
-  ) { }
+    private readonly findGYMUsersUseCase: FindGYMUsersUseCase,
+  ) {}
 
   @UseInterceptors(AddUUIDInterceptor)
   @Post()
@@ -49,7 +71,10 @@ export class GymsController {
 
   @UseInterceptors(FindRegistryInterceptor<IGym>)
   @Patch(':id')
-  update(@Param('id', ParseUUIDPipe) id: string, @Body() updateGymDto: UpdateGymDto) {
+  update(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() updateGymDto: UpdateGymDto,
+  ) {
     return this.updateGymUseCase.run(id, updateGymDto);
   }
 
@@ -66,21 +91,25 @@ export class GymsController {
     return this.getGymWithPlansUseCase.run(id);
   }
 
-  @UseInterceptors(FindRegistryInterceptor<IGym>)
-  @Patch(":id/activate")
-  activate(@Param("id", ParseUUIDPipe) id: string) {
-
-  }
+  // @UseInterceptors(FindRegistryInterceptor<IGym>)
+  // @Patch(':id/activate')
+  // activate(@Param('id', ParseUUIDPipe) id: string) {}
 
   @UseInterceptors(FindRegistryInterceptor<IGym>)
-  @Post(":id/users")
-  addNewUser(@Body() addNewUserDto: AddNewUserDto) {
+  @ApiResponse({
+    status: HttpStatus.CREATED,
+    type: GYMUserResponseDTO,
+  })
+  @Post(':id/users')
+  addNewUser(
+    @Body() addNewUserDto: AddNewUserDto,
+  ): Promise<GYMUserResponseDTO> {
     return this.addNewUserUseCase.run(addNewUserDto);
   }
 
   @UseInterceptors(FindRegistryInterceptor<IGym>)
-  @Get(":id/users")
-  getUsers(@Param("id", ParseUUIDPipe) gymId: string) {
+  @Get(':id/users')
+  getUsers(@Param('id', ParseUUIDPipe) gymId: string) {
     return this.findGYMUsersUseCase.run(gymId);
   }
 }

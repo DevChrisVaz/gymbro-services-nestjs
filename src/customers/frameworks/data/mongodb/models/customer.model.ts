@@ -1,18 +1,14 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Type } from 'class-transformer';
 import { Customer } from 'src/customers/domain/entities/customer.entity';
+import { UserModel } from 'src/users/frameworks/data/mogodb/models/user.model';
 
 export type CustomerDocument = CustomerModel & Document;
 
-@Schema({ timestamps: true })
+@Schema()
 export class CustomerModel implements Customer {
   @Prop({ required: true, unique: true })
-  uuid: string;
-
-  @Prop({ required: true })
-  firstName: string;
-
-  @Prop({ required: true })
-  lastName: string;
+  user: string;
 
   @Prop({ required: true, unique: true })
   email: string;
@@ -23,23 +19,23 @@ export class CustomerModel implements Customer {
   @Prop({ required: true })
   birthdate: Date;
 
-  @Prop({ required: true })
-  password: string;
-
   @Prop()
   usedPasswords: string[];
 
   @Prop()
   profilePicture: string;
 
-  @Prop()
-  tokens: string[];
-
-  @Prop({ default: 'UNVERIFIED' })
-  status: string;
-
-  createdAt: string;
-  updatedAt: string;
+  @Type(() => UserModel)
+  userRef: UserModel;
 }
 
-export const CustomerSchema = SchemaFactory.createForClass(CustomerModel);
+const CustomerSchema = SchemaFactory.createForClass(CustomerModel);
+
+CustomerSchema.virtual('userRef', {
+  ref: 'UserModel',
+  localField: 'user',
+  foreignField: 'uuid',
+  justOne: true,
+});
+
+export { CustomerSchema };

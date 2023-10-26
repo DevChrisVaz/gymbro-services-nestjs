@@ -3,7 +3,7 @@ import { ConfigService } from '@nestjs/config';
 
 export default () => ({
   apiKey: process.env.APIKEY,
-  secret: process.env.SECRET
+  secret: process.env.SECRET,
 });
 
 export const configProviders: Provider[] = [

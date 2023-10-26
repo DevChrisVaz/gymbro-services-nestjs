@@ -3,7 +3,6 @@ import { IsNotEmpty, IsString, ValidateNested } from 'class-validator';
 import { AddNewUserDto } from './add-new-user.dto';
 
 export class CreateGymDto {
-
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
@@ -15,10 +14,9 @@ export class CreateGymDto {
   description: string;
 
   @ApiProperty({
-    type: AddNewUserDto 
+    type: AddNewUserDto,
   })
   @IsNotEmpty()
   @ValidateNested()
-  user: AddNewUserDto
-
+  user: AddNewUserDto;
 }

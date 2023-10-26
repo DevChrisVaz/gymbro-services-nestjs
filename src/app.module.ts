@@ -23,7 +23,7 @@ import { PermitionsModule } from './permitions/permitions.module';
     PlansModule,
     BranchesModule,
     AddressesModule,
-    PermitionsModule
+    PermitionsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

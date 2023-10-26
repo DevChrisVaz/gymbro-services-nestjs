@@ -33,7 +33,7 @@ export class AuthGuard implements CanActivate {
 
     const request = context.switchToHttp().getRequest();
     const token = this.extractTokenFromHeader(request);
-    
+
     if (!token) {
       const apikey = this.extractApiKeyFromHeader(request);
       if (apikey) {
@@ -48,16 +48,18 @@ export class AuthGuard implements CanActivate {
       request.user = payload;
       return true;
     } catch {
-      console.log(request.cookies.token)
-      if(!request.cookies.token) throw new UnauthorizedException();
-      const tokens: ITokens = await this.refreshTokenUseCase.run({ accessToken: token, refreshToken: request.cookies.token });
+      if (!request.cookies.token) throw new UnauthorizedException();
+      const tokens: ITokens = await this.refreshTokenUseCase.run({
+        accessToken: token,
+        refreshToken: request.cookies.token,
+      });
       const response = context.switchToHttp().getResponse();
       const cookieOptions: CookieOptions = {
-        httpOnly: true, 
-        secure: true, 
-        sameSite: 'none', 
+        httpOnly: true,
+        secure: true,
+        sameSite: 'none',
         maxAge: 7 * 24 * 60 * 60,
-        path: '/token', 
+        path: '/token',
       };
       request.user = this.jwtService.decode(tokens.accessToken);
       response.cookie('token', tokens.refreshToken, cookieOptions);
@@ -67,7 +69,7 @@ export class AuthGuard implements CanActivate {
 
   private extractTokenFromHeader(request: Request): string | undefined {
     const [type, token] = request.headers.authorization?.split(' ') ?? [];
-    return type === 'bearer' ? token : undefined;
+    return type === 'Bearer' ? token : undefined;
   }
 
   private extractApiKeyFromHeader(request: Request): string | undefined {

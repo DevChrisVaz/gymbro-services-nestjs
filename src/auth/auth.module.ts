@@ -21,7 +21,7 @@ import { RolesGuard } from '../permitions/guards/roles.guard';
       secret: jwtConstants.secret,
     }),
     DatabaseModule,
-    EncryptionModule
+    EncryptionModule,
   ],
   controllers: [AuthController],
   providers: [

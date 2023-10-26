@@ -4,7 +4,11 @@ import { UpdateGymDto } from './application/dto/update-gym.dto';
 import { plainToInstance } from 'class-transformer';
 import { Gym, SerializedGym } from './domain/entities/gym.entity';
 import { AddNewUserDto } from './application/dto/add-new-user.dto';
-import { GYMUser, IGYMUser, SerializedGYMUser } from './domain/entities/gym-user.entity';
+import {
+  GYMUser,
+  IGYMUser,
+  SerializedGYMUser,
+} from './domain/entities/gym-user.entity';
 
 @Injectable()
 export class GymsService {

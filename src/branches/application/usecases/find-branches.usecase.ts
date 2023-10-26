@@ -7,9 +7,7 @@ export class FindBranchesUseCase {
   constructor(private dataServices: DatabaseServicesContract) {}
 
   async run(): Promise<IBranch[]> {
-    const foundBranches: IBranch[] = await this.dataServices.branches.find(
-      {},
-    );
+    const foundBranches: IBranch[] = await this.dataServices.branches.find({});
     return foundBranches;
   }
 }

@@ -1,21 +1,30 @@
-import { Injectable } from "@nestjs/common";
-import { GYMUserResponseDTO } from "../dto/response/gym-user-response.dto";
-import { GymsService } from "src/gyms/gyms.service";
-import { UsersService } from "src/users/users.service";
-import { DatabaseServicesContract } from "src/database/domain/contracts/database-services.contract";
-import { IGYMUser } from "src/gyms/domain/entities/gym-user.entity";
+import { Injectable } from '@nestjs/common';
+import { GYMUserResponseDTO } from '../dto/response/gym-user-response.dto';
+import { DatabaseServicesContract } from 'src/database/domain/contracts/database-services.contract';
+import { IGYMUser } from 'src/gyms/domain/entities/gym-user.entity';
+import { IUser } from 'src/users/domain/entities/User';
 
 @Injectable()
 export class FindGYMUsersUseCase {
-    constructor(
-        private readonly databaseServices: DatabaseServicesContract,
-        private readonly gymsService: GymsService,
-        private readonly usersService: UsersService,
-    ) {}
+  constructor(private readonly databaseServices: DatabaseServicesContract) {}
 
-    async run(gymId: string): Promise<GYMUserResponseDTO[]> {
-        const foundGYMUsers: IGYMUser[] = await this.databaseServices.GYMUsers.find({ gym: gymId });
-        console.log(foundGYMUsers);
-        throw new Error();
-    }
+  async run(gymId: string): Promise<GYMUserResponseDTO[]> {
+    const foundGYMUsers: IGYMUser[] = await this.databaseServices.GYMUsers.find(
+      { gym: gymId },
+    );
+    return foundGYMUsers.map((gymUser) => {
+      let foundUser: IUser;
+
+      this.databaseServices.users
+        .findOne({ uuid: gymUser.user })
+        .then((user) => {
+          foundUser = user;
+        });
+
+      return new GYMUserResponseDTO({
+        ...foundUser,
+        ...gymUser,
+      });
+    });
+  }
 }

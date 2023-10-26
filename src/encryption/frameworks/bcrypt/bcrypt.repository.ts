@@ -3,7 +3,7 @@ import * as bcrypt from 'bcrypt';
 import { Inject } from '@nestjs/common';
 
 export class BCryptRepository implements DataHashingContract {
-  constructor(@Inject('SALT') private readonly salt: number) { }
+  constructor(@Inject('SALT') private readonly salt: number) {}
 
   hash(data: string): Promise<string> {
     return bcrypt.hash(data, this.salt);

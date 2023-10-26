@@ -2,7 +2,6 @@ import { ApiHideProperty, ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsNumber, IsString, IsUUID } from 'class-validator';
 
 export class CreatePlanDto {
-
   @ApiHideProperty()
   @IsNotEmpty()
   @IsUUID()

@@ -1,4 +1,4 @@
-import { ITimestamps } from "src/database/domain/entities/ITimestamps";
+import { ITimestamps } from 'src/database/domain/entities/ITimestamps';
 
 export interface IBranch extends ITimestamps {
   uuid: string;
@@ -6,10 +6,10 @@ export interface IBranch extends ITimestamps {
   address: string;
   phone: string;
   email: string;
-  socialMedia?: [string]
-  operatingHours?: [string]
-  policies?: [string]
-  rules?: [string]
+  socialMedia?: [string];
+  operatingHours?: [string];
+  policies?: [string];
+  rules?: [string];
   gym: string;
   logo: string;
   status: string;
@@ -28,8 +28,8 @@ export class Branch implements IBranch {
   gym: string;
   logo: string;
   status: string;
-  createdAt: string;
-  updatedAt: string;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export class SerializedBranch extends Branch {

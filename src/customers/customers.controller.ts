@@ -1,65 +1,112 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, Request, Req } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UseInterceptors,
+  Request,
+} from '@nestjs/common';
 import { CreateCustomerDto, UpdateCustomerDto } from './application/dto';
-import { CreateCustomerUseCase, DeleteCustomerUseCase, FindCustomersUseCase, GetCustomerProfileUseCase, GetCustomerSubscriptionsUseCase, UpdateCustomerUseCase } from './application/usecases';
+import {
+  CreateCustomerUseCase,
+  DeleteCustomerUseCase,
+  FindCustomersUseCase,
+  GetCustomerProfileUseCase,
+  GetCustomerSubscriptionsUseCase,
+  UpdateCustomerUseCase,
+} from './application/usecases';
 import { AddUUIDInterceptor } from 'src/core/interceptors/add-uuid.interceptor';
 import { FindOneUseCaseContract } from 'src/core/contracts/usecase.contract';
-import { ICustomer } from './domain/entities/customer.entity';
 import { FindRegistryInterceptor } from 'src/core/interceptors/find-registry.interceptor';
-import { ApiBearerAuth, ApiCreatedResponse, ApiSecurity, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiCreatedResponse,
+  ApiOkResponse,
+  ApiSecurity,
+  ApiTags,
+} from '@nestjs/swagger';
 import { Public } from 'src/auth/decorators/public.decorator';
+import { CustomerResponseDTO } from './application/dto/response/customer-response.dto';
 
-@ApiSecurity("api_key")
+@ApiSecurity('api_key')
 @ApiBearerAuth()
-@ApiTags("Customers")
+@ApiTags('Customers')
 @Controller('customers')
 export class CustomersController {
   constructor(
     private readonly createCustomerUseCase: CreateCustomerUseCase,
     private readonly findCustomersUseCase: FindCustomersUseCase,
-    private readonly findCustomerUseCase: FindOneUseCaseContract<ICustomer>,
+    private readonly findCustomerUseCase: FindOneUseCaseContract<
+      Promise<CustomerResponseDTO>
+    >,
     private readonly updateCustomerUseCase: UpdateCustomerUseCase,
     private readonly deleteCustomerUseCase: DeleteCustomerUseCase,
     private readonly getCustomerProfileUseCase: GetCustomerProfileUseCase,
-    private readonly getCustomerSubscriptionsUseCase: GetCustomerSubscriptionsUseCase
+    private readonly getCustomerSubscriptionsUseCase: GetCustomerSubscriptionsUseCase,
   ) {}
 
-  @ApiCreatedResponse()
+  // @ApiOperation({
+  //   summary: "Register a customer for mobile application access"
+  // })
   @Public()
   @UseInterceptors(AddUUIDInterceptor)
-  @Post("register")
+  @Post('register')
+  @ApiCreatedResponse({
+    type: CustomerResponseDTO,
+  })
   create(@Body() createCustomerDto: CreateCustomerDto) {
     return this.createCustomerUseCase.run(createCustomerDto);
   }
 
   @Get()
+  @ApiOkResponse({
+    type: CustomerResponseDTO,
+    isArray: true,
+  })
   findAll() {
     return this.findCustomersUseCase.run();
   }
 
   @Get('profile')
+  @ApiOkResponse({
+    type: CustomerResponseDTO,
+  })
   getProfile(@Request() req) {
     return this.getCustomerProfileUseCase.run(req.user.email);
   }
 
+  @Get('subscriptions')
+  getSubscriptions(@Request() req) {
+    return this.getCustomerSubscriptionsUseCase.run(req.user.id);
+  }
+
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  @ApiOkResponse({
+    type: CustomerResponseDTO,
+  })
+  findOne(@Param('id') id: string): Promise<CustomerResponseDTO> {
     return this.findCustomerUseCase.run(id);
   }
 
-  @UseInterceptors(FindRegistryInterceptor<ICustomer>)
+  @UseInterceptors(FindRegistryInterceptor<Promise<CustomerResponseDTO>>)
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateCustomerDto: UpdateCustomerDto) {
+  @ApiOkResponse({
+    type: CustomerResponseDTO,
+  })
+  update(
+    @Param('id') id: string,
+    @Body() updateCustomerDto: UpdateCustomerDto,
+  ) {
     return this.updateCustomerUseCase.run(id, updateCustomerDto);
   }
 
-  @UseInterceptors(FindRegistryInterceptor<ICustomer>)
+  @UseInterceptors(FindRegistryInterceptor<Promise<CustomerResponseDTO>>)
   @Delete(':id')
+  @ApiOkResponse()
   remove(@Param('id') id: string) {
     return this.deleteCustomerUseCase.run(id);
-  }
-
-  @Get(':id/subscriptions')
-  getSubscriptions(@Param('id') id: string) {
-    return this.getCustomerSubscriptionsUseCase.run(id);
   }
 }

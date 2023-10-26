@@ -1,5 +1,4 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { now } from 'mongoose';
 import { IPlan } from 'src/plans/domain/entities/plan.entity';
 
 export type PlanDocument = PlanModel & Document;

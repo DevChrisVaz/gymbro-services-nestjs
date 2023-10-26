@@ -3,14 +3,19 @@ import { CustomersService } from './customers.service';
 import { CustomersController } from './customers.controller';
 import { DatabaseModule } from 'src/database/database.module';
 import { useCaseProviders } from './application/usecases/providers';
-import { CreateCustomerUseCase, DeleteCustomerUseCase, FindCustomersUseCase, GetCustomerProfileUseCase, GetCustomerSubscriptionsUseCase, UpdateCustomerUseCase } from './application/usecases';
+import {
+  CreateCustomerUseCase,
+  DeleteCustomerUseCase,
+  FindCustomersUseCase,
+  GetCustomerProfileUseCase,
+  GetCustomerSubscriptionsUseCase,
+  UpdateCustomerUseCase,
+} from './application/usecases';
 import { EncryptionModule } from 'src/encryption/encryption.module';
+import { UsersModule } from 'src/users/users.module';
 
 @Module({
-  imports: [
-    DatabaseModule,
-    EncryptionModule
-  ],
+  imports: [DatabaseModule, EncryptionModule, UsersModule],
   controllers: [CustomersController],
   providers: [
     CustomersService,
@@ -20,7 +25,7 @@ import { EncryptionModule } from 'src/encryption/encryption.module';
     UpdateCustomerUseCase,
     DeleteCustomerUseCase,
     GetCustomerProfileUseCase,
-    GetCustomerSubscriptionsUseCase
+    GetCustomerSubscriptionsUseCase,
   ],
   exports: [CustomersService],
 })

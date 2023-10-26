@@ -1,32 +1,17 @@
 import { ApiHideProperty, ApiProperty } from '@nestjs/swagger';
-import { Type } from 'class-transformer';
+import { Exclude, Type } from 'class-transformer';
 import {
   IsDate,
   IsEmail,
   IsNotEmpty,
+  IsOptional,
   IsPhoneNumber,
   IsString,
   IsStrongPassword,
-  IsUUID,
 } from 'class-validator';
+import { CreateUserDto } from 'src/users/application/dto';
 
-export class CreateCustomerDto {
-
-  @ApiHideProperty()
-  @IsUUID()
-  @IsNotEmpty()
-  uuid: string;
-
-  @ApiProperty()
-  @IsNotEmpty()
-  @IsString()
-  firstName: string;
-
-  @ApiProperty()
-  @IsNotEmpty()
-  @IsString()
-  lastName: string;
-
+export class CreateCustomerDto extends CreateUserDto {
   @ApiProperty()
   @IsNotEmpty()
   @IsEmail()
@@ -47,4 +32,10 @@ export class CreateCustomerDto {
   @IsNotEmpty()
   @IsDate()
   birthdate: string;
+
+  @ApiHideProperty()
+  @IsString()
+  @IsOptional()
+  @Exclude()
+  override status: string;
 }

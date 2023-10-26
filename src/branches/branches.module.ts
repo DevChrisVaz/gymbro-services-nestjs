@@ -2,12 +2,16 @@ import { Module } from '@nestjs/common';
 import { BranchesService } from './branches.service';
 import { BranchesController } from './branches.controller';
 import { DatabaseModule } from 'src/database/database.module';
-import { CreateBranchUseCase, DeleteBranchUseCase, FindBranchesUseCase, UpdateBranchUseCase, useCaseProviders } from './application/usecases';
+import {
+  CreateBranchUseCase,
+  DeleteBranchUseCase,
+  FindBranchesUseCase,
+  UpdateBranchUseCase,
+  useCaseProviders,
+} from './application/usecases';
 
 @Module({
-  imports: [
-    DatabaseModule
-  ],
+  imports: [DatabaseModule],
   controllers: [BranchesController],
   providers: [
     BranchesService,
@@ -15,8 +19,8 @@ import { CreateBranchUseCase, DeleteBranchUseCase, FindBranchesUseCase, UpdateBr
     FindBranchesUseCase,
     CreateBranchUseCase,
     UpdateBranchUseCase,
-    DeleteBranchUseCase
+    DeleteBranchUseCase,
   ],
-  exports: [BranchesService]
+  exports: [BranchesService],
 })
-export class BranchesModule { }
+export class BranchesModule {}

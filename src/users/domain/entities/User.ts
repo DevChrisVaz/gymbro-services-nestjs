@@ -31,6 +31,9 @@ export class User implements IUser {
 }
 
 export class SerializedUser extends User {
+  @Exclude({ toPlainOnly: true })
+  status: string;
+
   constructor(partial: Partial<SerializedUser>) {
     super();
     Object.assign(this, partial);

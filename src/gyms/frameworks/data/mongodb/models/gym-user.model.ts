@@ -6,36 +6,34 @@ import { UserModel } from 'src/users/frameworks/data/mogodb/models/user.model';
 
 export type GYMUserDocument = GYMUserModel & Document;
 
-@Schema({
-    virtuals: true
-})
+@Schema()
 export class GYMUserModel implements IGYMUser {
-    @Prop({ required: true, unique: true })
-    user: string;
+  @Prop({ required: true, unique: true })
+  user: string;
 
-    @Prop({ required: true, unique: true })
-    userName: string;
+  @Prop({ required: true, unique: true })
+  userName: string;
 
-    @Prop([String])
-    usedPasswords: string[];
+  @Prop([String])
+  usedPasswords: string[];
 
-    @Prop({ required: true, default: "ADMIN" })
-    rol: string;
+  @Prop({ required: true, default: 'ADMIN' })
+  rol: string;
 
-    @Prop({ required: true })
-    gym: string;
+  @Prop({ required: true })
+  gym: string;
 
-    @Type(() => UserModel)
-    userRef: UserModel
+  @Type(() => UserModel)
+  userRef: UserModel;
 }
 
 const GYMUserSchema = SchemaFactory.createForClass(GYMUserModel);
 
-GYMUserSchema.virtual("userRef", {
-    ref: "UserModel",
-    localField: "user",
-    foreignField: "uuid",
-    justOne: true
+GYMUserSchema.virtual('userRef', {
+  ref: 'UserModel',
+  localField: 'user',
+  foreignField: 'uuid',
+  justOne: true,
 });
 
-export { GYMUserSchema }
+export { GYMUserSchema };

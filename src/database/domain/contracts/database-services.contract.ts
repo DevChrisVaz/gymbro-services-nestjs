@@ -8,13 +8,13 @@ import { IPlan } from 'src/plans/domain/entities/plan.entity';
 import { ISubscription } from 'src/subscriptions/domain/entities/subscription.entity';
 import { IBranch } from 'src/branches/domain/entities/branch.entity';
 import { IAddress } from 'src/addresses/domain/entities/address.entity';
-import { IPermition } from 'src/permitions/domain/entities/permition.entity';
+import { IBranchPermition } from 'src/permitions/domain/entities/branch-permition.entity';
 import { IGYMUser } from 'src/gyms/domain/entities/gym-user.entity';
 
 export abstract class DatabaseServicesContract {
   abstract users: RepositoryContract<User>;
   abstract gyms: RepositoryContract<IGym>;
-  abstract GYMUsers: RepositoryContract<IGYMUser>
+  abstract GYMUsers: RepositoryContract<IGYMUser>;
   abstract customers: RepositoryContract<Customer>;
   abstract tokens: RepositoryContract<TokenContract>;
   abstract auth: RepositoryContract<IAuth>;
@@ -22,5 +22,5 @@ export abstract class DatabaseServicesContract {
   abstract subscriptions: RepositoryContract<ISubscription>;
   abstract branches: RepositoryContract<IBranch>;
   abstract addresses: RepositoryContract<IAddress>;
-  abstract permitions: RepositoryContract<IPermition>
+  abstract permitions: RepositoryContract<IBranchPermition>;
 }

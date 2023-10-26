@@ -1,9 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Exclude } from 'class-transformer';
-import { IGYMUser } from 'src/gyms/domain/entities/gym-user.entity';
+import { ICustomer } from 'src/customers/domain/entities/customer.entity';
 import { IUser } from 'src/users/domain/entities/User';
 
-export class GYMUserResponseDTO implements IUser, IGYMUser {
+export class CustomerResponseDTO implements IUser, ICustomer {
   @Exclude()
   _id?: string;
 
@@ -13,19 +13,19 @@ export class GYMUserResponseDTO implements IUser, IGYMUser {
   @Exclude()
   user: string;
 
+  @ApiProperty()
+  email: string;
+
+  @ApiProperty()
+  phone: string;
+
+  @ApiProperty()
+  birthdate: Date;
+
   @Exclude()
   usedPasswords: string[];
 
   @ApiProperty()
-  userName: string;
-
-  @ApiProperty()
-  gym: string;
-
-  @ApiProperty()
-  rol: string;
-
-  @Exclude()
   uuid: string;
 
   @ApiProperty()
@@ -40,13 +40,16 @@ export class GYMUserResponseDTO implements IUser, IGYMUser {
   @Exclude()
   status: string;
 
+  @Exclude()
+  userRef?: IUser;
+
   @ApiProperty()
   createdAt?: string;
 
   @ApiProperty()
   updatedAt?: string;
 
-  constructor(partial: Partial<GYMUserResponseDTO>) {
+  constructor(partial: Partial<CustomerResponseDTO>) {
     Object.assign(this, partial);
   }
 }

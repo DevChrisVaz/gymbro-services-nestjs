@@ -9,12 +9,14 @@ export class UpdateBranchUseCase {
   constructor(
     private readonly branchesService: BranchesService,
     private dataServices: DatabaseServicesContract,
-  ) { }
+  ) {}
 
   async run(uuid: string, dto: UpdateBranchDto): Promise<IBranch> {
     const dataToUpdate = this.branchesService.mapDtoToBranch(dto);
-    const updatedBranch: IBranch =
-      await this.dataServices.branches.update(uuid, dataToUpdate);
+    const updatedBranch: IBranch = await this.dataServices.branches.update(
+      uuid,
+      dataToUpdate,
+    );
     return this.branchesService.serializeBranch(updatedBranch);
   }
 }

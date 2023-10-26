@@ -1,6 +1,20 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UseInterceptors,
+} from '@nestjs/common';
 import { CreatePlanDto, UpdatePlanDto } from './application/dto';
-import { CreatePlanUseCase, DeletePlanUseCase, FindPlansUseCase, UpdatePlanUseCase } from './application/usecases';
+import {
+  CreatePlanUseCase,
+  DeletePlanUseCase,
+  FindPlansUseCase,
+  UpdatePlanUseCase,
+} from './application/usecases';
 import { AddUUIDInterceptor } from 'src/core/interceptors/add-uuid.interceptor';
 import { FindRegistryInterceptor } from 'src/core/interceptors/find-registry.interceptor';
 import { IPlan } from './domain/entities/plan.entity';
@@ -8,9 +22,9 @@ import { FindOneUseCaseContract } from 'src/core/contracts/usecase.contract';
 import { ApiBearerAuth, ApiSecurity, ApiTags } from '@nestjs/swagger';
 import { Public } from 'src/auth/decorators/public.decorator';
 
-@ApiSecurity("api_key")
+@ApiSecurity('api_key')
 @ApiBearerAuth()
-@ApiTags("Plans")
+@ApiTags('Plans')
 @Controller('plans')
 export class PlansController {
   constructor(
@@ -18,7 +32,7 @@ export class PlansController {
     private readonly findPlanUseCase: FindOneUseCaseContract<IPlan>,
     private readonly findPlansUseCase: FindPlansUseCase,
     private readonly updatePlanUseCase: UpdatePlanUseCase,
-    private readonly deletePlanUseCase: DeletePlanUseCase
+    private readonly deletePlanUseCase: DeletePlanUseCase,
   ) {}
 
   @UseInterceptors(AddUUIDInterceptor)

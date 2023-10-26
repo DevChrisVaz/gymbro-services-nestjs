@@ -1,9 +1,18 @@
-import { ApiHideProperty, ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IsNotEmpty, IsOptional, IsString, IsStrongPassword, IsUUID } from 'class-validator';
+import {
+  ApiHideProperty,
+  ApiProperty,
+  ApiPropertyOptional,
+} from '@nestjs/swagger';
+import {
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  IsStrongPassword,
+  IsUUID,
+} from 'class-validator';
 import { CreateUserDto } from 'src/users/application/dto';
 
 export class AddNewUserDto extends CreateUserDto {
-
   @ApiHideProperty()
   @IsUUID()
   @IsNotEmpty()
@@ -28,5 +37,4 @@ export class AddNewUserDto extends CreateUserDto {
   @IsUUID()
   @IsNotEmpty()
   gym: string;
-
 }

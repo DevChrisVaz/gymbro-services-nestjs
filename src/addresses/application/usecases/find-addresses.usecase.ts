@@ -7,11 +7,15 @@ import { DatabaseServicesContract } from 'src/database/domain/contracts/database
 export class FindAddressesUseCase {
   constructor(
     private dataServices: DatabaseServicesContract,
-    private addressesService: AddressesService
-  ) { }
+    private addressesService: AddressesService,
+  ) {}
 
   async run(): Promise<IAddress[]> {
-    const foundAddresses: IAddress[] = await this.dataServices.addresses.find({});
-    return foundAddresses.map((address) => this.addressesService.serializeAddress(address));
+    const foundAddresses: IAddress[] = await this.dataServices.addresses.find(
+      {},
+    );
+    return foundAddresses.map((address) =>
+      this.addressesService.serializeAddress(address),
+    );
   }
 }

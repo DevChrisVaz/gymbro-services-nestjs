@@ -7,7 +7,7 @@ import { DatabaseServicesContract } from 'src/database/domain/contracts/database
 export class DeleteAddressUseCase {
   constructor(
     private dataServices: DatabaseServicesContract,
-    private readonly addressesService: AddressesService
+    private readonly addressesService: AddressesService,
   ) {}
 
   async run(id: string): Promise<IAddress> {

@@ -18,7 +18,7 @@ import { FindGYMUsersUseCase } from './application/usecases/find-gym-users.useca
   imports: [
     DatabaseModule,
     UsersModule,
-    EncryptionModule
+    EncryptionModule,
     // MailingModule
   ],
   controllers: [GymsController],
@@ -32,7 +32,7 @@ import { FindGYMUsersUseCase } from './application/usecases/find-gym-users.useca
     GetGymWithPlansUseCase,
     AddNewUserUseCase,
     CreateGymUseCase,
-    FindGYMUsersUseCase
+    FindGYMUsersUseCase,
   ],
 })
 export class GymsModule {}

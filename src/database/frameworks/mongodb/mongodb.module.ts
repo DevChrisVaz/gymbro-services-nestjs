@@ -32,10 +32,22 @@ import {
   SubscriptionModel,
   SubscriptionSchema,
 } from 'src/subscriptions/frameworks/data/mongodb/models/subscription.model';
-import { BranchModel, BranchSchema } from 'src/branches/frameworks/data/mongodb/models/branch.model';
-import { AddressModel, AddressSchema } from 'src/addresses/frameworks/data/mongodb/models/address.model';
-import { PermitionModel, PermitionSchema } from 'src/permitions/frameworks/data/mongodb/models/permition.model';
-import { GYMUserModel, GYMUserSchema } from 'src/gyms/frameworks/data/mongodb/models/gym-user.model';
+import {
+  BranchModel,
+  BranchSchema,
+} from 'src/branches/frameworks/data/mongodb/models/branch.model';
+import {
+  AddressModel,
+  AddressSchema,
+} from 'src/addresses/frameworks/data/mongodb/models/address.model';
+import {
+  BranchPermitionModel,
+  BranchPermitionSchema,
+} from 'src/permitions/frameworks/data/mongodb/models/branch-permition.model';
+import {
+  GYMUserModel,
+  GYMUserSchema,
+} from 'src/gyms/frameworks/data/mongodb/models/gym-user.model';
 
 @Module({
   imports: [
@@ -51,7 +63,7 @@ import { GYMUserModel, GYMUserSchema } from 'src/gyms/frameworks/data/mongodb/mo
       { name: SubscriptionModel.name, schema: SubscriptionSchema },
       { name: BranchModel.name, schema: BranchSchema },
       { name: AddressModel.name, schema: AddressSchema },
-      { name: PermitionModel.name, schema: PermitionSchema }
+      { name: BranchPermitionModel.name, schema: BranchPermitionSchema },
     ]),
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
@@ -69,4 +81,4 @@ import { GYMUserModel, GYMUserSchema } from 'src/gyms/frameworks/data/mongodb/mo
   ],
   exports: [DatabaseServicesContract],
 })
-export class MongoDBModule {}
+export class MongoDBModule { }

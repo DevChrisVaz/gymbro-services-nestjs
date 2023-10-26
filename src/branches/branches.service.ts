@@ -2,7 +2,11 @@ import { Injectable } from '@nestjs/common';
 import { CreateBranchDto } from './application/dto/create-branch.dto';
 import { UpdateBranchDto } from './application/dto/update-branch.dto';
 import { plainToInstance } from 'class-transformer';
-import { Branch, IBranch, SerializedBranch } from './domain/entities/branch.entity';
+import {
+  Branch,
+  IBranch,
+  SerializedBranch,
+} from './domain/entities/branch.entity';
 
 @Injectable()
 export class BranchesService {

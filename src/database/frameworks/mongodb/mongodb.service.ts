@@ -41,17 +41,29 @@ import {
 } from 'src/plans/frameworks/data/mongodb/models/plan.model';
 import { PlanRepositoryImpl } from 'src/plans/frameworks/data/mongodb/plan.repository';
 import { SubscriptionRepositoryImpl } from 'src/subscriptions/frameworks/data/mongodb/subscription.repository';
-import { BranchDocument, BranchModel } from 'src/branches/frameworks/data/mongodb/models/branch.model';
+import {
+  BranchDocument,
+  BranchModel,
+} from 'src/branches/frameworks/data/mongodb/models/branch.model';
 import { BranchRepositoryImpl } from 'src/branches/frameworks/data/mongodb/branch.repository';
 import { IBranch } from 'src/branches/domain/entities/branch.entity';
 import { IAddress } from 'src/addresses/domain/entities/address.entity';
-import { AddressDocument, AddressModel } from 'src/addresses/frameworks/data/mongodb/models/address.model';
+import {
+  AddressDocument,
+  AddressModel,
+} from 'src/addresses/frameworks/data/mongodb/models/address.model';
 import { AddressRepositoryImpl } from 'src/addresses/frameworks/data/mongodb/address.repository';
-import { IPermition } from 'src/permitions/domain/entities/permition.entity';
-import { PermitionDocument, PermitionModel } from 'src/permitions/frameworks/data/mongodb/models/permition.model';
-import { PermitionRepositoryImpl } from 'src/permitions/frameworks/data/mongodb/permition.repository';
+import { IBranchPermition } from 'src/permitions/domain/entities/branch-permition.entity';
+import {
+  BranchPermitionDocument,
+  BranchPermitionModel,
+} from 'src/permitions/frameworks/data/mongodb/models/branch-permition.model';
+import { BranchPermitionRepositoryImpl } from 'src/permitions/frameworks/data/mongodb/branch-permition.repository';
 import { GYMUserRepositoryContract } from 'src/gyms/domain/repositories/gym-user.repository';
-import { GYMUserDocument, GYMUserModel } from 'src/gyms/frameworks/data/mongodb/models/gym-user.model';
+import {
+  GYMUserDocument,
+  GYMUserModel,
+} from 'src/gyms/frameworks/data/mongodb/models/gym-user.model';
 import { GYMUserRepositoryImpl } from 'src/gyms/frameworks/data/mongodb/gym-user.repository';
 
 @Injectable()
@@ -68,7 +80,7 @@ export class MongoDBServices
   subscriptions: RepositoryContract<ISubscription>;
   branches: RepositoryContract<IBranch>;
   addresses: RepositoryContract<IAddress>;
-  permitions: RepositoryContract<IPermition>;
+  permitions: RepositoryContract<IBranchPermition>;
 
   constructor(
     @InjectModel(UserModel.name)
@@ -91,14 +103,14 @@ export class MongoDBServices
     private branchRepository: Model<BranchDocument>,
     @InjectModel(AddressModel.name)
     private addressRepository: Model<AddressDocument>,
-    @InjectModel(PermitionModel.name)
-    private permitionRepository: Model<PermitionDocument>
+    @InjectModel(BranchPermitionModel.name)
+    private permitionRepository: Model<BranchPermitionDocument>,
   ) {}
 
   onApplicationBootstrap() {
     this.users = new UserRepositoryImpl(this.userRepository);
     this.gyms = new GymRepositoryImpl(this.gymRepository);
-    this.GYMUsers = new GYMUserRepositoryImpl(this.GYMUserRepository, ["useRef"])
+    this.GYMUsers = new GYMUserRepositoryImpl(this.GYMUserRepository);
     this.customers = new CustomerRepositoryImpl(this.customerRepository);
     this.tokens = new TokenRepository(this.tokenRepository);
     this.auth = new AuthRepositoryImpl(this.authRepository);
@@ -106,14 +118,8 @@ export class MongoDBServices
     this.subscriptions = new SubscriptionRepositoryImpl(
       this.subscriptionRepository,
     );
-    this.branches = new BranchRepositoryImpl(
-      this.branchRepository
-    );
-    this.addresses = new AddressRepositoryImpl(
-      this.addressRepository
-    );
-    this.permitions = new PermitionRepositoryImpl(
-      this.permitionRepository
-    )
+    this.branches = new BranchRepositoryImpl(this.branchRepository);
+    this.addresses = new AddressRepositoryImpl(this.addressRepository);
+    this.permitions = new BranchPermitionRepositoryImpl(this.permitionRepository);
   }
 }
