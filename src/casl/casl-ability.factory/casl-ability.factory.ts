@@ -39,9 +39,7 @@ export class CaslAbilityFactory {
             if (permition.rol === BranchRole.MANAGER) {
                 can(Action.Manage, 'all');
             }
-        } else {
-            cannot(Action.Manage, 'all');
-        }
+        } 
 
         return build({
             // Read https://casl.js.org/v6/en/guide/subject-type-detection#use-classes-as-subject-types for details

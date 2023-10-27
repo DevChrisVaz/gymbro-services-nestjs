@@ -12,6 +12,7 @@ import { CookieOptions, Request } from 'express';
 import { RefreshSessionUseCase } from '../application/usecases/refresh-session.usecase';
 import { ITokens } from '../domain/entities/tokens';
 import { IS_PUBLIC_KEY } from '../decorators/public.decorator';
+import { DatabaseServicesContract } from 'src/database/domain/contracts/database-services.contract';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -19,8 +20,9 @@ export class AuthGuard implements CanActivate {
     private jwtService: JwtService,
     private reflector: Reflector,
     private refreshTokenUseCase: RefreshSessionUseCase,
+    private readonly databaseServices: DatabaseServicesContract,
     @Inject('APIKEY') private apiKey: string,
-  ) {}
+  ) { }
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const isPublic = this.reflector.getAllAndOverride<boolean>(IS_PUBLIC_KEY, [
@@ -46,6 +48,13 @@ export class AuthGuard implements CanActivate {
     try {
       const payload = await this.jwtService.verifyAsync(token);
       request.user = payload;
+
+      if (payload.gym) {
+        request.user.permitions = await this.databaseServices.branchPermitions.find({
+          user: request.user.id
+        });
+      }
+
       return true;
     } catch {
       if (!request.cookies.token) throw new UnauthorizedException();

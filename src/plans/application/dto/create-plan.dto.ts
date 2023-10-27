@@ -17,7 +17,7 @@ export class CreatePlanDto {
   @IsString()
   description: string;
 
-  @ApiProperty()
+  @ApiProperty({description: "in days"})
   @IsNotEmpty()
   @IsNumber()
   duration: number;
