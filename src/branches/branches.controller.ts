@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   UseInterceptors,
+  ParseUUIDPipe,
 } from '@nestjs/common';
 import { CreateBranchDto } from './application/dto/create-branch.dto';
 import { UpdateBranchDto } from './application/dto/update-branch.dto';
@@ -22,6 +23,9 @@ import { ApiBearerAuth, ApiSecurity, ApiTags } from '@nestjs/swagger';
 import { FindRegistryInterceptor } from 'src/core/interceptors/find-registry.interceptor';
 import { AddUUIDInterceptor } from 'src/core/interceptors/add-uuid.interceptor';
 import { AddAddressUUIDInterceptor } from 'src/addresses/interceptors/add-address-uuid.interceptor';
+import { Public } from 'src/auth/decorators/public.decorator';
+import { FindPlansByBranchUseCase } from 'src/plans/application/usecases/find-plans-by-branch.usecase';
+import { IPlan } from 'src/plans/domain/entities/plan.entity';
 
 @ApiSecurity('api_key')
 @ApiBearerAuth()
@@ -34,6 +38,7 @@ export class BranchesController {
     private readonly findBranchUseCase: FindOneUseCaseContract<IBranch>,
     private readonly updateBranchUseCase: UpdateBranchUseCase,
     private readonly deleteBranchUseCase: DeleteBranchUseCase,
+    private readonly findPlansByBranchUseCase: FindPlansByBranchUseCase,
   ) {}
 
   @UseInterceptors(AddUUIDInterceptor)
@@ -43,6 +48,7 @@ export class BranchesController {
     return this.createBranchUseCase.run(createBranchDto);
   }
 
+  @Public()
   @Get()
   findAll() {
     return this.findBranchesUseCase.run();
@@ -63,5 +69,14 @@ export class BranchesController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.deleteBranchUseCase.run(id);
+  }
+
+  @Public()
+  @UseInterceptors(FindRegistryInterceptor<IBranch>)
+  @Get(':id/plans')
+  async getPlans(@Param('id', ParseUUIDPipe) id: string) {
+    const branch: IBranch = await this.findBranchUseCase.run(id);
+    const plans: IPlan[] = await this.findPlansByBranchUseCase.run(id);
+    return { ...branch, plans };
   }
 }

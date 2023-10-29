@@ -19,12 +19,11 @@ export class LoginUseCase {
     private dataServices: DatabaseServicesContract,
     private readonly dataHashingService: DataHashingContract,
     private readonly authService: AuthService,
-  ) { }
+  ) {}
 
   async run(
     logInDto: LogInDto,
   ): Promise<{ accessToken: string; refreshToken: string }> {
-
     let accessToken: string,
       refreshToken: string,
       ref: string,
@@ -61,7 +60,6 @@ export class LoginUseCase {
             id: foundCustomer.user,
             firstName: foundUser.firstName,
             lastName: foundUser.lastName,
-            email: foundCustomer.email,
             profilePicture: foundCustomer.profilePicture,
           },
           '2h',
@@ -90,7 +88,6 @@ export class LoginUseCase {
             id: foundUser.uuid,
             firstName: foundUser.firstName,
             lastName: foundUser.lastName,
-            userName: foundGYMUser.userName,
             profilePicture: foundUser.profilePicture,
             gym: foundGYMUser.gym,
           },

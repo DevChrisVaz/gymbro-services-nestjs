@@ -22,9 +22,9 @@ import { IPlan, Plan } from './domain/entities/plan.entity';
 import { FindOneUseCaseContract } from 'src/core/contracts/usecase.contract';
 import { ApiBearerAuth, ApiSecurity, ApiTags } from '@nestjs/swagger';
 import { Public } from 'src/auth/decorators/public.decorator';
-import { CheckAbilities } from 'src/casl/casl-ability.factory/casl-ability.decorator';
-import { Action } from 'src/casl/casl-ability.factory/casl-ability.factory';
+import { CheckAbilities } from 'src/casl/casl-ability/casl-ability.decorator';
 import { AbilitiesGuard } from 'src/casl/guards/abilities.guard';
+import { Action } from 'src/casl/domain/action';
 
 @ApiSecurity('api_key')
 @ApiBearerAuth()

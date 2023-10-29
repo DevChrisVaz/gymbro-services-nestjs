@@ -6,7 +6,6 @@ export type BranchPermitionDocument = BranchPermitionModel & Document;
 
 @Schema()
 export class BranchPermitionModel implements IBranchPermition {
-
   @Prop()
   branch: string;
 
@@ -23,4 +22,5 @@ export class BranchPermitionModel implements IBranchPermition {
   updatedAt: string;
 }
 
-export const BranchPermitionSchema = SchemaFactory.createForClass(BranchPermitionModel);
+export const BranchPermitionSchema =
+  SchemaFactory.createForClass(BranchPermitionModel);

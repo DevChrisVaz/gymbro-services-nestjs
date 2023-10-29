@@ -68,7 +68,8 @@ import { GYMUserRepositoryImpl } from 'src/gyms/frameworks/data/mongodb/gym-user
 
 @Injectable()
 export class MongoDBServices
-  implements DatabaseServicesContract, OnApplicationBootstrap {
+  implements DatabaseServicesContract, OnApplicationBootstrap
+{
   users: UserRepositoryImpl;
   gyms: GymRepositoryImpl;
   GYMUsers: GYMUserRepositoryContract;
@@ -104,7 +105,7 @@ export class MongoDBServices
     private addressRepository: Model<AddressDocument>,
     @InjectModel(BranchPermitionModel.name)
     private branchPermitionRepository: Model<BranchPermitionDocument>,
-  ) { }
+  ) {}
 
   onApplicationBootstrap() {
     this.users = new UserRepositoryImpl(this.userRepository);
@@ -119,6 +120,8 @@ export class MongoDBServices
     );
     this.branches = new BranchRepositoryImpl(this.branchRepository);
     this.addresses = new AddressRepositoryImpl(this.addressRepository);
-    this.branchPermitions = new BranchPermitionRepositoryImpl(this.branchPermitionRepository);
+    this.branchPermitions = new BranchPermitionRepositoryImpl(
+      this.branchPermitionRepository,
+    );
   }
 }

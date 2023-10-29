@@ -9,12 +9,11 @@ import {
   UseInterceptors,
   Request,
 } from '@nestjs/common';
-import { CreateCustomerDto, UpdateCustomerDto } from './application/dto';
+import { CreateCustomerDto /* UpdateCustomerDto */ } from './application/dto';
 import {
   CreateCustomerUseCase,
   DeleteCustomerUseCase,
   FindCustomersUseCase,
-  GetCustomerProfileUseCase,
   GetCustomerSubscriptionsUseCase,
   UpdateCustomerUseCase,
 } from './application/usecases';
@@ -30,6 +29,7 @@ import {
 } from '@nestjs/swagger';
 import { Public } from 'src/auth/decorators/public.decorator';
 import { CustomerResponseDTO } from './application/dto/response/customer-response.dto';
+import { UpdateAddressDto } from 'src/addresses/application/dto/update-address.dto';
 
 @ApiSecurity('api_key')
 @ApiBearerAuth()
@@ -44,7 +44,6 @@ export class CustomersController {
     >,
     private readonly updateCustomerUseCase: UpdateCustomerUseCase,
     private readonly deleteCustomerUseCase: DeleteCustomerUseCase,
-    private readonly getCustomerProfileUseCase: GetCustomerProfileUseCase,
     private readonly getCustomerSubscriptionsUseCase: GetCustomerSubscriptionsUseCase,
   ) {}
 
@@ -75,7 +74,15 @@ export class CustomersController {
     type: CustomerResponseDTO,
   })
   getProfile(@Request() req) {
-    return this.getCustomerProfileUseCase.run(req.user.email);
+    return this.findCustomerUseCase.run(req.user.id);
+  }
+
+  @Patch('profile')
+  @ApiOkResponse({
+    type: CustomerResponseDTO,
+  })
+  updateProfile(@Request() req, @Body() updateCustomerDto: UpdateAddressDto) {
+    return this.updateCustomerUseCase.run(req.user.id, updateCustomerDto);
   }
 
   @Get('subscriptions')
@@ -91,17 +98,17 @@ export class CustomersController {
     return this.findCustomerUseCase.run(id);
   }
 
-  @UseInterceptors(FindRegistryInterceptor<Promise<CustomerResponseDTO>>)
-  @Patch(':id')
-  @ApiOkResponse({
-    type: CustomerResponseDTO,
-  })
-  update(
-    @Param('id') id: string,
-    @Body() updateCustomerDto: UpdateCustomerDto,
-  ) {
-    return this.updateCustomerUseCase.run(id, updateCustomerDto);
-  }
+  // @UseInterceptors(FindRegistryInterceptor<Promise<CustomerResponseDTO>>)
+  // @Patch(':id')
+  // @ApiOkResponse({
+  //   type: CustomerResponseDTO,
+  // })
+  // update(
+  //   @Param('id') id: string,
+  //   @Body() updateCustomerDto: UpdateCustomerDto,
+  // ) {
+  //   return this.updateCustomerUseCase.run(id, updateCustomerDto);
+  // }
 
   @UseInterceptors(FindRegistryInterceptor<Promise<CustomerResponseDTO>>)
   @Delete(':id')

@@ -8,20 +8,20 @@ import { UpdatePlanUseCase } from './application/usecases/update-plan.usecase';
 import { DeletePlanUseCase } from './application/usecases/delete-plan.usecase';
 import { useCaseProviders } from './application/usecases/providers';
 import { CaslModule } from 'src/casl/casl.module';
+import { FindPlansByBranchUseCase } from './application/usecases';
 
 @Module({
-  imports: [
-    DatabaseModule,
-    CaslModule
-  ],
+  imports: [DatabaseModule, CaslModule],
   controllers: [PlansController],
   providers: [
     PlansService,
     ...useCaseProviders,
     FindPlansUseCase,
+    FindPlansByBranchUseCase,
     CreatePlanUseCase,
     UpdatePlanUseCase,
     DeletePlanUseCase,
   ],
+  exports: [FindPlansByBranchUseCase],
 })
 export class PlansModule {}

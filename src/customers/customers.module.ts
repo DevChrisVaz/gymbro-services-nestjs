@@ -7,7 +7,6 @@ import {
   CreateCustomerUseCase,
   DeleteCustomerUseCase,
   FindCustomersUseCase,
-  GetCustomerProfileUseCase,
   GetCustomerSubscriptionsUseCase,
   UpdateCustomerUseCase,
 } from './application/usecases';
@@ -24,7 +23,6 @@ import { UsersModule } from 'src/users/users.module';
     CreateCustomerUseCase,
     UpdateCustomerUseCase,
     DeleteCustomerUseCase,
-    GetCustomerProfileUseCase,
     GetCustomerSubscriptionsUseCase,
   ],
   exports: [CustomersService],

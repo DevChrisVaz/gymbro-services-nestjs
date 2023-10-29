@@ -21,7 +21,7 @@ export class PlanModel implements IPlan {
   price: number;
 
   @Prop()
-  gym: string;
+  branch: string;
 
   @Prop({ required: true, default: 'ACTIVE' })
   status: string;

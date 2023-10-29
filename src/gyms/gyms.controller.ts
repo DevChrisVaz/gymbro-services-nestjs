@@ -22,7 +22,6 @@ import { AddUUIDInterceptor } from 'src/core/interceptors/add-uuid.interceptor';
 import { IGym } from './domain/entities/gym.entity';
 import { FindOneUseCaseContract } from 'src/core/contracts/usecase.contract';
 import { FindRegistryInterceptor } from 'src/core/interceptors/find-registry.interceptor';
-import { GetGymWithPlansUseCase } from './application/usecases/get-gym-with-plans.usecase';
 import {
   ApiBearerAuth,
   ApiResponse,
@@ -47,7 +46,6 @@ export class GymsController {
     private readonly findGymUseCase: FindOneUseCaseContract<IGym>,
     private readonly updateGymUseCase: UpdateGymUseCase,
     private readonly deleteGymUseCase: DeleteGymUseCase,
-    private readonly getGymWithPlansUseCase: GetGymWithPlansUseCase,
     private readonly addNewUserUseCase: AddNewUserUseCase,
     private readonly findGYMUsersUseCase: FindGYMUsersUseCase,
   ) {}
@@ -56,7 +54,7 @@ export class GymsController {
   @UseInterceptors(AddUserUUIDInterceptor)
   @Post()
   create(@Body() createGymDto: CreateGymDto) {
-    console.log(createGymDto)
+    console.log(createGymDto);
     return this.createGymUseCase.run(createGymDto);
   }
 
@@ -85,13 +83,6 @@ export class GymsController {
   @Delete(':id')
   remove(@Param('id', ParseUUIDPipe) id: string) {
     return this.deleteGymUseCase.run(id);
-  }
-
-  @Public()
-  @UseInterceptors(FindRegistryInterceptor<IGym>)
-  @Get(':id/plans')
-  getPlans(@Param('id', ParseUUIDPipe) id: string) {
-    return this.getGymWithPlansUseCase.run(id);
   }
 
   // @UseInterceptors(FindRegistryInterceptor<IGym>)

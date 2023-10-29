@@ -9,7 +9,7 @@ export interface IPlan extends ITimestamps {
   description: string;
   duration: number;
   price: number;
-  gym: string;
+  branch: string;
   status: string;
 }
 
@@ -19,7 +19,7 @@ export type TPlan = TTimestamps & {
   description: string;
   duration: number;
   price: number;
-  gym: string;
+  branch: string;
   status: string;
 };
 
@@ -29,7 +29,7 @@ export class Plan implements TPlan {
   description: string;
   duration: number;
   price: number;
-  gym: string;
+  branch: string;
   status: string;
   createdAt: string;
   updatedAt: string;

@@ -81,4 +81,4 @@ import {
   ],
   exports: [DatabaseServicesContract],
 })
-export class MongoDBModule { }
+export class MongoDBModule {}

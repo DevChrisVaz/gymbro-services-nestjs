@@ -1,4 +1,4 @@
 export enum BranchRole {
-  MANAGER = "MANAGER",
-  TRAINER = "TRAINER",
+  MANAGER = 'MANAGER',
+  TRAINER = 'TRAINER',
 }

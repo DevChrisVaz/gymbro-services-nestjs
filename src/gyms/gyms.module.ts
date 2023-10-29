@@ -7,7 +7,6 @@ import { UpdateGymUseCase } from './application/usecases/update-gym.usecase';
 import { DeleteGymUseCase } from './application/usecases/delete-gym.usecase';
 import { DatabaseModule } from 'src/database/database.module';
 import { useCaseProviders } from './application/usecases/providers';
-import { GetGymWithPlansUseCase } from './application/usecases/get-gym-with-plans.usecase';
 import { UsersModule } from 'src/users/users.module';
 import { EncryptionModule } from 'src/encryption/encryption.module';
 import { AddNewUserUseCase } from './application/usecases/add-new-user.usecase';
@@ -29,7 +28,6 @@ import { FindGYMUsersUseCase } from './application/usecases/find-gym-users.useca
     CreateGymUseCase,
     UpdateGymUseCase,
     DeleteGymUseCase,
-    GetGymWithPlansUseCase,
     AddNewUserUseCase,
     CreateGymUseCase,
     FindGYMUsersUseCase,

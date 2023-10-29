@@ -4,4 +4,4 @@ import { MongoDBRepository } from 'src/database/frameworks/mongodb/mongodb.repos
 
 export class BranchPermitionRepositoryImpl
   extends MongoDBRepository<IBranchPermition>
-  implements BranchPermitionRepositoryContract { }
+  implements BranchPermitionRepositoryContract {}

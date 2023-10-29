@@ -31,7 +31,7 @@ export class CreateBranchDto {
 
   @ApiProperty()
   @IsNotEmpty()
-  @IsPhoneNumber("MX")
+  @IsPhoneNumber('MX')
   phone: string;
 
   @ApiProperty()

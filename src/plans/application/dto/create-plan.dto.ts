@@ -17,7 +17,7 @@ export class CreatePlanDto {
   @IsString()
   description: string;
 
-  @ApiProperty({description: "in days"})
+  @ApiProperty({ description: 'in days' })
   @IsNotEmpty()
   @IsNumber()
   duration: number;
@@ -30,5 +30,5 @@ export class CreatePlanDto {
   @ApiProperty()
   @IsNotEmpty()
   @IsUUID()
-  gym: string;
+  branch: string;
 }

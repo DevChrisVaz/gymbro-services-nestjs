@@ -4,7 +4,6 @@ import { AddNewUserDto } from './add-new-user.dto';
 import { Type } from 'class-transformer';
 
 export class CreateGymDto {
-  
   @ApiHideProperty()
   @IsUUID()
   @IsNotEmpty()
@@ -21,10 +20,10 @@ export class CreateGymDto {
   description: string;
 
   @ApiProperty({
-    type: OmitType(AddNewUserDto, ["user", "status", "rol", "uuid", "gym"]),
+    type: OmitType(AddNewUserDto, ['user', 'status', 'rol', 'uuid', 'gym']),
   })
   @IsNotEmpty()
   @ValidateNested()
-  @Type(() => OmitType(AddNewUserDto, ["gym"]))
+  @Type(() => OmitType(AddNewUserDto, ['gym']))
   user: AddNewUserDto;
 }

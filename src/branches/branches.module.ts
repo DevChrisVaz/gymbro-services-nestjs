@@ -10,12 +10,10 @@ import {
   useCaseProviders,
 } from './application/usecases';
 import { AddressesModule } from 'src/addresses/addresses.module';
+import { PlansModule } from 'src/plans/plans.module';
 
 @Module({
-  imports: [
-    DatabaseModule,
-    AddressesModule
-  ],
+  imports: [DatabaseModule, AddressesModule, PlansModule],
   controllers: [BranchesController],
   providers: [
     BranchesService,

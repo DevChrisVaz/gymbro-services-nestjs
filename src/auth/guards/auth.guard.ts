@@ -22,7 +22,7 @@ export class AuthGuard implements CanActivate {
     private refreshTokenUseCase: RefreshSessionUseCase,
     private readonly databaseServices: DatabaseServicesContract,
     @Inject('APIKEY') private apiKey: string,
-  ) { }
+  ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const isPublic = this.reflector.getAllAndOverride<boolean>(IS_PUBLIC_KEY, [
@@ -50,9 +50,10 @@ export class AuthGuard implements CanActivate {
       request.user = payload;
 
       if (payload.gym) {
-        request.user.permitions = await this.databaseServices.branchPermitions.find({
-          user: request.user.id
-        });
+        request.user.permitions =
+          await this.databaseServices.branchPermitions.find({
+            user: request.user.id,
+          });
       }
 
       return true;

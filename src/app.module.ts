@@ -11,7 +11,8 @@ import { SubscriptionsModule } from './subscriptions/subscriptions.module';
 import { BranchesModule } from './branches/branches.module';
 import { AddressesModule } from './addresses/addresses.module';
 import { PermitionsModule } from './permitions/permitions.module';
-import { CaslModule } from './casl/casl.module';
+// import { CaslModule } from './casl/casl.module';
+import { ThrottlerModule } from '@nestjs/throttler';
 
 @Module({
   imports: [
@@ -25,7 +26,13 @@ import { CaslModule } from './casl/casl.module';
     BranchesModule,
     AddressesModule,
     PermitionsModule,
-    CaslModule,
+    // CaslModule,
+    ThrottlerModule.forRoot([
+      {
+        ttl: 60000,
+        limit: 10,
+      },
+    ]),
   ],
   controllers: [AppController],
   providers: [AppService],

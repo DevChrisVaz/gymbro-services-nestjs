@@ -13,7 +13,6 @@ import {
 import { CreateUserDto } from 'src/users/application/dto';
 
 export class AddNewUserDto extends CreateUserDto {
-
   @ApiHideProperty()
   user: string;
 
@@ -36,5 +35,4 @@ export class AddNewUserDto extends CreateUserDto {
   @IsUUID()
   @IsNotEmpty()
   gym: string;
-
 }

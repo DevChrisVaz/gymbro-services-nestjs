@@ -15,17 +15,21 @@ export class CreateBranchUseCase {
   ) {}
 
   async run(createBranchDto: CreateBranchDto): Promise<IBranch> {
-    const address: IAddress = this.addressesService.mapDtoToAddress(createBranchDto.address);
-    let branch: IBranch =
+    const address: IAddress = this.addressesService.mapDtoToAddress(
+      createBranchDto.address,
+    );
+    const branch: IBranch =
       this.branchesService.mapDtoToBranch(createBranchDto);
-    
-    const createdAddress: IAddress = await this.dataServices.addresses.save(address);
+
+    const createdAddress: IAddress = await this.dataServices.addresses.save(
+      address,
+    );
     branch.address = createdAddress.uuid;
 
     const createdBranch: IBranch = await this.dataServices.branches.save(
       branch,
     );
-    
+
     return this.branchesService.serializeBranch(createdBranch);
   }
 }
