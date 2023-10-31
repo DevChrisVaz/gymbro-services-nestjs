@@ -6,7 +6,7 @@ import { Public } from './decorators/public.decorator';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly loginUseCase: LoginUseCase) {}
+  constructor(private readonly loginUseCase: LoginUseCase) { }
 
   @Public()
   @Post('login')
@@ -27,5 +27,10 @@ export class AuthController {
     res.cookie('token', refreshToken, cookieOptions);
 
     return { token: accessToken };
+  }
+
+  @Post("Customer")
+  async customerLogIn(@Body() credentials, @Res({ passthrough: true }) res: Response) {
+    const { accessToken, refreshToken } = await this.loginUseCase.run(credentials);
   }
 }
