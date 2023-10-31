@@ -9,7 +9,7 @@ import {
   UseInterceptors,
   Request,
 } from '@nestjs/common';
-import { CreateCustomerDto /* UpdateCustomerDto */ } from './application/dto';
+import { CreateCustomerDto, UpdateCustomerDto } from './application/dto';
 import {
   CreateCustomerUseCase,
   DeleteCustomerUseCase,
@@ -29,7 +29,7 @@ import {
 } from '@nestjs/swagger';
 import { Public } from 'src/auth/decorators/public.decorator';
 import { CustomerResponseDTO } from './application/dto/response/customer-response.dto';
-import { UpdateAddressDto } from 'src/addresses/application/dto/update-address.dto';
+import { UserAuthenticatedRequest } from 'src/auth/auth';
 
 @ApiSecurity('api_key')
 @ApiBearerAuth()
@@ -73,7 +73,7 @@ export class CustomersController {
   @ApiOkResponse({
     type: CustomerResponseDTO,
   })
-  getProfile(@Request() req) {
+  getProfile(@Request() req: UserAuthenticatedRequest) {
     return this.findCustomerUseCase.run(req.user.id);
   }
 
@@ -81,12 +81,15 @@ export class CustomersController {
   @ApiOkResponse({
     type: CustomerResponseDTO,
   })
-  updateProfile(@Request() req, @Body() updateCustomerDto: UpdateAddressDto) {
+  updateProfile(
+    @Request() req: UserAuthenticatedRequest,
+    @Body() updateCustomerDto: UpdateCustomerDto,
+  ) {
     return this.updateCustomerUseCase.run(req.user.id, updateCustomerDto);
   }
 
   @Get('subscriptions')
-  getSubscriptions(@Request() req) {
+  getSubscriptions(@Request() req: UserAuthenticatedRequest) {
     return this.getCustomerSubscriptionsUseCase.run(req.user.id);
   }
 

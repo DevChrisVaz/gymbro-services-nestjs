@@ -58,8 +58,7 @@ export class LoginUseCase {
         accessToken = await this.authService.generateAccessToken(
           {
             id: foundCustomer.user,
-            firstName: foundUser.firstName,
-            lastName: foundUser.lastName,
+            name: `${foundUser.firstName} ${foundUser.lastName}`,
             profilePicture: foundCustomer.profilePicture,
           },
           '2h',
@@ -86,8 +85,7 @@ export class LoginUseCase {
         accessToken = await this.authService.generateAccessToken(
           {
             id: foundUser.uuid,
-            firstName: foundUser.firstName,
-            lastName: foundUser.lastName,
+            name: `${foundUser.firstName} ${foundUser.lastName}`,
             profilePicture: foundUser.profilePicture,
             gym: foundGYMUser.gym,
           },

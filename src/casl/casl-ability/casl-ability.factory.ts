@@ -1,9 +1,8 @@
 import {
   AbilityBuilder,
-  AbilityClass,
   AnyAbility,
   ExtractSubjectType,
-  PureAbility,
+  createMongoAbility,
 } from '@casl/ability';
 import { Injectable } from '@nestjs/common';
 import { Customer } from 'src/customers/domain/entities/customer.entity';
@@ -12,13 +11,13 @@ import { CustomerAbilities } from '../abilities/customer-abilities';
 import { AppAbility, Subjects } from './casl-ability';
 import { Subscription } from 'src/subscriptions/domain/entities/subscription.entity';
 import { SubscriptionAbilities } from '../abilities/subscription-abilities';
+import { BranchAbilities } from '../abilities/branch-abilities';
+import { Branch } from 'src/branches/domain/entities/branch.entity';
 
 @Injectable()
 export class CaslAbilityFactory {
   defineAbility(user: any, subject?: Subjects): AnyAbility {
-    const ability = new AbilityBuilder<AppAbility>(
-      PureAbility as AbilityClass<AppAbility>,
-    );
+    const ability = new AbilityBuilder<AppAbility>(createMongoAbility);
 
     switch (subject) {
       case Customer:
@@ -27,6 +26,8 @@ export class CaslAbilityFactory {
         return;
       case Subscription:
         return new SubscriptionAbilities(ability).defineAbilities(user);
+      case Branch:
+        return new BranchAbilities(ability).defineAbilities(user);
       default:
         break;
     }
