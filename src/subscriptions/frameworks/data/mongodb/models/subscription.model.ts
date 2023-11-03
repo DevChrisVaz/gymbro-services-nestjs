@@ -18,11 +18,9 @@ export class SubscriptionModel implements ISubscription {
   @Prop({ required: true, default: 'ACTIVE' })
   status: string;
 
-  @Prop({ default: now() })
   createdAt: string;
-
-  @Prop({ default: now() })
   updatedAt: string;
+  
 }
 
 export const SubscriptionSchema =

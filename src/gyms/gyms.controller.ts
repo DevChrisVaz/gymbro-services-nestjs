@@ -54,7 +54,6 @@ export class GymsController {
   @UseInterceptors(AddUserUUIDInterceptor)
   @Post()
   create(@Body() createGymDto: CreateGymDto) {
-    console.log(createGymDto);
     return this.createGymUseCase.run(createGymDto);
   }
 
