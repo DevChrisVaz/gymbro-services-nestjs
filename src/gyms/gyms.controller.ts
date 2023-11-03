@@ -24,6 +24,8 @@ import { FindOneUseCaseContract } from 'src/core/contracts/usecase.contract';
 import { FindRegistryInterceptor } from 'src/core/interceptors/find-registry.interceptor';
 import {
   ApiBearerAuth,
+  ApiCreatedResponse,
+  ApiOkResponse,
   ApiResponse,
   ApiSecurity,
   ApiTags,
@@ -34,6 +36,7 @@ import { FindGYMUsersUseCase } from './application/usecases/find-gym-users.useca
 import { AddNewUserDto } from './application/dto/add-new-user.dto';
 import { GYMUserResponseDTO } from './application/dto/response/gym-user-response.dto';
 import { AddUserUUIDInterceptor } from 'src/users/interceptors/add-user-uuid.interceptor';
+import { GYMResponseDTO } from './application/dto/response/gym-response.dto';
 
 @ApiSecurity('api_key')
 @ApiBearerAuth()
@@ -48,29 +51,40 @@ export class GymsController {
     private readonly deleteGymUseCase: DeleteGymUseCase,
     private readonly addNewUserUseCase: AddNewUserUseCase,
     private readonly findGYMUsersUseCase: FindGYMUsersUseCase,
-  ) {}
+  ) { }
 
   @UseInterceptors(AddUUIDInterceptor)
   @UseInterceptors(AddUserUUIDInterceptor)
   @Post()
+  @ApiCreatedResponse()
   create(@Body() createGymDto: CreateGymDto) {
     return this.createGymUseCase.run(createGymDto);
   }
 
   @Public()
   @Get()
+  @ApiOkResponse({
+    type: GYMResponseDTO,
+    isArray: true
+  })
   findAll() {
     return this.findGymsUseCase.run();
   }
 
   @Public()
   @Get(':id')
+  @ApiOkResponse({
+    type: GYMResponseDTO
+  })
   findOne(@Param('id', ParseUUIDPipe) id: string) {
     return this.findGymUseCase.run(id);
   }
 
   @UseInterceptors(FindRegistryInterceptor<IGym>)
   @Patch(':id')
+  @ApiOkResponse({
+    type: GYMResponseDTO
+  })
   update(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updateGymDto: UpdateGymDto,
@@ -89,9 +103,8 @@ export class GymsController {
   // activate(@Param('id', ParseUUIDPipe) id: string) {}
 
   @UseInterceptors(FindRegistryInterceptor<IGym>)
-  @ApiResponse({
-    status: HttpStatus.CREATED,
-    type: GYMUserResponseDTO,
+  @ApiCreatedResponse({
+    type: GYMUserResponseDTO
   })
   @Post(':id/users')
   addNewUser(

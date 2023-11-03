@@ -5,6 +5,7 @@ import { DatabaseServicesContract } from 'src/database/domain/contracts/database
 import { CreateBranchDto } from '../dto/create-branch.dto';
 import { IAddress } from 'src/addresses/domain/entities/address.entity';
 import { AddressesService } from 'src/addresses/addresses.service';
+import { BranchResponseDto } from '../dto/responses/branch-response.dto';
 
 @Injectable()
 export class CreateBranchUseCase {
@@ -12,9 +13,9 @@ export class CreateBranchUseCase {
     private readonly branchesService: BranchesService,
     private readonly addressesService: AddressesService,
     private readonly dataServices: DatabaseServicesContract,
-  ) {}
+  ) { }
 
-  async run(createBranchDto: CreateBranchDto): Promise<IBranch> {
+  async run(createBranchDto: CreateBranchDto): Promise<BranchResponseDto> {
     const address: IAddress = this.addressesService.mapDtoToAddress(
       createBranchDto.address,
     );
@@ -30,6 +31,8 @@ export class CreateBranchUseCase {
       branch,
     );
 
-    return this.branchesService.serializeBranch(createdBranch);
+    return new BranchResponseDto({
+      ...this.branchesService.serializeBranch(createdBranch)
+    });
   }
 }

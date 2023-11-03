@@ -4,6 +4,7 @@ import { ICustomer } from 'src/customers/domain/entities/customer.entity';
 import { IUser } from 'src/users/domain/entities/User';
 
 export class CustomerResponseDTO implements IUser, ICustomer {
+  
   @Exclude()
   _id?: string;
 
