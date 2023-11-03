@@ -41,8 +41,8 @@ export class PlansController {
 
   @UseInterceptors(AddUUIDInterceptor)
   @Post()
-  @UseGuards(AbilitiesGuard)
-  @CheckAbilities({ action: Action.Create, subject: Plan })
+  // @UseGuards(AbilitiesGuard)
+  // @CheckAbilities({ action: Action.Create, subject: Plan })
   create(@Body() createPlanDto: CreatePlanDto) {
     return this.createPlanUseCase.run(createPlanDto);
   }

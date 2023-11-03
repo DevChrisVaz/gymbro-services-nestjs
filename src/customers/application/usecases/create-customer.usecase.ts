@@ -8,6 +8,7 @@ import { DataHashingContract } from 'src/encryption/domain/contracts/hashing.con
 import { IUser } from 'src/users/domain/entities/User';
 import { UsersService } from 'src/users/users.service';
 import { CustomerResponseDTO } from '../dto/response/customer-response.dto';
+import { CustomerAlreadyExistsException } from '../exceptions/customer-already-exists-exception';
 
 @Injectable()
 export class CreateCustomerUseCase {
@@ -21,6 +22,10 @@ export class CreateCustomerUseCase {
   async run(
     createdCustomerDto: CreateCustomerDto,
   ): Promise<CustomerResponseDTO> {
+    const existingCustomer: ICustomer = await this.dataServices.customers.findOne({ email: createdCustomerDto.email });
+
+    if (existingCustomer) throw new CustomerAlreadyExistsException();
+
     const user: IUser = this.usersService.mapDtoToUser(createdCustomerDto);
     const createdUser: IUser = await this.dataServices.users.save(user);
 
