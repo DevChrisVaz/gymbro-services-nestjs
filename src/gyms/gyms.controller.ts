@@ -53,6 +53,7 @@ export class GymsController {
     private readonly findGYMUsersUseCase: FindGYMUsersUseCase,
   ) { }
 
+  @Public()
   @UseInterceptors(AddUUIDInterceptor)
   @UseInterceptors(AddUserUUIDInterceptor)
   @Post()
