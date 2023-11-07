@@ -4,7 +4,7 @@ import {
   UserDocument,
 } from 'src/users/frameworks/data/mogodb/models/user.model';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, startSession } from 'mongoose';
 import { UserRepositoryImpl } from 'src/users/frameworks/data/mogodb/user-repository.impl';
 import {
   GymDocument,
@@ -65,11 +65,13 @@ import {
   GYMUserModel,
 } from 'src/gyms/frameworks/data/mongodb/models/gym-user.model';
 import { GYMUserRepositoryImpl } from 'src/gyms/frameworks/data/mongodb/gym-user.repository';
+import { SessionContract } from 'src/database/domain/contracts/session.contract';
+import { MongoDBSession } from './mongodb-session';
 
 @Injectable()
 export class MongoDBServices
-  implements DatabaseServicesContract, OnApplicationBootstrap
-{
+  implements DatabaseServicesContract, OnApplicationBootstrap {
+  session: SessionContract;
   users: UserRepositoryImpl;
   gyms: GymRepositoryImpl;
   GYMUsers: GYMUserRepositoryContract;
@@ -105,9 +107,10 @@ export class MongoDBServices
     private addressRepository: Model<AddressDocument>,
     @InjectModel(BranchPermitionModel.name)
     private branchPermitionRepository: Model<BranchPermitionDocument>,
-  ) {}
+  ) { }
 
   onApplicationBootstrap() {
+    this.session = new MongoDBSession();
     this.users = new UserRepositoryImpl(this.userRepository);
     this.gyms = new GymRepositoryImpl(this.gymRepository);
     this.GYMUsers = new GYMUserRepositoryImpl(this.GYMUserRepository);

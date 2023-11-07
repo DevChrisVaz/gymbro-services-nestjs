@@ -10,8 +10,10 @@ import { IBranch } from 'src/branches/domain/entities/branch.entity';
 import { IAddress } from 'src/addresses/domain/entities/address.entity';
 import { IBranchPermition } from 'src/permitions/domain/entities/branch-permition.entity';
 import { IGYMUser } from 'src/gyms/domain/entities/gym-user.entity';
+import { SessionContract } from './session.contract';
 
 export abstract class DatabaseServicesContract {
+  abstract session: SessionContract;
   abstract users: RepositoryContract<User>;
   abstract gyms: RepositoryContract<IGym>;
   abstract GYMUsers: RepositoryContract<IGYMUser>;
