@@ -22,7 +22,7 @@ export class AuthGuard implements CanActivate {
     private refreshTokenUseCase: RefreshSessionUseCase,
     private readonly databaseServices: DatabaseServicesContract,
     @Inject('APIKEY') private apiKey: string,
-  ) {}
+  ) { }
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const isPublic = this.reflector.getAllAndOverride<boolean>(IS_PUBLIC_KEY, [
@@ -45,36 +45,18 @@ export class AuthGuard implements CanActivate {
       }
     }
 
-    try {
-      const payload = await this.jwtService.verifyAsync(token);
-      request.user = payload;
+    const payload = await this.jwtService.verifyAsync(token);
+    request.user = payload;
 
-      if (payload.gym) {
-        request.user.permitions =
-          await this.databaseServices.branchPermitions.find({
-            user: request.user.id,
-          });
-      }
-
-      return true;
-    } catch {
-      if (!request.cookies.token) throw new UnauthorizedException();
-      const tokens: ITokens = await this.refreshTokenUseCase.run({
-        accessToken: token,
-        refreshToken: request.cookies.token,
-      });
-      const response = context.switchToHttp().getResponse();
-      const cookieOptions: CookieOptions = {
-        httpOnly: true,
-        secure: true,
-        sameSite: 'none',
-        maxAge: 7 * 24 * 60 * 60,
-        path: '/token',
-      };
-      request.user = this.jwtService.decode(tokens.accessToken);
-      response.cookie('token', tokens.refreshToken, cookieOptions);
-      response.token = tokens.accessToken;
+    if (payload.gym) {
+      request.user.permitions =
+        await this.databaseServices.branchPermitions.find({
+          user: request.user.id,
+        });
     }
+
+    return true;
+
   }
 
   private extractTokenFromHeader(request: Request): string | undefined {
