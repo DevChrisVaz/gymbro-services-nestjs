@@ -11,6 +11,8 @@ import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from './guards/auth.guard';
 import { EncryptionModule } from 'src/encryption/encryption.module';
 import { RefreshSessionUseCase } from './application/usecases/refresh-session.usecase';
+import { CustomerLoginUseCase } from './application/usecases/customer-login.usecase';
+import { GYMUserLoginUseCase } from './application/usecases/gym-user-login.usecase';
 
 @Module({
   imports: [
@@ -27,6 +29,8 @@ import { RefreshSessionUseCase } from './application/usecases/refresh-session.us
     ...configProviders,
     AuthService,
     LoginUseCase,
+    CustomerLoginUseCase,
+    GYMUserLoginUseCase,
     RefreshSessionUseCase,
     {
       provide: APP_GUARD,
@@ -35,4 +39,4 @@ import { RefreshSessionUseCase } from './application/usecases/refresh-session.us
   ],
   exports: [AuthService],
 })
-export class AuthModule {}
+export class AuthModule { }
