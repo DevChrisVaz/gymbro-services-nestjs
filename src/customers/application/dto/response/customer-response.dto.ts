@@ -1,9 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Exclude } from 'class-transformer';
 import { ICustomer } from 'src/customers/domain/entities/customer.entity';
-import { IUser } from 'src/users/domain/entities/User';
+import { IUser } from 'src/users/domain/entities/user.entity';
+import { IPerson } from 'src/users/domain/entities/person.entity';
 
-export class CustomerResponseDTO implements IUser, ICustomer {
+export class CustomerResponseDTO implements IPerson, ICustomer {
   
   @Exclude()
   _id?: string;
@@ -12,7 +13,7 @@ export class CustomerResponseDTO implements IUser, ICustomer {
   __v?: string;
 
   @Exclude()
-  user: string;
+  person: string;
 
   @ApiProperty()
   email: string;

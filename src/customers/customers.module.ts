@@ -12,9 +12,15 @@ import {
 } from './application/usecases';
 import { EncryptionModule } from 'src/encryption/encryption.module';
 import { UsersModule } from 'src/users/users.module';
+import { AuthModule } from 'src/auth/auth.module';
 
 @Module({
-  imports: [DatabaseModule, EncryptionModule, UsersModule],
+  imports: [
+    DatabaseModule,
+    EncryptionModule,
+    UsersModule,
+    AuthModule
+  ],
   controllers: [CustomersController],
   providers: [
     CustomersService,
@@ -27,4 +33,4 @@ import { UsersModule } from 'src/users/users.module';
   ],
   exports: [CustomersService],
 })
-export class CustomersModule {}
+export class CustomersModule { }

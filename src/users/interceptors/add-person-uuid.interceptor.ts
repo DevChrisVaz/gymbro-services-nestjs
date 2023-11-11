@@ -8,13 +8,13 @@ import { Observable, map } from 'rxjs';
 import { v4 as uuidv4 } from 'uuid';
 
 @Injectable()
-export class AddUserUUIDInterceptor<T> implements NestInterceptor<T, T> {
+export class AddPersonUUIDInterceptor<T> implements NestInterceptor<T, T> {
   intercept(context: ExecutionContext, next: CallHandler): Observable<T> {
     const uuid = uuidv4();
     const request = context.switchToHttp().getRequest();
 
     if (request.body) {
-      request.body.user.uuid = uuid;
+      request.body.person.uuid = uuid;
     }
 
     return next.handle().pipe(map((data) => data));

@@ -3,8 +3,8 @@ import {
   UserModel,
   UserDocument,
 } from 'src/users/frameworks/data/mogodb/models/user.model';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model, startSession } from 'mongoose';
+import { InjectConnection, InjectModel } from '@nestjs/mongoose';
+import { ClientSession, Connection, Model } from 'mongoose';
 import { UserRepositoryImpl } from 'src/users/frameworks/data/mogodb/user-repository.impl';
 import {
   GymDocument,
@@ -67,11 +67,20 @@ import {
 import { GYMUserRepositoryImpl } from 'src/gyms/frameworks/data/mongodb/gym-user.repository';
 import { SessionContract } from 'src/database/domain/contracts/session.contract';
 import { MongoDBSession } from './mongodb-session';
+import { RoleDocument, RoleModel } from 'src/permitions/frameworks/data/mongodb/models/role.model';
+import { UserRoleDocument, UserRoleModel } from 'src/permitions/frameworks/data/mongodb/models/user-role.model';
+import { IRole } from 'src/permitions/domain/entities/role.entity';
+import { IUserRole } from 'src/permitions/domain/entities/user-role.entity';
+import { RoleRepositoryImpl } from 'src/permitions/frameworks/data/mongodb/role.repository';
+import { UserRoleRepositoryImpl } from 'src/permitions/frameworks/data/mongodb/user-role.model';
+import { PersonRepositoryImpl } from 'src/users/frameworks/data/mogodb/person-repository.impl';
+import { PersonDocument, PersonModel } from 'src/users/frameworks/data/mogodb/models/person.model';
 
 @Injectable()
 export class MongoDBServices
   implements DatabaseServicesContract, OnApplicationBootstrap {
   session: SessionContract;
+  persons: PersonRepositoryImpl;
   users: UserRepositoryImpl;
   gyms: GymRepositoryImpl;
   GYMUsers: GYMUserRepositoryContract;
@@ -82,9 +91,13 @@ export class MongoDBServices
   subscriptions: RepositoryContract<ISubscription>;
   branches: RepositoryContract<IBranch>;
   addresses: RepositoryContract<IAddress>;
+  roles: RepositoryContract<IRole>;
+  userRoles: RepositoryContract<IUserRole>;
   branchPermitions: RepositoryContract<IBranchPermition>;
 
   constructor(
+    @InjectModel(PersonModel.name)
+    private personRepository: Model<PersonDocument>,
     @InjectModel(UserModel.name)
     private userRepository: Model<UserDocument>,
     @InjectModel(GymModel.name)
@@ -105,12 +118,18 @@ export class MongoDBServices
     private branchRepository: Model<BranchDocument>,
     @InjectModel(AddressModel.name)
     private addressRepository: Model<AddressDocument>,
+    @InjectModel(RoleModel.name)
+    private roleRepository: Model<RoleDocument>,
+    @InjectModel(UserRoleModel.name)
+    private userRoleRepository: Model<UserRoleDocument>,
     @InjectModel(BranchPermitionModel.name)
     private branchPermitionRepository: Model<BranchPermitionDocument>,
+    @InjectConnection() private connection: Connection
   ) { }
 
   onApplicationBootstrap() {
     this.session = new MongoDBSession();
+    this.persons = new PersonRepositoryImpl(this.personRepository);
     this.users = new UserRepositoryImpl(this.userRepository);
     this.gyms = new GymRepositoryImpl(this.gymRepository);
     this.GYMUsers = new GYMUserRepositoryImpl(this.GYMUserRepository);
@@ -123,8 +142,26 @@ export class MongoDBServices
     );
     this.branches = new BranchRepositoryImpl(this.branchRepository);
     this.addresses = new AddressRepositoryImpl(this.addressRepository);
+    this.roles = new RoleRepositoryImpl(this.roleRepository);
+    this.userRoles = new UserRoleRepositoryImpl(this.userRoleRepository);
     this.branchPermitions = new BranchPermitionRepositoryImpl(
       this.branchPermitionRepository,
     );
+  }
+
+  async runInTransaction(operations: (session: ClientSession) => Promise<any>): Promise<any> {
+    const session = await this.connection.startSession();
+    session.startTransaction();
+
+    try {
+      const result = await operations(session);
+      await session.commitTransaction();
+      session.endSession();
+      return result;
+    } catch (error) {
+      await session.abortTransaction();
+      session.endSession();
+      throw error;
+    }
   }
 }

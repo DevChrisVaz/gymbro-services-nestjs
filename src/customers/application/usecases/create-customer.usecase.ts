@@ -5,10 +5,10 @@ import { ICustomer } from 'src/customers/domain/entities/customer.entity';
 import { DatabaseServicesContract } from 'src/database/domain/contracts/database-services.contract';
 import { CreateCustomerDto } from '../dto';
 import { DataHashingContract } from 'src/encryption/domain/contracts/hashing.contract';
-import { IUser } from 'src/users/domain/entities/User';
 import { UsersService } from 'src/users/users.service';
 import { CustomerResponseDTO } from '../dto/response/customer-response.dto';
 import { CustomerAlreadyExistsException } from '../exceptions/customer-already-exists-exception';
+import { IPerson } from 'src/users/domain/entities/person.entity';
 
 @Injectable()
 export class CreateCustomerUseCase {
@@ -17,7 +17,7 @@ export class CreateCustomerUseCase {
     private readonly usersService: UsersService,
     private dataServices: DatabaseServicesContract,
     private readonly dataHashingService: DataHashingContract,
-  ) {}
+  ) { }
 
   async run(
     createdCustomerDto: CreateCustomerDto,
@@ -26,12 +26,12 @@ export class CreateCustomerUseCase {
 
     if (existingCustomer) throw new CustomerAlreadyExistsException();
 
-    const user: IUser = this.usersService.mapDtoToUser(createdCustomerDto);
-    const createdUser: IUser = await this.dataServices.users.save(user);
+    const person: IPerson = this.usersService.mapDtoToPerson(createdCustomerDto);
+    const createdPerson: IPerson = await this.dataServices.persons.save(person);
 
     const customer: ICustomer =
       this.customersService.mapDtoToCustomer(createdCustomerDto);
-    customer.user = createdUser.uuid;
+    customer.person = createdPerson.uuid;
     const createdCustomer: ICustomer = await this.dataServices.customers.save(
       customer,
     );
@@ -44,7 +44,7 @@ export class CreateCustomerUseCase {
     await this.dataServices.auth.save(auth);
 
     return new CustomerResponseDTO({
-      ...createdUser,
+      ...createdPerson,
       ...createdCustomer,
     });
   }

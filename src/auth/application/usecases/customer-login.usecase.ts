@@ -9,6 +9,7 @@ import { Customer } from 'src/customers/domain/entities/customer.entity';
 import { DatabaseServicesContract } from 'src/database/domain/contracts/database-services.contract';
 import { LogInDto } from '../dtos';
 import { DataHashingContract } from 'src/encryption/domain/contracts/hashing.contract';
+import { IPerson } from 'src/users/domain/entities/person.entity';
 
 @Injectable()
 export class CustomerLoginUseCase {
@@ -41,14 +42,14 @@ export class CustomerLoginUseCase {
                 email: foundAuth.userName,
             });
 
-        const foundUser = await this.dataServices.users.findOne({
-            uuid: foundCustomer.user,
+        const foundPerson: IPerson = await this.dataServices.persons.findOne({
+            uuid: foundCustomer.person,
         });
 
         const accessToken = await this.authService.generateAccessToken(
             {
-                id: foundCustomer.user,
-                name: `${foundUser.firstName} ${foundUser.lastName}`,
+                id: foundCustomer.person,
+                name: `${foundPerson.firstName} ${foundPerson.lastName}`,
                 profilePicture: foundCustomer.profilePicture,
             },
             '2h',
@@ -59,7 +60,7 @@ export class CustomerLoginUseCase {
         });
 
         await this.dataServices.tokens.save({
-            ref: foundCustomer.user,
+            ref: foundCustomer.person,
             token: refreshToken,
         });
 

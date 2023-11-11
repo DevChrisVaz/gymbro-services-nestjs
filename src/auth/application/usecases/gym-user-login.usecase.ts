@@ -9,6 +9,7 @@ import { DatabaseServicesContract } from 'src/database/domain/contracts/database
 import { LogInDto } from '../dtos';
 import { DataHashingContract } from 'src/encryption/domain/contracts/hashing.contract';
 import { IGYMUser } from 'src/gyms/domain/entities/gym-user.entity';
+import { IPerson } from 'src/users/domain/entities/person.entity';
 
 @Injectable()
 export class GYMUserLoginUseCase {
@@ -43,15 +44,15 @@ export class GYMUserLoginUseCase {
             },
         );
 
-        const foundUser = await this.dataServices.users.findOne({
+        const foundPerson: IPerson = await this.dataServices.persons.findOne({
             uuid: foundGYMUser.user,
         });
 
         const accessToken = await this.authService.generateAccessToken(
             {
-                id: foundUser.uuid,
-                name: `${foundUser.firstName} ${foundUser.lastName}`,
-                profilePicture: foundUser.profilePicture,
+                id: foundPerson.uuid,
+                name: `${foundPerson.firstName} ${foundPerson.lastName}`,
+                profilePicture: foundPerson.profilePicture,
                 gym: foundGYMUser.gym,
             },
             '15m',

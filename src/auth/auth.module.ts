@@ -3,7 +3,6 @@ import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { JwtModule } from '@nestjs/jwt';
 import { jwtConstants } from './auth.constants';
-import { LoginUseCase } from './application/usecases/login.usecase';
 import { DatabaseModule } from 'src/database/database.module';
 import authConfig, { configProviders } from './auth.config';
 import { ConfigModule } from '@nestjs/config';
@@ -12,7 +11,7 @@ import { AuthGuard } from './guards/auth.guard';
 import { EncryptionModule } from 'src/encryption/encryption.module';
 import { RefreshSessionUseCase } from './application/usecases/refresh-session.usecase';
 import { CustomerLoginUseCase } from './application/usecases/customer-login.usecase';
-import { GYMUserLoginUseCase } from './application/usecases/gym-user-login.usecase';
+import { UserLoginUseCase } from './application/usecases/user-login.usecase';
 
 @Module({
   imports: [
@@ -28,15 +27,14 @@ import { GYMUserLoginUseCase } from './application/usecases/gym-user-login.useca
   providers: [
     ...configProviders,
     AuthService,
-    LoginUseCase,
     CustomerLoginUseCase,
-    GYMUserLoginUseCase,
+    UserLoginUseCase,
     RefreshSessionUseCase,
     {
       provide: APP_GUARD,
       useClass: AuthGuard,
     },
   ],
-  exports: [AuthService],
+  exports: [AuthService, CustomerLoginUseCase],
 })
 export class AuthModule { }

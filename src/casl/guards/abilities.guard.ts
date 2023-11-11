@@ -5,7 +5,7 @@ import {
   Injectable,
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import { CaslAbilityFactory } from '../casl-ability/casl-ability.factory';
+// import { CaslAbilityFactory } from '../casl-ability/casl-ability.factory';
 import {
   CHECK_ABILITY,
   RequiredRule,
@@ -16,7 +16,7 @@ import { ForbiddenError } from '@casl/ability';
 export class AbilitiesGuard implements CanActivate {
   constructor(
     private reflector: Reflector,
-    private caslAbilityFactory: CaslAbilityFactory,
+    // private caslAbilityFactory: CaslAbilityFactory,
   ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
@@ -27,12 +27,12 @@ export class AbilitiesGuard implements CanActivate {
     const request = context.switchToHttp().getRequest();
     const user = request.user;
     const subject = request.subject;
-    const ability = this.caslAbilityFactory.defineAbility(user, subject);
+    // const ability = this.caslAbilityFactory.defineAbility(user, subject);
 
     try {
-      rules.forEach((rule) =>
-        ForbiddenError.from(ability).throwUnlessCan(rule.action, rule.subject),
-      );
+      // rules.forEach((rule) =>
+      //   ForbiddenError.from(ability).throwUnlessCan(rule.action, rule.subject),
+      // );
 
       return true;
     } catch (error) {

@@ -8,7 +8,7 @@ export type CustomerDocument = CustomerModel & Document;
 @Schema()
 export class CustomerModel implements Customer {
   @Prop({ required: true, unique: true })
-  user: string;
+  person: string;
 
   @Prop({ required: true, unique: true })
   email: string;
@@ -31,11 +31,11 @@ export class CustomerModel implements Customer {
 
 const CustomerSchema = SchemaFactory.createForClass(CustomerModel);
 
-CustomerSchema.virtual('userRef', {
-  ref: 'UserModel',
-  localField: 'user',
-  foreignField: 'uuid',
-  justOne: true,
-});
+// CustomerSchema.virtual('userRef', {
+//   ref: 'UserModel',
+//   localField: 'user',
+//   foreignField: 'uuid',
+//   justOne: true,
+// });
 
 export { CustomerSchema };

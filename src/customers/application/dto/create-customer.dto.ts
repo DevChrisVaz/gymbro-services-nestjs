@@ -9,9 +9,9 @@ import {
   IsString,
   IsStrongPassword,
 } from 'class-validator';
-import { CreateUserDto } from 'src/users/application/dto';
+import { CreatePersonDto } from 'src/users/application/dto/create-person.dto';
 
-export class CreateCustomerDto extends CreateUserDto {
+export class CreateCustomerDto extends CreatePersonDto {
   @ApiProperty()
   @IsNotEmpty()
   @IsEmail()

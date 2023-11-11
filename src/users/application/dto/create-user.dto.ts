@@ -3,26 +3,29 @@ import {
   ApiProperty,
   ApiPropertyOptional,
 } from '@nestjs/swagger';
-import { IsNotEmpty, IsOptional, IsString, IsUUID } from 'class-validator';
+import { IsEnum, IsNotEmpty, IsOptional, IsString, IsStrongPassword } from 'class-validator';
+import { CreatePersonDto } from './create-person.dto';
+import { Role } from 'src/permitions/domain/enums/role.enum';
 
-export class CreateUserDto {
+export class CreateUserDto extends CreatePersonDto {
+
   @ApiHideProperty()
-  @IsUUID()
-  @IsNotEmpty()
-  uuid: string;
+  person: string;
 
   @ApiProperty()
   @IsString()
   @IsNotEmpty()
-  firstName: string;
+  userName: string;
 
   @ApiProperty()
-  @IsString()
+  @IsStrongPassword()
   @IsNotEmpty()
-  lastName: string;
+  password: string;
 
   @ApiPropertyOptional()
-  @IsString()
   @IsOptional()
-  status?: string;
+  @IsString()
+  @IsEnum(Role)
+  role?: string;
+
 }

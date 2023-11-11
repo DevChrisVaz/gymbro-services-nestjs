@@ -10,7 +10,7 @@ import { useCaseProviders } from './application/usecases/providers';
 import { UsersModule } from 'src/users/users.module';
 import { EncryptionModule } from 'src/encryption/encryption.module';
 import { AddNewUserUseCase } from './application/usecases/add-new-user.usecase';
-import { FindGYMUsersUseCase } from './application/usecases/find-gym-users.usecase';
+// import { FindGYMUsersUseCase } from './application/usecases/find-gym-users.usecase';
 // import { MailingModule } from 'src/mailing/mailing.module';
 
 @Module({
@@ -30,7 +30,7 @@ import { FindGYMUsersUseCase } from './application/usecases/find-gym-users.useca
     DeleteGymUseCase,
     AddNewUserUseCase,
     CreateGymUseCase,
-    FindGYMUsersUseCase,
+    // FindGYMUsersUseCase,
   ],
 })
 export class GymsModule {}

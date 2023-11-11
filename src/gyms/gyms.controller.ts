@@ -8,7 +8,8 @@ import {
   Delete,
   ParseUUIDPipe,
   UseInterceptors,
-  HttpStatus,
+  Req,
+  Query,
 } from '@nestjs/common';
 import { CreateGymDto } from './application/dto/create-gym.dto';
 import { UpdateGymDto } from './application/dto/update-gym.dto';
@@ -26,17 +27,17 @@ import {
   ApiBearerAuth,
   ApiCreatedResponse,
   ApiOkResponse,
-  ApiResponse,
   ApiSecurity,
   ApiTags,
 } from '@nestjs/swagger';
 import { Public } from 'src/auth/decorators/public.decorator';
 import { AddNewUserUseCase } from './application/usecases/add-new-user.usecase';
-import { FindGYMUsersUseCase } from './application/usecases/find-gym-users.usecase';
-import { AddNewUserDto } from './application/dto/add-new-user.dto';
-import { GYMUserResponseDTO } from './application/dto/response/gym-user-response.dto';
-import { AddUserUUIDInterceptor } from 'src/users/interceptors/add-user-uuid.interceptor';
+// import { FindGYMUsersUseCase } from './application/usecases/find-gym-users.usecase';
+import { AddPersonUUIDInterceptor } from 'src/users/interceptors/add-person-uuid.interceptor';
 import { GYMResponseDTO } from './application/dto/response/gym-response.dto';
+import { CreateUserDto } from 'src/users/application/dto';
+import { UserResponseDTO } from 'src/users/application/dto/response/user-response.dto';
+import { UserAuthenticatedRequest } from 'src/auth/auth';
 
 @ApiSecurity('api_key')
 @ApiBearerAuth()
@@ -50,12 +51,12 @@ export class GymsController {
     private readonly updateGymUseCase: UpdateGymUseCase,
     private readonly deleteGymUseCase: DeleteGymUseCase,
     private readonly addNewUserUseCase: AddNewUserUseCase,
-    private readonly findGYMUsersUseCase: FindGYMUsersUseCase,
+    // private readonly findGYMUsersUseCase: FindGYMUsersUseCase,
   ) { }
 
   @Public()
   @UseInterceptors(AddUUIDInterceptor)
-  @UseInterceptors(AddUserUUIDInterceptor)
+  @UseInterceptors(AddPersonUUIDInterceptor)
   @Post()
   @ApiCreatedResponse()
   create(@Body() createGymDto: CreateGymDto) {
@@ -105,18 +106,20 @@ export class GymsController {
 
   @UseInterceptors(FindRegistryInterceptor<IGym>)
   @ApiCreatedResponse({
-    type: GYMUserResponseDTO
+    type: UserResponseDTO
   })
-  @Post(':id/users')
+  @Post('users')
   addNewUser(
-    @Body() addNewUserDto: AddNewUserDto,
-  ): Promise<GYMUserResponseDTO> {
-    return this.addNewUserUseCase.run(addNewUserDto);
+    @Req() req: UserAuthenticatedRequest,
+    @Query() query: any,
+    @Body() createUserDto: CreateUserDto,
+  ): Promise<UserResponseDTO> {
+    return this.addNewUserUseCase.run(createUserDto);
   }
 
-  @UseInterceptors(FindRegistryInterceptor<IGym>)
-  @Get(':id/users')
-  getUsers(@Param('id', ParseUUIDPipe) gymId: string) {
-    return this.findGYMUsersUseCase.run(gymId);
-  }
+  // @UseInterceptors(FindRegistryInterceptor<IGym>)
+  // @Get('users')
+  // getUsers(@Req() req: UserAuthenticatedRequest, @Query() query: any) {
+  //   return this.findGYMUsersUseCase.run(req.user.gym ?? query.gymId);
+  // }
 }

@@ -1,7 +1,7 @@
 import { Exclude } from 'class-transformer';
 
 export interface ICustomer {
-  user: string;
+  person: string;
   email: string;
   phone: string;
   birthdate: Date;
@@ -10,7 +10,7 @@ export interface ICustomer {
 }
 
 export class Customer implements ICustomer {
-  user: string;
+  person: string;
   email: string;
   phone: string;
   birthdate: Date;
@@ -20,7 +20,7 @@ export class Customer implements ICustomer {
 
 export class SerializedCustomer extends Customer {
   @Exclude()
-  override user: string;
+  override person: string;
 
   @Exclude()
   override usedPasswords: string[];

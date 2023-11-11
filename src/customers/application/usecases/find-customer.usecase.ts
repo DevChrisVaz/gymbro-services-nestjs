@@ -3,7 +3,7 @@ import { ICustomer } from 'src/customers/domain/entities/customer.entity';
 import { CustomerNotFoundException } from 'src/customers/domain/exceptions/customer-not-found.exception';
 import { DatabaseServicesContract } from 'src/database/domain/contracts/database-services.contract';
 import { CustomerResponseDTO } from '../dto/response/customer-response.dto';
-import { IUser } from 'src/users/domain/entities/User';
+import { IPerson } from 'src/users/domain/entities/person.entity';
 
 @Injectable()
 export class FindCustomerUseCase {
@@ -11,16 +11,16 @@ export class FindCustomerUseCase {
 
   async run(uuid: string): Promise<CustomerResponseDTO> {
     const foundCustomer: ICustomer = await this.dataServices.customers.findOne({
-      user: uuid,
+      person: uuid,
     });
 
     if (foundCustomer) {
-      const foundUser: IUser = await this.dataServices.users.findOne({ uuid });
-      console.log(foundUser);
+      const foundPerson: IPerson = await this.dataServices.persons.findOne({ uuid });
+      console.log(foundPerson);
 
       return new CustomerResponseDTO({
         ...foundCustomer,
-        ...foundUser,
+        ...foundPerson,
       });
     }
 

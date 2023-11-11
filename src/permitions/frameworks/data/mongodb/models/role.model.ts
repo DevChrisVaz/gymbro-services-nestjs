@@ -1,9 +1,10 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { IRole } from 'src/permitions/domain/entities/role.entity';
 
 export type RoleDocument = RoleModel & Document;
 
 @Schema({ timestamps: true })
-export class RoleModel {
+export class RoleModel implements IRole {
   @Prop({ unique: true, required: true })
   uuid: string;
 
@@ -11,4 +12,4 @@ export class RoleModel {
   name: string;
 }
 
-export const BranchPermitionSchema = SchemaFactory.createForClass(RoleModel);
+export const RoleSchema = SchemaFactory.createForClass(RoleModel);

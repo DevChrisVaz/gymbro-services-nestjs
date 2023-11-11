@@ -1,7 +1,7 @@
 import { ApiHideProperty, ApiProperty, OmitType } from '@nestjs/swagger';
 import { IsNotEmpty, IsString, IsUUID, ValidateNested } from 'class-validator';
-import { AddNewUserDto } from './add-new-user.dto';
 import { Type } from 'class-transformer';
+import { CreateUserDto } from 'src/users/application/dto';
 
 export class CreateGymDto {
   @ApiHideProperty()
@@ -20,10 +20,10 @@ export class CreateGymDto {
   description: string;
 
   @ApiProperty({
-    type: OmitType(AddNewUserDto, ['user', 'status', 'rol', 'uuid', 'gym']),
+    type: OmitType(CreateUserDto, ['person', 'status', 'uuid']),
   })
   @IsNotEmpty()
   @ValidateNested()
-  @Type(() => OmitType(AddNewUserDto, ['gym']))
-  user: AddNewUserDto;
+  @Type(() => CreateUserDto)
+  user: CreateUserDto;
 }

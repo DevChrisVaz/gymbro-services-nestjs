@@ -6,8 +6,8 @@ export interface AuthenticatedUser {
   id: string;
   name: string;
   profilePicture: string;
+  role: string;
   gym?: string;
-  permitions?: IBranchPermition[];
 }
 
 export interface UserAuthenticatedRequest extends Request {

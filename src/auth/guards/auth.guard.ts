@@ -10,6 +10,7 @@ import { JwtService } from '@nestjs/jwt';
 import { IS_PUBLIC_KEY } from '../decorators/public.decorator';
 import { DatabaseServicesContract } from 'src/database/domain/contracts/database-services.contract';
 import { AuthService } from '../auth.service';
+import { IUserRole } from 'src/permitions/domain/entities/user-role.entity';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -44,13 +45,6 @@ export class AuthGuard implements CanActivate {
 
     const payload = await this.jwtService.verifyAsync(token);
     request.user = payload;
-
-    if (payload.gym) {
-      request.user.permitions =
-        await this.databaseServices.branchPermitions.find({
-          user: request.user.id,
-        });
-    }
 
     return true;
 

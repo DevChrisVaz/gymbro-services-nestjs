@@ -1,4 +1,4 @@
-import { User } from 'src/users/domain/entities/User';
+import { IUser } from 'src/users/domain/entities/user.entity';
 import { IGym } from 'src/gyms/domain/entities/gym.entity';
 import { Customer } from 'src/customers/domain/entities/customer.entity';
 import { RepositoryContract } from './repository.contract';
@@ -11,10 +11,14 @@ import { IAddress } from 'src/addresses/domain/entities/address.entity';
 import { IBranchPermition } from 'src/permitions/domain/entities/branch-permition.entity';
 import { IGYMUser } from 'src/gyms/domain/entities/gym-user.entity';
 import { SessionContract } from './session.contract';
+import { IPerson } from 'src/users/domain/entities/person.entity';
+import { IRole } from 'src/permitions/domain/entities/role.entity';
+import { IUserRole } from 'src/permitions/domain/entities/user-role.entity';
 
 export abstract class DatabaseServicesContract {
   abstract session: SessionContract;
-  abstract users: RepositoryContract<User>;
+  abstract persons: RepositoryContract<IPerson>
+  abstract users: RepositoryContract<IUser>;
   abstract gyms: RepositoryContract<IGym>;
   abstract GYMUsers: RepositoryContract<IGYMUser>;
   abstract customers: RepositoryContract<Customer>;
@@ -24,5 +28,8 @@ export abstract class DatabaseServicesContract {
   abstract subscriptions: RepositoryContract<ISubscription>;
   abstract branches: RepositoryContract<IBranch>;
   abstract addresses: RepositoryContract<IAddress>;
+
+  abstract roles: RepositoryContract<IRole>;
+  abstract userRoles: RepositoryContract<IUserRole>;
   abstract branchPermitions: RepositoryContract<IBranchPermition>;
 }
