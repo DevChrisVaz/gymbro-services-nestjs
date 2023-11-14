@@ -33,7 +33,7 @@ import {
 import { Public } from 'src/auth/decorators/public.decorator';
 import { AddNewUserUseCase } from './application/usecases/add-new-user.usecase';
 // import { FindGYMUsersUseCase } from './application/usecases/find-gym-users.usecase';
-import { AddPersonUUIDInterceptor } from 'src/users/interceptors/add-person-uuid.interceptor';
+import { AddUserUUIDInterceptor } from 'src/users/interceptors/add-user-uuid.interceptor';
 import { GYMResponseDTO } from './application/dto/response/gym-response.dto';
 import { CreateUserDto } from 'src/users/application/dto';
 import { UserResponseDTO } from 'src/users/application/dto/response/user-response.dto';
@@ -56,7 +56,7 @@ export class GymsController {
 
   @Public()
   @UseInterceptors(AddUUIDInterceptor)
-  @UseInterceptors(AddPersonUUIDInterceptor)
+  @UseInterceptors(AddUserUUIDInterceptor)
   @Post()
   @ApiCreatedResponse()
   create(@Body() createGymDto: CreateGymDto) {
