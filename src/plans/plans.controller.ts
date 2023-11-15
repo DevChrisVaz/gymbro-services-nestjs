@@ -7,11 +7,13 @@ import {
   Param,
   Delete,
   UseInterceptors,
+  ParseUUIDPipe,
 } from '@nestjs/common';
 import { CreatePlanDto, UpdatePlanDto } from './application/dto';
 import {
   CreatePlanUseCase,
   DeletePlanUseCase,
+  FindPlansByBranchUseCase,
   FindPlansUseCase,
   UpdatePlanUseCase,
 } from './application/usecases';
@@ -31,6 +33,7 @@ export class PlansController {
     private readonly createPlanUseCase: CreatePlanUseCase,
     private readonly findPlanUseCase: FindOneUseCaseContract<IPlan>,
     private readonly findPlansUseCase: FindPlansUseCase,
+    private readonly findPlansByBranch: FindPlansByBranchUseCase,
     private readonly updatePlanUseCase: UpdatePlanUseCase,
     private readonly deletePlanUseCase: DeletePlanUseCase,
   ) { }
@@ -47,6 +50,12 @@ export class PlansController {
   @Get()
   findAll() {
     return this.findPlansUseCase.run();
+  }
+
+  @Public()
+  @Get(":branchId")
+  findBranchPlans(@Param("branchId", ParseUUIDPipe) branchId: string) {
+    return this.findPlansByBranch.run(branchId);
   }
 
   @Public()

@@ -38,9 +38,6 @@ export class CreateBranchDto {
   @IsNotEmpty()
   @IsEmail()
   email: string;
-
-  @ApiProperty()
-  @IsNotEmpty()
-  @IsUUID()
+  
   gym: string;
 }

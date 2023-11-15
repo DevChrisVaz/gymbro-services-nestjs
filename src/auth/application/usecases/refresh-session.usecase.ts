@@ -19,7 +19,6 @@ export class RefreshSessionUseCase {
       throw new UnauthorizedException();
 
     const accessTokenPayload: any = this.jwtService.decode(tokens.accessToken);
-    console.log(accessTokenPayload)
     const refreshTokenPayload = await this.jwtService
       .verifyAsync(tokens.refreshToken)
       .catch(() => {

@@ -27,8 +27,8 @@ export class AuthController {
       httpOnly: true,
       secure: true,
       sameSite: 'none',
-      maxAge: 7 * 24 * 60 * 60,
-      path: '/token',
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+      // path: '/token',
     };
 
     res.cookie('token', refreshToken, cookieOptions);
@@ -45,8 +45,7 @@ export class AuthController {
       httpOnly: true,
       secure: true,
       sameSite: 'none',
-      maxAge: 24 * 60 * 60 * 1000 * 7,
-      // path: '/token',
+      maxAge: 24 * 60 * 60 * 1000 * 7
     };
 
     res.cookie('token', refreshToken, cookieOptions);
@@ -70,7 +69,7 @@ export class AuthController {
       httpOnly: true,
       secure: true,
       sameSite: 'none',
-      maxAge: 7 * 24 * 60 * 60
+      maxAge: 7 * 24 * 60 * 60 * 1000
     };
 
     res.cookie('token', tokens.refreshToken, cookieOptions);

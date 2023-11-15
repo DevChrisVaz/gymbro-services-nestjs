@@ -37,8 +37,8 @@ export class UsersController {
         isArray: true
     })
     @Get()
-    findAll() {
-        return this.findUsersUseCase.run();
+    findAll(@Req() req: UserAuthenticatedRequest, @Query() query: any) {
+        return this.findUsersUseCase.run(req.user.gym ?? query.gym);
     }
 
     @ApiOkResponse({

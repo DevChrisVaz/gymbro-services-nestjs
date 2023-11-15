@@ -11,6 +11,7 @@ import {
 } from './application/usecases';
 import { AddressesModule } from 'src/addresses/addresses.module';
 import { PlansModule } from 'src/plans/plans.module';
+import { FindGymBranchesUseCase } from './application/usecases/find-gym-branches-usecase';
 
 @Module({
   imports: [DatabaseModule, AddressesModule, PlansModule],
@@ -19,6 +20,7 @@ import { PlansModule } from 'src/plans/plans.module';
     BranchesService,
     ...useCaseProviders,
     FindBranchesUseCase,
+    FindGymBranchesUseCase,
     CreateBranchUseCase,
     UpdateBranchUseCase,
     DeleteBranchUseCase,

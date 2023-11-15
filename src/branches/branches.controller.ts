@@ -8,6 +8,8 @@ import {
   Delete,
   UseInterceptors,
   ParseUUIDPipe,
+  Req,
+  Query,
 } from '@nestjs/common';
 import { CreateBranchDto } from './application/dto/create-branch.dto';
 import { UpdateBranchDto } from './application/dto/update-branch.dto';
@@ -19,7 +21,7 @@ import {
 } from './application/usecases';
 import { FindOneUseCaseContract } from 'src/core/contracts/usecase.contract';
 import { IBranch } from './domain/entities/branch.entity';
-import { ApiBearerAuth, ApiCreatedResponse, ApiSecurity, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiCreatedResponse, ApiOkResponse, ApiSecurity, ApiTags } from '@nestjs/swagger';
 import { FindRegistryInterceptor } from 'src/core/interceptors/find-registry.interceptor';
 import { AddUUIDInterceptor } from 'src/core/interceptors/add-uuid.interceptor';
 import { AddAddressUUIDInterceptor } from 'src/addresses/interceptors/add-address-uuid.interceptor';
@@ -27,6 +29,9 @@ import { Public } from 'src/auth/decorators/public.decorator';
 import { FindPlansByBranchUseCase } from 'src/plans/application/usecases/find-plans-by-branch.usecase';
 import { IPlan } from 'src/plans/domain/entities/plan.entity';
 import { BranchResponseDto } from './application/dto/responses/branch-response.dto';
+import { UserAuthenticatedRequest } from 'src/auth/auth';
+import { BranchWithAddressResponseDto } from './application/dto/responses/branch-with-address-response.dto';
+import { FindGymBranchesUseCase } from './application/usecases/find-gym-branches-usecase';
 
 @ApiSecurity('api_key')
 @ApiBearerAuth()
@@ -40,6 +45,7 @@ export class BranchesController {
     private readonly updateBranchUseCase: UpdateBranchUseCase,
     private readonly deleteBranchUseCase: DeleteBranchUseCase,
     private readonly findPlansByBranchUseCase: FindPlansByBranchUseCase,
+    private readonly findGymBranchesUseCase: FindGymBranchesUseCase
   ) { }
 
   @UseInterceptors(AddUUIDInterceptor)
@@ -48,14 +54,30 @@ export class BranchesController {
     type: BranchResponseDto
   })
   @Post()
-  create(@Body() createBranchDto: CreateBranchDto) {
+  create(
+    @Req() req: UserAuthenticatedRequest,
+    @Body() createBranchDto: CreateBranchDto,
+    @Query() query: any
+  ) {
+    createBranchDto.gym = req.user.gym ?? query.gymId;
     return this.createBranchUseCase.run(createBranchDto);
   }
 
   @Public()
   @Get()
+  @ApiOkResponse({
+    type: BranchWithAddressResponseDto
+  })
   findAll() {
     return this.findBranchesUseCase.run();
+  }
+
+  @Get("/gym")
+  @ApiOkResponse({
+    type: BranchWithAddressResponseDto
+  })
+  findByGym(@Req() req: UserAuthenticatedRequest, @Query() query: any) {
+    return this.findGymBranchesUseCase.run(req.user.gym ?? query.gymId);
   }
 
   @Get(':id')

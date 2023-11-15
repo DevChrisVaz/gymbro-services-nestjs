@@ -22,7 +22,9 @@ export class CreateUserDto extends CreatePersonDto {
   @IsNotEmpty()
   password: string;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({
+    enum: Role
+  })
   @IsOptional()
   @IsString()
   @IsEnum(Role)

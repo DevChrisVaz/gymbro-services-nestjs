@@ -8,6 +8,7 @@ import { DataHashingContract } from 'src/encryption/domain/contracts/hashing.con
 import { IPerson } from 'src/users/domain/entities/person.entity';
 import { IUser } from 'src/users/domain/entities/user.entity';
 import { Role } from 'src/permitions/domain/enums/role.enum';
+import { UserAlreadyExistsException } from 'src/users/application/exceptions/user-already-exists-exception';
 
 @Injectable()
 export class CreateGymUseCase {
@@ -19,6 +20,9 @@ export class CreateGymUseCase {
   ) { }
 
   async run(createGymDto: CreateGymDto): Promise<IGym> {
+    const existingUser: IUser = await this.dataServices.users.findOne({ userName: createGymDto.user.userName });
+    if (existingUser) throw new UserAlreadyExistsException();
+
     const gym: IGym = this.gymsService.mapDtoToGym(createGymDto);
     const person: IPerson = this.usersService.mapDtoToPerson(createGymDto.user);
     let user: IUser = this.usersService.mapDtoToUser(createGymDto.user);
