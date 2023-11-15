@@ -45,8 +45,8 @@ export class AuthController {
       httpOnly: true,
       secure: true,
       sameSite: 'none',
-      maxAge: 7 * 24 * 60 * 60,
-      path: '/token',
+      maxAge: 24 * 60 * 60 * 1000 * 7,
+      // path: '/token',
     };
 
     res.cookie('token', refreshToken, cookieOptions);
@@ -56,9 +56,9 @@ export class AuthController {
 
   @Public()
   @Put("refresh-token")
-  async refreshToken(@Req() req: Request, @Res() res: Response) {
+  async refreshToken(@Req() req: Request, @Res({ passthrough: true }) res: Response) {
     const token = this.authService.extractTokenFromHeader(req);
-
+    
     if (!req.cookies.token || !token) throw new UnauthorizedException();
 
     const tokens: ITokens = await this.refreshSessionUseCase.run({
@@ -70,8 +70,7 @@ export class AuthController {
       httpOnly: true,
       secure: true,
       sameSite: 'none',
-      maxAge: 7 * 24 * 60 * 60,
-      path: '/token',
+      maxAge: 7 * 24 * 60 * 60
     };
 
     res.cookie('token', tokens.refreshToken, cookieOptions);

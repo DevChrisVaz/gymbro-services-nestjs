@@ -11,17 +11,15 @@ export class RefreshSessionUseCase {
     private readonly databaseServices: DatabaseServicesContract,
     private readonly authService: AuthService,
     private readonly jwtService: JwtService,
-  ) {}
+  ) { }
 
   async run(tokens: ITokens): Promise<ITokens> {
-    if (
-      !(await this.databaseServices.tokens.findOne({
-        token: tokens.refreshToken,
-      }))
-    )
+    const foundToken = await this.databaseServices.tokens.findOne({ token: tokens.refreshToken });
+    if (!foundToken)
       throw new UnauthorizedException();
 
-    const accessTokenPayload = this.jwtService.decode(tokens.accessToken);
+    const accessTokenPayload: any = this.jwtService.decode(tokens.accessToken);
+    console.log(accessTokenPayload)
     const refreshTokenPayload = await this.jwtService
       .verifyAsync(tokens.refreshToken)
       .catch(() => {
@@ -36,8 +34,13 @@ export class RefreshSessionUseCase {
     await this.databaseServices.tokens.delete(tokens.refreshToken);
 
     const accessToken: string = await this.authService.generateAccessToken(
-      accessTokenPayload,
-      '2h',
+      {
+        id: accessTokenPayload.id,
+        name: accessTokenPayload.name,
+        role: accessTokenPayload.role,
+        gym: accessTokenPayload.gym,
+      },
+      '15m',
     );
     const refreshToken: string = await this.authService.generateRefreshToken({
       token: accessToken,
