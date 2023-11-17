@@ -9,6 +9,7 @@ import { UsersService } from 'src/users/users.service';
 import { CustomerResponseDTO } from '../dto/response/customer-response.dto';
 import { CustomerAlreadyExistsException } from '../exceptions/customer-already-exists-exception';
 import { IPerson } from 'src/users/domain/entities/person.entity';
+import { PhoneAlreadyInUseException } from '../exceptions/phone-already-in-use-exception';
 
 @Injectable()
 export class CreateCustomerUseCase {
@@ -20,17 +21,21 @@ export class CreateCustomerUseCase {
   ) { }
 
   async run(
-    createdCustomerDto: CreateCustomerDto,
+    createCustomerDto: CreateCustomerDto,
   ): Promise<CustomerResponseDTO> {
-    const existingCustomer: ICustomer = await this.dataServices.customers.findOne({ email: createdCustomerDto.email });
+    const existingCustomer: ICustomer = await this.dataServices.customers.findOne({ email: createCustomerDto.email });
 
     if (existingCustomer) throw new CustomerAlreadyExistsException();
 
-    const person: IPerson = this.usersService.mapDtoToPerson(createdCustomerDto);
+    const usedPhone = await this.dataServices.customers.findOne({ phone: createCustomerDto.phone });
+
+    if(usedPhone) throw new PhoneAlreadyInUseException()
+
+    const person: IPerson = this.usersService.mapDtoToPerson(createCustomerDto);
     const createdPerson: IPerson = await this.dataServices.persons.save(person);
 
     const customer: ICustomer =
-      this.customersService.mapDtoToCustomer(createdCustomerDto);
+      this.customersService.mapDtoToCustomer(createCustomerDto);
     customer.person = createdPerson.uuid;
     const createdCustomer: ICustomer = await this.dataServices.customers.save(
       customer,
@@ -39,7 +44,7 @@ export class CreateCustomerUseCase {
     const auth: Auth = {
       ref: 'CUSTOMER',
       userName: customer.email,
-      password: await this.dataHashingService.hash(createdCustomerDto.password),
+      password: await this.dataHashingService.hash(createCustomerDto.password),
     };
     await this.dataServices.auth.save(auth);
 

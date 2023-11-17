@@ -61,7 +61,7 @@ export class UserLoginUseCase {
 
         if (foundRole.gym) tokenData.gym = foundRole.gym;
 
-        const accessToken = await this.authService.generateAccessToken(tokenData, '15m');
+        const accessToken = await this.authService.generateAccessToken(tokenData, '15s');
 
         const refreshToken = await this.authService.generateRefreshToken({
             token: accessToken,
