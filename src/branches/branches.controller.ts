@@ -32,6 +32,7 @@ import { BranchResponseDto } from './application/dto/responses/branch-response.d
 import { UserAuthenticatedRequest } from 'src/auth/auth';
 import { BranchWithAddressResponseDto } from './application/dto/responses/branch-with-address-response.dto';
 import { FindGymBranchesUseCase } from './application/usecases/find-gym-branches-usecase';
+import { FindBranchUsersUseCase } from './application/usecases/find-branch-users.usecase';
 
 @ApiSecurity('api_key')
 @ApiBearerAuth()
@@ -45,7 +46,8 @@ export class BranchesController {
     private readonly updateBranchUseCase: UpdateBranchUseCase,
     private readonly deleteBranchUseCase: DeleteBranchUseCase,
     private readonly findPlansByBranchUseCase: FindPlansByBranchUseCase,
-    private readonly findGymBranchesUseCase: FindGymBranchesUseCase
+    private readonly findGymBranchesUseCase: FindGymBranchesUseCase,
+    private readonly findBranchUsersUseCase: FindBranchUsersUseCase
   ) { }
 
   @UseInterceptors(AddUUIDInterceptor)
@@ -104,5 +106,11 @@ export class BranchesController {
     const branch: IBranch = await this.findBranchUseCase.run(id);
     const plans: IPlan[] = await this.findPlansByBranchUseCase.run(id);
     return { ...branch, plans };
+  }
+
+  @UseInterceptors(FindRegistryInterceptor<IBranch>)
+  @Get(':id/users')
+  getUsers(@Param('id', ParseUUIDPipe) id: string) {
+    return this.findBranchUsersUseCase.run(id);
   }
 }
