@@ -75,6 +75,9 @@ import { RoleRepositoryImpl } from 'src/permitions/frameworks/data/mongodb/role.
 import { UserRoleRepositoryImpl } from 'src/permitions/frameworks/data/mongodb/user-role.model';
 import { PersonRepositoryImpl } from 'src/users/frameworks/data/mogodb/person-repository.impl';
 import { PersonDocument, PersonModel } from 'src/users/frameworks/data/mogodb/models/person.model';
+import { IEquipment } from 'src/equipment/domain/entities/equipment.entity';
+import { EquipmentDocument, EquipmentModel } from 'src/equipment/frameworks/data/mongodb/models/equipment.model';
+import { EquipmentRepositoryImpl } from 'src/equipment/frameworks/data/mongodb/equipment.repository';
 
 @Injectable()
 export class MongoDBServices
@@ -91,6 +94,8 @@ export class MongoDBServices
   subscriptions: RepositoryContract<ISubscription>;
   branches: RepositoryContract<IBranch>;
   addresses: RepositoryContract<IAddress>;
+  equipment: RepositoryContract<IEquipment>;
+
   roles: RepositoryContract<IRole>;
   userRoles: RepositoryContract<IUserRole>;
   branchPermitions: RepositoryContract<IBranchPermition>;
@@ -118,6 +123,9 @@ export class MongoDBServices
     private branchRepository: Model<BranchDocument>,
     @InjectModel(AddressModel.name)
     private addressRepository: Model<AddressDocument>,
+    @InjectModel(EquipmentModel.name)
+    private equipmentRepository: Model<EquipmentDocument>,
+
     @InjectModel(RoleModel.name)
     private roleRepository: Model<RoleDocument>,
     @InjectModel(UserRoleModel.name)
@@ -142,6 +150,8 @@ export class MongoDBServices
     );
     this.branches = new BranchRepositoryImpl(this.branchRepository);
     this.addresses = new AddressRepositoryImpl(this.addressRepository);
+    this.equipment = new EquipmentRepositoryImpl(this.equipmentRepository);
+
     this.roles = new RoleRepositoryImpl(this.roleRepository);
     this.userRoles = new UserRoleRepositoryImpl(this.userRoleRepository);
     this.branchPermitions = new BranchPermitionRepositoryImpl(
