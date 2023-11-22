@@ -13,6 +13,9 @@ import { AddressesModule } from './addresses/addresses.module';
 import { PermitionsModule } from './permitions/permitions.module';
 // import { CaslModule } from './casl/casl.module';
 import { ThrottlerModule } from '@nestjs/throttler';
+import { EquipmentModule } from './equipment/equipment.module';
+import { CloudModule } from './cloud/cloud.module';
+import { DatabaseModule } from './database/database.module';
 
 @Module({
   imports: [
@@ -26,6 +29,7 @@ import { ThrottlerModule } from '@nestjs/throttler';
     BranchesModule,
     AddressesModule,
     PermitionsModule,
+    DatabaseModule,
     // CaslModule,
     ThrottlerModule.forRoot([
       {
@@ -33,8 +37,10 @@ import { ThrottlerModule } from '@nestjs/throttler';
         limit: 10,
       },
     ]),
+    EquipmentModule,
+    CloudModule
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule { }

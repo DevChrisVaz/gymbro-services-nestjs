@@ -14,6 +14,7 @@ import { SessionContract } from './session.contract';
 import { IPerson } from 'src/users/domain/entities/person.entity';
 import { IRole } from 'src/permitions/domain/entities/role.entity';
 import { IUserRole } from 'src/permitions/domain/entities/user-role.entity';
+import { IEquipment } from 'src/equipment/domain/entities/equipment.entity';
 
 export abstract class DatabaseServicesContract {
   abstract session: SessionContract;
@@ -28,6 +29,7 @@ export abstract class DatabaseServicesContract {
   abstract subscriptions: RepositoryContract<ISubscription>;
   abstract branches: RepositoryContract<IBranch>;
   abstract addresses: RepositoryContract<IAddress>;
+  abstract equipment: RepositoryContract<IEquipment>;
 
   abstract roles: RepositoryContract<IRole>;
   abstract userRoles: RepositoryContract<IUserRole>;
