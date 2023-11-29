@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Global, Module } from '@nestjs/common';
 import { BranchesService } from './branches.service';
 import { BranchesController } from './branches.controller';
 import { DatabaseModule } from 'src/database/database.module';
@@ -13,7 +13,9 @@ import { AddressesModule } from 'src/addresses/addresses.module';
 import { PlansModule } from 'src/plans/plans.module';
 import { FindGymBranchesUseCase } from './application/usecases/find-gym-branches-usecase';
 import { FindBranchUsersUseCase } from './application/usecases/find-branch-users.usecase';
+import { FindBranchEquipmentUseCase } from 'src/equipment/application/usecases/find-branch-equipment.usecase';
 
+@Global()
 @Module({
   imports: [DatabaseModule, AddressesModule, PlansModule],
   controllers: [BranchesController],
@@ -25,8 +27,9 @@ import { FindBranchUsersUseCase } from './application/usecases/find-branch-users
     CreateBranchUseCase,
     UpdateBranchUseCase,
     DeleteBranchUseCase,
-    FindBranchUsersUseCase
+    FindBranchUsersUseCase,
+    FindBranchEquipmentUseCase,
   ],
-  exports: [BranchesService],
+  exports: [BranchesService, CreateBranchUseCase],
 })
 export class BranchesModule {}

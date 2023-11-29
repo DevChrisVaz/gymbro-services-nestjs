@@ -10,15 +10,15 @@ export class CreateSubscriptionUseCase {
   constructor(
     private readonly subscriptionsService: SubscriptionsService,
     private dataServices: DatabaseServicesContract,
-  ) { }
+  ) {}
 
   async run(createPlanDto: CreateSubscriptionDto): Promise<ISubscription> {
     const foundSubscription = await this.dataServices.subscriptions.findOne({
       customer: createPlanDto.customer,
-      plan: createPlanDto.plan
+      plan: createPlanDto.plan,
     });
 
-    if (foundSubscription) throw new AlreadySubscribedException()
+    if (foundSubscription) throw new AlreadySubscribedException();
 
     const subscription =
       this.subscriptionsService.mapDtoToSubscription(createPlanDto);

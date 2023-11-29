@@ -13,7 +13,7 @@ export class UpdateCustomerUseCase {
     private readonly customersService: CustomersService,
     private readonly usersService: UsersService,
     private dataServices: DatabaseServicesContract,
-  ) { }
+  ) {}
 
   async run(
     uuid: string,

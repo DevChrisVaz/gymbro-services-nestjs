@@ -10,7 +10,6 @@ import { JwtService } from '@nestjs/jwt';
 import { IS_PUBLIC_KEY } from '../decorators/public.decorator';
 import { DatabaseServicesContract } from 'src/database/domain/contracts/database-services.contract';
 import { AuthService } from '../auth.service';
-import { IUserRole } from 'src/permitions/domain/entities/user-role.entity';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -20,7 +19,7 @@ export class AuthGuard implements CanActivate {
     private authService: AuthService,
     private readonly databaseServices: DatabaseServicesContract,
     @Inject('APIKEY') private apiKey: string,
-  ) { }
+  ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const isPublic = this.reflector.getAllAndOverride<boolean>(IS_PUBLIC_KEY, [
@@ -47,6 +46,5 @@ export class AuthGuard implements CanActivate {
     request.user = payload;
 
     return true;
-
   }
 }

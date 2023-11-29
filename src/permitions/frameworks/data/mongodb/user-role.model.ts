@@ -3,5 +3,5 @@ import { IUserRole } from 'src/permitions/domain/entities/user-role.entity';
 import { UserRolesRepositoryContract } from 'src/permitions/domain/repositories/user-roles.entity';
 
 export class UserRoleRepositoryImpl
-    extends MongoDBRepository<IUserRole>
-    implements UserRolesRepositoryContract { }
+  extends MongoDBRepository<IUserRole>
+  implements UserRolesRepositoryContract {}

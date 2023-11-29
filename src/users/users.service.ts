@@ -4,7 +4,11 @@ import { plainToClass } from 'class-transformer';
 import { CreateUserDto, UpdateUserDto } from './application/dto';
 import { CreatePersonDto } from './application/dto/create-person.dto';
 import { UpdatePersonDto } from './application/dto/update-person.dto';
-import { IPerson, Person, SerializedPerson } from './domain/entities/person.entity';
+import {
+  IPerson,
+  Person,
+  SerializedPerson,
+} from './domain/entities/person.entity';
 
 @Injectable()
 export class UsersService {

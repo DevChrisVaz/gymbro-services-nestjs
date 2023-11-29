@@ -17,25 +17,24 @@ export class CreateUserUseCase {
     private readonly usersService: UsersService,
     private dataServices: DatabaseServicesContract,
     private readonly dataHashingService: DataHashingContract,
-  ) { }
+  ) {}
 
   async run(
     createUserDto: CreateUserDto,
-    gymId?: string
+    gymId?: string,
   ): Promise<UserResponseDTO> {
-    const existingUser: IUser = await this.dataServices.users.findOne({ userName: createUserDto.userName });
+    const existingUser: IUser = await this.dataServices.users.findOne({
+      userName: createUserDto.userName,
+    });
 
     if (existingUser) throw new UserAlreadyExistsException();
 
     const person: IPerson = this.usersService.mapDtoToPerson(createUserDto);
     const createdPerson: IPerson = await this.dataServices.persons.save(person);
 
-    const user: IUser =
-      this.usersService.mapDtoToUser(createUserDto);
+    const user: IUser = this.usersService.mapDtoToUser(createUserDto);
     user.person = createdPerson.uuid;
-    const createdUser: IUser = await this.dataServices.users.save(
-      user,
-    );
+    const createdUser: IUser = await this.dataServices.users.save(user);
 
     const auth: Auth = {
       ref: 'USER',
@@ -46,8 +45,8 @@ export class CreateUserUseCase {
 
     const role: IUserRole = {
       user: createdUser.person,
-      role: createUserDto.role ?? Role.BASIC
-    }
+      role: createUserDto.role ?? Role.BASIC,
+    };
 
     if (gymId) role.gym = gymId;
 

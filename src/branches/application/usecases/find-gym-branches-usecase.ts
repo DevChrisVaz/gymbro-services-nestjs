@@ -7,16 +7,22 @@ import { AddressResponseDto } from 'src/addresses/application/dto/responses/addr
 
 @Injectable()
 export class FindGymBranchesUseCase {
-    constructor(private dataServices: DatabaseServicesContract) { }
+  constructor(private dataServices: DatabaseServicesContract) {}
 
-    async run(gymId: string): Promise<BranchWithAddressResponseDto[]> {
-        const foundBranches: IBranch[] = await this.dataServices.branches.find({ gym: gymId });
-        return await Promise.all(foundBranches.map(async branch => {
-            const address: IAddress = await this.dataServices.addresses.findOne({ uuid: branch.address });
-            return new BranchWithAddressResponseDto({
-                ...branch,
-                address: new AddressResponseDto({ ...address })
-            })
-        }));
-    }
+  async run(gymId: string): Promise<BranchWithAddressResponseDto[]> {
+    const foundBranches: IBranch[] = await this.dataServices.branches.find({
+      gym: gymId,
+    });
+    return await Promise.all(
+      foundBranches.map(async (branch) => {
+        const address: IAddress = await this.dataServices.addresses.findOne({
+          uuid: branch.address,
+        });
+        return new BranchWithAddressResponseDto({
+          ...branch,
+          address: new AddressResponseDto({ ...address }),
+        });
+      }),
+    );
+  }
 }

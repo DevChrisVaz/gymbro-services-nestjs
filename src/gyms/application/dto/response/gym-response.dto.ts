@@ -3,35 +3,37 @@ import { Exclude } from 'class-transformer';
 import { IGym } from 'src/gyms/domain/entities/gym.entity';
 
 export class GYMResponseDTO implements IGym {
-    @Exclude()
-    _id?: string;
+  @Exclude()
+  _id?: string;
 
-    @Exclude()
-    __v?: string;
+  @Exclude()
+  __v?: string;
 
-    @Exclude()
-    uuid: string;
+  @Exclude()
+  uuid: string;
 
-    @ApiProperty()
-    name: string;
+  @ApiProperty()
+  name: string;
 
-    @ApiProperty()
-    description: string;
+  @ApiProperty()
+  description: string;
 
-    @ApiProperty()
-    logo: string;
+  @ApiProperty()
+  email: string;
 
-    @Exclude()
-    status: string;
+  @ApiProperty()
+  logo: string;
 
-    @ApiProperty()
-    createdAt?: string;
+  @Exclude()
+  status: string;
 
-    @ApiProperty()
-    updatedAt?: string;
+  @ApiProperty()
+  createdAt?: string;
 
-    constructor(partial: Partial<GYMResponseDTO>) {
-        Object.assign(this, partial);
-    }
+  @ApiProperty()
+  updatedAt?: string;
 
+  constructor(partial: Partial<GYMResponseDTO>) {
+    Object.assign(this, partial);
+  }
 }

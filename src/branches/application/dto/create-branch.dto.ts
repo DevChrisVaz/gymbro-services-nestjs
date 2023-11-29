@@ -38,6 +38,6 @@ export class CreateBranchDto {
   @IsNotEmpty()
   @IsEmail()
   email: string;
-  
+
   gym: string;
 }

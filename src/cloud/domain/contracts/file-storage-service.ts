@@ -1,5 +1,3 @@
-import { Readable } from "stream";
-
 export abstract class FileStorageService {
-    abstract uploadFile(body: Readable, key: string): Promise<void>
+  abstract uploadFile(body: Buffer, key: string): Promise<void>;
 }

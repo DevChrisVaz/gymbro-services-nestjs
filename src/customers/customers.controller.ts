@@ -8,7 +8,6 @@ import {
   Delete,
   UseInterceptors,
   Request,
-  Res,
 } from '@nestjs/common';
 import { CreateCustomerDto, UpdateCustomerDto } from './application/dto';
 import {
@@ -31,8 +30,7 @@ import {
 import { Public } from 'src/auth/decorators/public.decorator';
 import { CustomerResponseDTO } from './application/dto/response/customer-response.dto';
 import { UserAuthenticatedRequest } from 'src/auth/auth';
-import { CustomerLoginUseCase } from 'src/auth/application/usecases/customer-login.usecase';
-import { CookieOptions, Response } from 'express';
+import { VerifyCustomerAccountUseCase } from './application/usecases/verify-customer-account.usecase';
 
 @ApiSecurity('api_key')
 @ApiBearerAuth()
@@ -41,6 +39,7 @@ import { CookieOptions, Response } from 'express';
 export class CustomersController {
   constructor(
     private readonly createCustomerUseCase: CreateCustomerUseCase,
+    private readonly verifyCustomerAccountUseCase: VerifyCustomerAccountUseCase,
     private readonly findCustomersUseCase: FindCustomersUseCase,
     private readonly findCustomerUseCase: FindOneUseCaseContract<
       Promise<CustomerResponseDTO>
@@ -48,8 +47,7 @@ export class CustomersController {
     private readonly updateCustomerUseCase: UpdateCustomerUseCase,
     private readonly deleteCustomerUseCase: DeleteCustomerUseCase,
     private readonly getCustomerSubscriptionsUseCase: GetCustomerSubscriptionsUseCase,
-    private readonly customerLoginUseCase: CustomerLoginUseCase
-  ) { }
+  ) {}
 
   // @ApiOperation({
   //   summary: "Register a customer for mobile application access"
@@ -60,24 +58,16 @@ export class CustomersController {
   @ApiCreatedResponse({
     type: CustomerResponseDTO,
   })
-  async create(@Body() createCustomerDto: CreateCustomerDto, @Res({ passthrough: true }) res: Response) {
+  async create(@Body() createCustomerDto: CreateCustomerDto) {
     await this.createCustomerUseCase.run(createCustomerDto);
-    const { accessToken, refreshToken } = await this.customerLoginUseCase.run({
-      userName: createCustomerDto.email,
-      password: createCustomerDto.password
-    });
+    return { message: 'Account creaded successfully' };
+  }
 
-    const cookieOptions: CookieOptions = {
-      httpOnly: true,
-      secure: true,
-      sameSite: 'none',
-      maxAge: 7 * 24 * 60 * 60,
-      path: '/token',
-    };
-
-    res.cookie('token', refreshToken, cookieOptions);
-
-    return { token: accessToken };
+  @Public()
+  @Patch('verify-account/:token')
+  @ApiOkResponse()
+  async verifyAccount(@Param('token') token: string) {
+    await this.verifyCustomerAccountUseCase.run(token);
   }
 
   @Get()

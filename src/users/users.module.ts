@@ -6,6 +6,7 @@ import { CreateUserUseCase } from './application/usecases/create-user.usecase';
 import { UsersController } from './users.controller';
 import { FindUsersUseCase } from './application/usecases/find-users.usecase';
 import { FindUserUseCase } from './application/usecases/find-user.usecase';
+import { PersonCacheServiceProvider } from './frameworks/providers/person-cache-service.provider';
 
 @Module({
   imports: [DatabaseModule, EncryptionModule],
@@ -14,8 +15,9 @@ import { FindUserUseCase } from './application/usecases/find-user.usecase';
     CreateUserUseCase,
     FindUsersUseCase,
     FindUserUseCase,
-    UsersService
+    UsersService,
+    PersonCacheServiceProvider,
   ],
-  exports: [UsersService],
+  exports: [UsersService, PersonCacheServiceProvider],
 })
-export class UsersModule { }
+export class UsersModule {}

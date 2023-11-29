@@ -33,8 +33,3 @@ export class SerializedUser extends User {
     Object.assign(this, partial);
   }
 }
-
-
-export interface AuthenticatedUser {
-  
-}

@@ -18,7 +18,7 @@ import { IEquipment } from 'src/equipment/domain/entities/equipment.entity';
 
 export abstract class DatabaseServicesContract {
   abstract session: SessionContract;
-  abstract persons: RepositoryContract<IPerson>
+  abstract persons: RepositoryContract<IPerson>;
   abstract users: RepositoryContract<IUser>;
   abstract gyms: RepositoryContract<IGym>;
   abstract GYMUsers: RepositoryContract<IGYMUser>;
