@@ -109,8 +109,7 @@ const confirmRegistration = (person: IPerson) => {
                                                 <table align="center" class="content">
                                                     <tr>
                                                         <td>
-                                                            <p style="font-size: 18px; font-weight: bold;">Confirmar
-                                                                Cuenta</p>
+                                                            <p style="font-size: 18px; font-weight: bold;">Bienvenido a GYMBRO</p>
                                                         </td>
                                                     </tr>
                                                     <tr>

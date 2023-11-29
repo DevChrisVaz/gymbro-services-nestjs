@@ -16,8 +16,8 @@ export class GYMNodemailerService implements GYMMailerServiceContract {
     await this.mailerService.sendMail({
       from: 'GYMBRO Team <gymbro.test@outlook.com>',
       html: confirmRegistration(person),
-      subject: 'Verificación de cuenta',
-      text: 'Verificación de cuenta',
+      subject: 'Bienvenido a GYMBRO',
+      text: 'Bienvenido a GYMBRO',
       to: gym.email,
     });
   }
