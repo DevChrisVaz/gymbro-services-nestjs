@@ -13,11 +13,13 @@ export class AddNewUserUseCase {
     private readonly usersService: UsersService,
     private readonly databaseServices: DatabaseServicesContract,
     private readonly dataHashingService: DataHashingContract,
-  ) { }
+  ) {}
 
   async run(createUserDto: CreateUserDto): Promise<UserResponseDTO> {
     const person: IPerson = this.usersService.mapDtoToPerson(createUserDto);
-    const createdPerson: IPerson = await this.databaseServices.persons.save(person);
+    const createdPerson: IPerson = await this.databaseServices.persons.save(
+      person,
+    );
 
     const user: IUser = this.usersService.mapDtoToUser(createUserDto);
     user.person = createdPerson.uuid;

@@ -1,4 +1,12 @@
-import { Body, Controller, Post, Put, Req, Res, UnauthorizedException } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Post,
+  Put,
+  Req,
+  Res,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { LogInDto } from './application/dtos';
 import { CookieOptions, Request, Response } from 'express';
 import { Public } from './decorators/public.decorator';
@@ -14,14 +22,18 @@ export class AuthController {
     private readonly authService: AuthService,
     private readonly customerLoginUseCase: CustomerLoginUseCase,
     private readonly userLoginUseCase: UserLoginUseCase,
-    private readonly refreshSessionUseCase: RefreshSessionUseCase
-  ) { }
-
+    private readonly refreshSessionUseCase: RefreshSessionUseCase,
+  ) {}
 
   @Public()
-  @Post("customers")
-  async customerLogIn(@Body() logInDto: LogInDto, @Res({ passthrough: true }) res: Response) {
-    const { accessToken, refreshToken } = await this.customerLoginUseCase.run(logInDto);
+  @Post('customers')
+  async customerLogIn(
+    @Body() logInDto: LogInDto,
+    @Res({ passthrough: true }) res: Response,
+  ) {
+    const { accessToken, refreshToken } = await this.customerLoginUseCase.run(
+      logInDto,
+    );
 
     const cookieOptions: CookieOptions = {
       httpOnly: true,
@@ -37,15 +49,20 @@ export class AuthController {
   }
 
   @Public()
-  @Post("users")
-  async userLogIn(@Body() logInDto: LogInDto, @Res({ passthrough: true }) res: Response) {
-    const { accessToken, refreshToken } = await this.userLoginUseCase.run(logInDto);
+  @Post('users')
+  async userLogIn(
+    @Body() logInDto: LogInDto,
+    @Res({ passthrough: true }) res: Response,
+  ) {
+    const { accessToken, refreshToken } = await this.userLoginUseCase.run(
+      logInDto,
+    );
 
     const cookieOptions: CookieOptions = {
       httpOnly: true,
       secure: true,
       sameSite: 'none',
-      maxAge: 24 * 60 * 60 * 1000 * 7
+      maxAge: 24 * 60 * 60 * 1000 * 7,
     };
 
     res.cookie('token', refreshToken, cookieOptions);
@@ -54,10 +71,13 @@ export class AuthController {
   }
 
   @Public()
-  @Put("refresh-token")
-  async refreshToken(@Req() req: Request, @Res({ passthrough: true }) res: Response) {
+  @Put('refresh-token')
+  async refreshToken(
+    @Req() req: Request,
+    @Res({ passthrough: true }) res: Response,
+  ) {
     const token = this.authService.extractTokenFromHeader(req);
-    
+
     if (!req.cookies.token || !token) throw new UnauthorizedException();
 
     const tokens: ITokens = await this.refreshSessionUseCase.run({
@@ -69,11 +89,11 @@ export class AuthController {
       httpOnly: true,
       secure: true,
       sameSite: 'none',
-      maxAge: 7 * 24 * 60 * 60 * 1000
+      maxAge: 7 * 24 * 60 * 60 * 1000,
     };
 
     res.cookie('token', tokens.refreshToken, cookieOptions);
 
-    return { token: tokens.accessToken }
+    return { token: tokens.accessToken };
   }
 }

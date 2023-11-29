@@ -7,19 +7,19 @@ import { IAddress } from 'src/addresses/domain/entities/address.entity';
 
 @Injectable()
 export class FindBranchUseCase {
-  constructor(
-    private dataServices: DatabaseServicesContract,
-  ) { }
+  constructor(private dataServices: DatabaseServicesContract) {}
 
   async run(uuid: string): Promise<BranchWithAddressResponseDto> {
     const foundBranch: IBranch = await this.dataServices.branches.findOne({
       uuid,
     });
     if (foundBranch) {
-      const address: IAddress = await this.dataServices.addresses.findOne({ uuid: foundBranch.address });
+      const address: IAddress = await this.dataServices.addresses.findOne({
+        uuid: foundBranch.address,
+      });
       return new BranchWithAddressResponseDto({
         ...foundBranch,
-        address
+        address,
       });
     }
 

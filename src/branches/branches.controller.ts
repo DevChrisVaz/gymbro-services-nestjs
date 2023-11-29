@@ -21,7 +21,13 @@ import {
 } from './application/usecases';
 import { FindOneUseCaseContract } from 'src/core/contracts/usecase.contract';
 import { IBranch } from './domain/entities/branch.entity';
-import { ApiBearerAuth, ApiCreatedResponse, ApiOkResponse, ApiSecurity, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiCreatedResponse,
+  ApiOkResponse,
+  ApiSecurity,
+  ApiTags,
+} from '@nestjs/swagger';
 import { FindRegistryInterceptor } from 'src/core/interceptors/find-registry.interceptor';
 import { AddUUIDInterceptor } from 'src/core/interceptors/add-uuid.interceptor';
 import { AddAddressUUIDInterceptor } from 'src/addresses/interceptors/add-address-uuid.interceptor';
@@ -33,6 +39,7 @@ import { UserAuthenticatedRequest } from 'src/auth/auth';
 import { BranchWithAddressResponseDto } from './application/dto/responses/branch-with-address-response.dto';
 import { FindGymBranchesUseCase } from './application/usecases/find-gym-branches-usecase';
 import { FindBranchUsersUseCase } from './application/usecases/find-branch-users.usecase';
+import { FindBranchEquipmentUseCase } from 'src/equipment/application/usecases/find-branch-equipment.usecase';
 
 @ApiSecurity('api_key')
 @ApiBearerAuth()
@@ -47,19 +54,20 @@ export class BranchesController {
     private readonly deleteBranchUseCase: DeleteBranchUseCase,
     private readonly findPlansByBranchUseCase: FindPlansByBranchUseCase,
     private readonly findGymBranchesUseCase: FindGymBranchesUseCase,
-    private readonly findBranchUsersUseCase: FindBranchUsersUseCase
-  ) { }
+    private readonly findBranchUsersUseCase: FindBranchUsersUseCase,
+    private readonly findBranchEquipmentUseCase: FindBranchEquipmentUseCase,
+  ) {}
 
   @UseInterceptors(AddUUIDInterceptor)
   @UseInterceptors(AddAddressUUIDInterceptor)
   @ApiCreatedResponse({
-    type: BranchResponseDto
+    type: BranchResponseDto,
   })
   @Post()
   create(
     @Req() req: UserAuthenticatedRequest,
     @Body() createBranchDto: CreateBranchDto,
-    @Query() query: any
+    @Query() query: any,
   ) {
     createBranchDto.gym = req.user.gym ?? query.gymId;
     return this.createBranchUseCase.run(createBranchDto);
@@ -68,15 +76,15 @@ export class BranchesController {
   @Public()
   @Get()
   @ApiOkResponse({
-    type: BranchWithAddressResponseDto
+    type: BranchWithAddressResponseDto,
   })
   findAll() {
     return this.findBranchesUseCase.run();
   }
 
-  @Get("/gym")
+  @Get('/gym')
   @ApiOkResponse({
-    type: BranchWithAddressResponseDto
+    type: BranchWithAddressResponseDto,
   })
   findByGym(@Req() req: UserAuthenticatedRequest, @Query() query: any) {
     return this.findGymBranchesUseCase.run(req.user.gym ?? query.gymId);
@@ -112,5 +120,12 @@ export class BranchesController {
   @Get(':id/users')
   getUsers(@Param('id', ParseUUIDPipe) id: string) {
     return this.findBranchUsersUseCase.run(id);
+  }
+
+  @Public()
+  @UseInterceptors(FindRegistryInterceptor<IBranch>)
+  @Get(':id/equipment')
+  getEquipment(@Param('id', ParseUUIDPipe) id: string) {
+    return this.findBranchEquipmentUseCase.run(id);
   }
 }

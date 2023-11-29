@@ -1,19 +1,13 @@
-import {
-  ApiHideProperty,
-  ApiProperty,
-  ApiPropertyOptional,
-} from '@nestjs/swagger';
+import { ApiHideProperty, ApiProperty } from '@nestjs/swagger';
 import {
   IsNotEmpty,
   IsOptional,
   IsString,
   IsStrongPassword,
-  IsUUID,
 } from 'class-validator';
 import { CreateUserDto } from 'src/users/application/dto';
 
 export class AddNewUserDto extends CreateUserDto {
-
   @ApiHideProperty()
   user: string;
 
@@ -31,5 +25,4 @@ export class AddNewUserDto extends CreateUserDto {
   @IsString()
   @IsOptional()
   status?: string;
-
 }

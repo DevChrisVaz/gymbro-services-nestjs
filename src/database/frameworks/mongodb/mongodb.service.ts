@@ -67,21 +67,34 @@ import {
 import { GYMUserRepositoryImpl } from 'src/gyms/frameworks/data/mongodb/gym-user.repository';
 import { SessionContract } from 'src/database/domain/contracts/session.contract';
 import { MongoDBSession } from './mongodb-session';
-import { RoleDocument, RoleModel } from 'src/permitions/frameworks/data/mongodb/models/role.model';
-import { UserRoleDocument, UserRoleModel } from 'src/permitions/frameworks/data/mongodb/models/user-role.model';
+import {
+  RoleDocument,
+  RoleModel,
+} from 'src/permitions/frameworks/data/mongodb/models/role.model';
+import {
+  UserRoleDocument,
+  UserRoleModel,
+} from 'src/permitions/frameworks/data/mongodb/models/user-role.model';
 import { IRole } from 'src/permitions/domain/entities/role.entity';
 import { IUserRole } from 'src/permitions/domain/entities/user-role.entity';
 import { RoleRepositoryImpl } from 'src/permitions/frameworks/data/mongodb/role.repository';
 import { UserRoleRepositoryImpl } from 'src/permitions/frameworks/data/mongodb/user-role.model';
 import { PersonRepositoryImpl } from 'src/users/frameworks/data/mogodb/person-repository.impl';
-import { PersonDocument, PersonModel } from 'src/users/frameworks/data/mogodb/models/person.model';
+import {
+  PersonDocument,
+  PersonModel,
+} from 'src/users/frameworks/data/mogodb/models/person.model';
 import { IEquipment } from 'src/equipment/domain/entities/equipment.entity';
-import { EquipmentDocument, EquipmentModel } from 'src/equipment/frameworks/data/mongodb/models/equipment.model';
+import {
+  EquipmentDocument,
+  EquipmentModel,
+} from 'src/equipment/frameworks/data/mongodb/models/equipment.model';
 import { EquipmentRepositoryImpl } from 'src/equipment/frameworks/data/mongodb/equipment.repository';
 
 @Injectable()
 export class MongoDBServices
-  implements DatabaseServicesContract, OnApplicationBootstrap {
+  implements DatabaseServicesContract, OnApplicationBootstrap
+{
   session: SessionContract;
   persons: PersonRepositoryImpl;
   users: UserRepositoryImpl;
@@ -132,8 +145,8 @@ export class MongoDBServices
     private userRoleRepository: Model<UserRoleDocument>,
     @InjectModel(BranchPermitionModel.name)
     private branchPermitionRepository: Model<BranchPermitionDocument>,
-    @InjectConnection() private connection: Connection
-  ) { }
+    @InjectConnection() private connection: Connection,
+  ) {}
 
   onApplicationBootstrap() {
     this.session = new MongoDBSession();
@@ -159,7 +172,9 @@ export class MongoDBServices
     );
   }
 
-  async runInTransaction(operations: (session: ClientSession) => Promise<any>): Promise<any> {
+  async runInTransaction(
+    operations: (session: ClientSession) => Promise<any>,
+  ): Promise<any> {
     const session = await this.connection.startSession();
     session.startTransaction();
 

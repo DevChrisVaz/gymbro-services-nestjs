@@ -9,12 +9,15 @@ export class FindGymsUseCase {
   constructor(
     private readonly gymsService: GymsService,
     private readonly dataServices: DatabaseServicesContract,
-  ) { }
+  ) {}
 
   async run(): Promise<GYMResponseDTO[]> {
     const foundGyms: IGym[] = await this.dataServices.gyms.find({});
-    return foundGyms.map((gym) => new GYMResponseDTO({
-      ...this.gymsService.serializeGym(gym)
-    }));
+    return foundGyms.map(
+      (gym) =>
+        new GYMResponseDTO({
+          ...this.gymsService.serializeGym(gym),
+        }),
+    );
   }
 }

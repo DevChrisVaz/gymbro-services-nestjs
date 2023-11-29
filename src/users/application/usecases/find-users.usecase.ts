@@ -6,26 +6,28 @@ import { IUser } from 'src/users/domain/entities/user.entity';
 
 @Injectable()
 export class FindUsersUseCase {
-  constructor(private dataServices: DatabaseServicesContract) { }
+  constructor(private dataServices: DatabaseServicesContract) {}
 
   async run(gymId?: string): Promise<UserResponseDTO[]> {
-
     if (gymId) {
       const gymRoles = await this.dataServices.userRoles.find({ gym: gymId });
       return await Promise.all(
-        gymRoles.map(async role => {
-          const foundUser: IUser = await this.dataServices.users.findOne({ person: role.user });
-          const foundPerson: IPerson = await this.dataServices.persons.findOne({ uuid: foundUser.person });
+        gymRoles.map(async (role) => {
+          const foundUser: IUser = await this.dataServices.users.findOne({
+            person: role.user,
+          });
+          const foundPerson: IPerson = await this.dataServices.persons.findOne({
+            uuid: foundUser.person,
+          });
           return new UserResponseDTO({
             ...foundPerson,
-            ...foundUser
-          })
-        }));
+            ...foundUser,
+          });
+        }),
+      );
     }
 
-    const foundUsers: IUser[] = await this.dataServices.users.find(
-      {},
-    );
+    const foundUsers: IUser[] = await this.dataServices.users.find({});
     return await Promise.all(
       foundUsers.map(async (user) => {
         const foundPerson: IPerson = await this.dataServices.persons.findOne({

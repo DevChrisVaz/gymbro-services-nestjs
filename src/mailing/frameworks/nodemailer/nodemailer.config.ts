@@ -1,23 +1,7 @@
-import nodemailer from 'nodemailer';
-
-// class Nodemailer {
-//     constructor(
-//         private readonly host: string,
-//         private readonly port: number,
-
-//     ) {
-
-//     }
-// }
-
-const transporter = nodemailer.createTransport({
-  host: '',
-  port: 0,
-  secure: false,
-  auth: {
-    user: '',
-    pass: '',
-  },
+export default () => ({
+  nodemailerEmailService: process.env.NODEMAILER_EMAIL_SERVICE,
+  nodemailerHost: process.env.NODEMAILER_HOST,
+  nodemailerPort: process.env.NODEMAILER_PORT,
+  nodemailerUser: process.env.NODEMAILER_USER,
+  nodemailerPass: process.env.NODEMAILER_PASSWORD,
 });
-
-export default transporter;

@@ -1,5 +1,5 @@
-import { FileStorageService } from "./file-storage-service";
+import { FileStorageService } from './file-storage-service';
 
 export abstract class CloudServicesContract {
-    abstract fileStorage: FileStorageService
+  abstract fileStorage: FileStorageService;
 }

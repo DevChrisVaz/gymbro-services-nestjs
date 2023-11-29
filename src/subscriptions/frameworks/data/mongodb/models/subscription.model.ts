@@ -1,5 +1,4 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { now } from 'mongoose';
 import { ISubscription } from 'src/subscriptions/domain/entities/subscription.entity';
 
 export type SubscriptionDocument = SubscriptionModel & Document;
@@ -20,7 +19,6 @@ export class SubscriptionModel implements ISubscription {
 
   createdAt: string;
   updatedAt: string;
-  
 }
 
 export const SubscriptionSchema =

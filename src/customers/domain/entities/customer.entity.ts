@@ -9,6 +9,10 @@ export interface ICustomer {
   profilePicture: string;
 }
 
+export interface ICustomerWithPassword extends ICustomer {
+  password: string;
+}
+
 export class Customer implements ICustomer {
   person: string;
   email: string;

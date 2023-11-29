@@ -4,7 +4,6 @@ import { IUser } from 'src/users/domain/entities/user.entity';
 import { IPerson } from 'src/users/domain/entities/person.entity';
 
 export class UserResponseDTO implements IPerson, IUser {
-
   @Exclude()
   _id: any;
 

@@ -5,6 +5,7 @@ export interface IGym extends ITimestamps {
   uuid: string;
   name: string;
   description: string;
+  email: string;
   logo: string;
   status: string;
 }
@@ -13,6 +14,7 @@ export class Gym implements IGym {
   uuid: string;
   name: string;
   description: string;
+  email: string;
   logo: string;
   status: string;
   createdAt?: string;
