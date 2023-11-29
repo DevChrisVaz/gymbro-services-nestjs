@@ -10,7 +10,7 @@ async function bootstrap() {
   app.use(cookieParser());
   app.enableCors({
     credentials: true,
-    origin: ["https://gymbro-dashboard.onrender.com"]
+    origin: ["https://gymbro-dashboard.onrender.com", "https://gymbro-landing-page.vercel.app"]
   });
   app.setGlobalPrefix('api');
   app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
