@@ -48,9 +48,22 @@ import {
   GYMUserModel,
   GYMUserSchema,
 } from 'src/gyms/frameworks/data/mongodb/models/gym-user.model';
-import { RoleModel, RoleSchema } from 'src/permitions/frameworks/data/mongodb/models/role.model';
-import { UserRoleModel, UserRoleSchema } from 'src/permitions/frameworks/data/mongodb/models/user-role.model';
-import { PersonModel, PersonSchema } from 'src/users/frameworks/data/mogodb/models/person.model';
+import {
+  RoleModel,
+  RoleSchema,
+} from 'src/permitions/frameworks/data/mongodb/models/role.model';
+import {
+  UserRoleModel,
+  UserRoleSchema,
+} from 'src/permitions/frameworks/data/mongodb/models/user-role.model';
+import {
+  PersonModel,
+  PersonSchema,
+} from 'src/users/frameworks/data/mogodb/models/person.model';
+import {
+  EquipmentModel,
+  EquipmentSchema,
+} from 'src/equipment/frameworks/data/mongodb/models/equipment.model';
 
 @Module({
   imports: [
@@ -67,6 +80,8 @@ import { PersonModel, PersonSchema } from 'src/users/frameworks/data/mogodb/mode
       { name: SubscriptionModel.name, schema: SubscriptionSchema },
       { name: BranchModel.name, schema: BranchSchema },
       { name: AddressModel.name, schema: AddressSchema },
+      { name: EquipmentModel.name, schema: EquipmentSchema },
+
       { name: RoleModel.name, schema: RoleSchema },
       { name: UserRoleModel.name, schema: UserRoleSchema },
       { name: BranchPermitionModel.name, schema: BranchPermitionSchema },
@@ -87,4 +102,4 @@ import { PersonModel, PersonSchema } from 'src/users/frameworks/data/mogodb/mode
   ],
   exports: [DatabaseServicesContract],
 })
-export class MongoDBModule { }
+export class MongoDBModule {}

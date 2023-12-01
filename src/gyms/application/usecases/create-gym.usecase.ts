@@ -9,6 +9,7 @@ import { IPerson } from 'src/users/domain/entities/person.entity';
 import { IUser } from 'src/users/domain/entities/user.entity';
 import { Role } from 'src/permitions/domain/enums/role.enum';
 import { UserAlreadyExistsException } from 'src/users/application/exceptions/user-already-exists-exception';
+import { GYMMailerServiceContract } from 'src/gyms/domain/contracts/gym-mailer-service-contract';
 
 @Injectable()
 export class CreateGymUseCase {
@@ -17,10 +18,13 @@ export class CreateGymUseCase {
     private readonly usersService: UsersService,
     private dataServices: DatabaseServicesContract,
     private readonly dataHashing: DataHashingContract,
-  ) { }
+    private readonly gymMailingService: GYMMailerServiceContract,
+  ) {}
 
   async run(createGymDto: CreateGymDto): Promise<IGym> {
-    const existingUser: IUser = await this.dataServices.users.findOne({ userName: createGymDto.user.userName });
+    const existingUser: IUser = await this.dataServices.users.findOne({
+      userName: createGymDto.user.userName,
+    });
     if (existingUser) throw new UserAlreadyExistsException();
 
     const gym: IGym = this.gymsService.mapDtoToGym(createGymDto);
@@ -39,7 +43,7 @@ export class CreateGymUseCase {
     await this.dataServices.userRoles.save({
       user: person.uuid,
       role: Role.OWNER,
-      gym: createdGym.uuid
+      gym: createdGym.uuid,
     });
 
     await this.dataServices.auth.save({
@@ -47,6 +51,11 @@ export class CreateGymUseCase {
       userName: user.userName,
       password: await this.dataHashing.hash(createGymDto.user.password),
     });
+
+    await this.gymMailingService.sendConfirmRegistrationEmail(
+      createdGym,
+      createdPerson,
+    );
 
     return this.gymsService.serializeGym(createdGym);
   }

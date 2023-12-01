@@ -14,6 +14,9 @@ export class GymModel implements IGym {
   @Prop({ required: true })
   description: string;
 
+  @Prop({ required: true })
+  email: string;
+
   @Prop()
   logo: string;
 

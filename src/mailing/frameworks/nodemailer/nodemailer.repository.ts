@@ -1,10 +1,15 @@
+import { Inject } from '@nestjs/common';
+import { Transporter } from 'nodemailer';
 import { IMail } from 'src/mailing/domain/entities/mail.entity';
 import { MailerRepositoryContract } from 'src/mailing/domain/repositories/mailer.repository';
-import transporter from './nodemailer.config';
 
-export class NodeMailerRepositoryImpl extends MailerRepositoryContract {
+export class NodeMailerRepositoryImpl implements MailerRepositoryContract {
+  constructor(
+    @Inject('TRANSPORT_PROVIDER') private readonly transporter: Transporter,
+  ) {}
+
   async sendMail(mail: IMail) {
-    await transporter.sendMail({
+    await this.transporter.sendMail({
       from: mail.from,
       to: mail.to,
       subject: mail.subject,

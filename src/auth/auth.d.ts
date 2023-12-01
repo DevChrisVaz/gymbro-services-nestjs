@@ -1,6 +1,5 @@
 import { Request } from 'express';
 import { Customer } from 'src/customers/domain/entities/customer.entity';
-import { IBranchPermition } from 'src/permitions/domain/entities/branch-permition.entity';
 
 export interface AuthenticatedUser {
   id: string;

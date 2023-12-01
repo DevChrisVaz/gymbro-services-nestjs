@@ -36,7 +36,7 @@ export class PlansController {
     private readonly findPlansByBranch: FindPlansByBranchUseCase,
     private readonly updatePlanUseCase: UpdatePlanUseCase,
     private readonly deletePlanUseCase: DeletePlanUseCase,
-  ) { }
+  ) {}
 
   @UseInterceptors(AddUUIDInterceptor)
   @Post()
@@ -53,8 +53,8 @@ export class PlansController {
   }
 
   @Public()
-  @Get(":branchId")
-  findBranchPlans(@Param("branchId", ParseUUIDPipe) branchId: string) {
+  @Get(':branchId')
+  findBranchPlans(@Param('branchId', ParseUUIDPipe) branchId: string) {
     return this.findPlansByBranch.run(branchId);
   }
 

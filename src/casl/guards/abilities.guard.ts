@@ -5,7 +5,6 @@ import {
   Injectable,
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-// import { CaslAbilityFactory } from '../casl-ability/casl-ability.factory';
 import {
   CHECK_ABILITY,
   RequiredRule,
@@ -14,10 +13,7 @@ import { ForbiddenError } from '@casl/ability';
 
 @Injectable()
 export class AbilitiesGuard implements CanActivate {
-  constructor(
-    private reflector: Reflector,
-    // private caslAbilityFactory: CaslAbilityFactory,
-  ) {}
+  constructor(private reflector: Reflector) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const rules =

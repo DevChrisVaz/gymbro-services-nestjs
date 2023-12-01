@@ -37,4 +37,4 @@ import { UserLoginUseCase } from './application/usecases/user-login.usecase';
   ],
   exports: [AuthService, CustomerLoginUseCase],
 })
-export class AuthModule { }
+export class AuthModule {}

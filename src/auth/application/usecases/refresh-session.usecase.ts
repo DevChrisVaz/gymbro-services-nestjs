@@ -11,12 +11,13 @@ export class RefreshSessionUseCase {
     private readonly databaseServices: DatabaseServicesContract,
     private readonly authService: AuthService,
     private readonly jwtService: JwtService,
-  ) { }
+  ) {}
 
   async run(tokens: ITokens): Promise<ITokens> {
-    const foundToken = await this.databaseServices.tokens.findOne({ token: tokens.refreshToken });
-    if (!foundToken)
-      throw new UnauthorizedException();
+    const foundToken = await this.databaseServices.tokens.findOne({
+      token: tokens.refreshToken,
+    });
+    if (!foundToken) throw new UnauthorizedException();
 
     const accessTokenPayload: any = this.jwtService.decode(tokens.accessToken);
     const refreshTokenPayload = await this.jwtService
@@ -39,7 +40,7 @@ export class RefreshSessionUseCase {
         role: accessTokenPayload.role,
         gym: accessTokenPayload.gym,
       },
-      '15s',
+      '30s',
     );
     const refreshToken: string = await this.authService.generateRefreshToken({
       token: accessToken,

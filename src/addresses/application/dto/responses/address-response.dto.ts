@@ -1,7 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 
 export class AddressResponseDto {
-
   @ApiProperty()
   uuid: string;
 
@@ -29,5 +28,4 @@ export class AddressResponseDto {
   constructor(partial: Partial<AddressResponseDto>) {
     Object.assign(this, partial);
   }
-
 }

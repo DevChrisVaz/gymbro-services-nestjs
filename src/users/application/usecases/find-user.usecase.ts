@@ -6,22 +6,20 @@ import { IUser } from 'src/users/domain/entities/user.entity';
 
 @Injectable()
 export class FindUserUseCase {
-    constructor(private dataServices: DatabaseServicesContract) { }
+  constructor(private dataServices: DatabaseServicesContract) {}
 
-    async run(uuid: string): Promise<UserResponseDTO> {
+  async run(uuid: string): Promise<UserResponseDTO> {
+    const foundUser: IUser = await this.dataServices.users.findOne({
+      person: uuid,
+    });
 
-        const foundUser: IUser = await this.dataServices.users.findOne(
-            { person: uuid },
-        );
+    const foundPerson: IPerson = await this.dataServices.persons.findOne({
+      uuid: foundUser.person,
+    });
 
-        const foundPerson: IPerson = await this.dataServices.persons.findOne({
-            uuid: foundUser.person,
-        });
-
-        return new UserResponseDTO({
-            ...foundPerson,
-            ...foundUser,
-        });
-
-    }
+    return new UserResponseDTO({
+      ...foundPerson,
+      ...foundUser,
+    });
+  }
 }

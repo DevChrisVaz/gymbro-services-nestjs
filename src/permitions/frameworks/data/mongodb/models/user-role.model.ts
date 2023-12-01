@@ -11,7 +11,7 @@ export class UserRoleModel implements IUserRole {
 
   @Prop({
     required: true,
-    enum: Role
+    enum: Role,
   })
   role: string;
 
@@ -19,5 +19,4 @@ export class UserRoleModel implements IUserRole {
   gym: string;
 }
 
-export const UserRoleSchema =
-  SchemaFactory.createForClass(UserRoleModel);
+export const UserRoleSchema = SchemaFactory.createForClass(UserRoleModel);

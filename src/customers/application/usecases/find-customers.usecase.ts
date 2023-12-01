@@ -6,7 +6,7 @@ import { IPerson } from 'src/users/domain/entities/person.entity';
 
 @Injectable()
 export class FindCustomersUseCase {
-  constructor(private dataServices: DatabaseServicesContract) { }
+  constructor(private dataServices: DatabaseServicesContract) {}
 
   async run(): Promise<CustomerResponseDTO[]> {
     const foundCustomers: ICustomer[] = await this.dataServices.customers.find(

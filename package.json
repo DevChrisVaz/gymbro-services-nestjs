@@ -2,7 +2,7 @@
   "name": "gym-assistant-services",
   "version": "0.0.1",
   "description": "",
-  "author": "",
+  "author": "Christian Alexander Vázquez González",
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
@@ -20,6 +20,7 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.454.0",
     "@casl/ability": "^6.5.0",
     "@nestjs/cache-manager": "^2.1.0",
     "@nestjs/common": "^9.0.0",
@@ -33,14 +34,17 @@
     "@nestjs/swagger": "^7.1.13",
     "@nestjs/throttler": "^5.0.1",
     "bcrypt": "^5.1.0",
-    "cache-manager": "^5.2.3",
+    "cache-manager": "^5.3.1",
+    "cache-manager-redis-store": "^3.0.1",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.0",
     "cookie": "^0.5.0",
     "cookie-parser": "^1.4.6",
+    "jimp": "^0.22.10",
     "mongoose": "^7.2.1",
     "nodemailer": "^6.9.7",
     "pkcs7-padding": "^0.1.1",
+    "redis": "^3.1.2",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.2.0",
     "uuid": "^9.0.0"
@@ -53,6 +57,7 @@
     "@types/cookie-parser": "^1.4.5",
     "@types/express": "^4.17.13",
     "@types/jest": "29.5.0",
+    "@types/multer": "^1.4.10",
     "@types/node": "18.15.11",
     "@types/nodemailer": "^6.4.13",
     "@types/pkcs7-padding": "^0.1.1",

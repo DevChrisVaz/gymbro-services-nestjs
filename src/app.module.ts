@@ -13,6 +13,13 @@ import { AddressesModule } from './addresses/addresses.module';
 import { PermitionsModule } from './permitions/permitions.module';
 // import { CaslModule } from './casl/casl.module';
 import { ThrottlerModule } from '@nestjs/throttler';
+import { EquipmentModule } from './equipment/equipment.module';
+import { CloudModule } from './cloud/cloud.module';
+import { DatabaseModule } from './database/database.module';
+import { CacheModule } from '@nestjs/cache-manager';
+import type { RedisClientOptions } from 'redis';
+import { redisStore } from 'cache-manager-redis-store';
+import { MailingModule } from './mailing/mailing.module';
 
 @Module({
   imports: [
@@ -26,13 +33,26 @@ import { ThrottlerModule } from '@nestjs/throttler';
     BranchesModule,
     AddressesModule,
     PermitionsModule,
+    DatabaseModule,
+    MailingModule,
     // CaslModule,
+    EquipmentModule,
+    CloudModule,
     ThrottlerModule.forRoot([
       {
-        ttl: 60000,
+        ttl: 30000,
         limit: 10,
       },
     ]),
+    CacheModule.registerAsync<RedisClientOptions>({
+      isGlobal: true,
+      useFactory: async () => ({
+        store: redisStore,
+        url: process.env.REDIS_URL,
+        user: process.env.REDIS_USER,
+        password: process.env.REDIS_PASSWORD,
+      }),
+    }),
   ],
   controllers: [AppController],
   providers: [AppService],

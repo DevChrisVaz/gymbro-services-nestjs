@@ -12,6 +12,6 @@ export class FindPlansUseCase {
 
   async run(): Promise<IPlan[]> {
     const foundPlans: IPlan[] = await this.dataServices.plans.find({});
-    return foundPlans.map((gym) => this.plansService.serializePlan(gym));
+    return foundPlans.map((plan) => this.plansService.serializePlan(plan));
   }
 }

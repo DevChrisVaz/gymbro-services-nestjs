@@ -15,8 +15,9 @@ export class FindCustomerUseCase {
     });
 
     if (foundCustomer) {
-      const foundPerson: IPerson = await this.dataServices.persons.findOne({ uuid });
-      console.log(foundPerson);
+      const foundPerson: IPerson = await this.dataServices.persons.findOne({
+        uuid,
+      });
 
       return new CustomerResponseDTO({
         ...foundCustomer,

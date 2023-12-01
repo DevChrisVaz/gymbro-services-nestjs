@@ -13,7 +13,7 @@ export class CreateBranchUseCase {
     private readonly branchesService: BranchesService,
     private readonly addressesService: AddressesService,
     private readonly dataServices: DatabaseServicesContract,
-  ) { }
+  ) {}
 
   async run(createBranchDto: CreateBranchDto): Promise<BranchResponseDto> {
     const address: IAddress = this.addressesService.mapDtoToAddress(
@@ -32,7 +32,7 @@ export class CreateBranchUseCase {
     );
 
     return new BranchResponseDto({
-      ...this.branchesService.serializeBranch(createdBranch)
+      ...this.branchesService.serializeBranch(createdBranch),
     });
   }
 }

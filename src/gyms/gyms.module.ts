@@ -10,19 +10,14 @@ import { useCaseProviders } from './application/usecases/providers';
 import { UsersModule } from 'src/users/users.module';
 import { EncryptionModule } from 'src/encryption/encryption.module';
 import { AddNewUserUseCase } from './application/usecases/add-new-user.usecase';
-// import { FindGYMUsersUseCase } from './application/usecases/find-gym-users.usecase';
-// import { MailingModule } from 'src/mailing/mailing.module';
+import { GYMNodemailerServiceProvider } from './frameworks/mailing/nodemailer/gym-nodemailer-service.provider';
 
 @Module({
-  imports: [
-    DatabaseModule,
-    UsersModule,
-    EncryptionModule,
-    // MailingModule
-  ],
+  imports: [DatabaseModule, UsersModule, EncryptionModule],
   controllers: [GymsController],
   providers: [
     GymsService,
+    GYMNodemailerServiceProvider,
     ...useCaseProviders,
     FindGymsUseCase,
     CreateGymUseCase,
@@ -30,7 +25,6 @@ import { AddNewUserUseCase } from './application/usecases/add-new-user.usecase';
     DeleteGymUseCase,
     AddNewUserUseCase,
     CreateGymUseCase,
-    // FindGYMUsersUseCase,
   ],
 })
 export class GymsModule {}
