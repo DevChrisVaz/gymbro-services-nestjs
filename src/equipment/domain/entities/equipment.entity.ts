@@ -1,6 +1,7 @@
 import { ITimestamps } from 'src/database/domain/entities/ITimestamps';
 
 export interface IEquipment extends ITimestamps {
+  uuid: string;
   name: string;
   description: string;
   image: string;
@@ -10,6 +11,7 @@ export interface IEquipment extends ITimestamps {
 }
 
 export class Equipment implements IEquipment {
+  uuid: string;
   name: string;
   description: string;
   image: string;

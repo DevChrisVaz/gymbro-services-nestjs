@@ -40,7 +40,7 @@ export class RefreshSessionUseCase {
         role: accessTokenPayload.role,
         gym: accessTokenPayload.gym,
       },
-      '15s',
+      '30s',
     );
     const refreshToken: string = await this.authService.generateRefreshToken({
       token: accessToken,

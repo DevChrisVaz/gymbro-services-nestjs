@@ -57,7 +57,7 @@ export class UserLoginUseCase {
 
     const accessToken = await this.authService.generateAccessToken(
       tokenData,
-      '15s',
+      '30s',
     );
 
     const refreshToken = await this.authService.generateRefreshToken({
