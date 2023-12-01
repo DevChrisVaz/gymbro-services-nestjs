@@ -131,7 +131,7 @@ const verificationEmail = (person: IPerson, token: string) => {
                                                     </tr>
                                                     <tr>
                                                         <td>
-                                                            <a href="http://localhost:3000/account/verify?token=${token}"
+                                                            <a href="https://gymbro-landing-page.vercel.app/account/verify/token=${token}"
                                                                 style="margin: 0 140px; padding: 20px 25px; outline: none; border: none; 
                                                                         border-radius: 100px; background-color: #27be82; color: #ffffff; font-size: 16px;
                                                                         text-decoration: none;">Confirmar cuenta</a>
