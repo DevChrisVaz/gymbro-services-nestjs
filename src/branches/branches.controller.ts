@@ -40,6 +40,7 @@ import { BranchWithAddressResponseDto } from './application/dto/responses/branch
 import { FindGymBranchesUseCase } from './application/usecases/find-gym-branches-usecase';
 import { FindBranchUsersUseCase } from './application/usecases/find-branch-users.usecase';
 import { FindBranchEquipmentUseCase } from 'src/equipment/application/usecases/find-branch-equipment.usecase';
+import { GetCustomerBranchActiveSubscriptionUseCase } from './application/usecases/get-customer-branch-active-subscription.usecase';
 
 @ApiSecurity('api_key')
 @ApiBearerAuth()
@@ -56,7 +57,8 @@ export class BranchesController {
     private readonly findGymBranchesUseCase: FindGymBranchesUseCase,
     private readonly findBranchUsersUseCase: FindBranchUsersUseCase,
     private readonly findBranchEquipmentUseCase: FindBranchEquipmentUseCase,
-  ) {}
+    private readonly getCustomerBranchActiveSubscriptionUseCase: GetCustomerBranchActiveSubscriptionUseCase
+  ) { }
 
   @UseInterceptors(AddUUIDInterceptor)
   @UseInterceptors(AddAddressUUIDInterceptor)
@@ -127,5 +129,14 @@ export class BranchesController {
   @Get(':id/equipment')
   getEquipment(@Param('id', ParseUUIDPipe) id: string) {
     return this.findBranchEquipmentUseCase.run(id);
+  }
+
+  @UseInterceptors(FindRegistryInterceptor<IBranch>)
+  @Get(':id/:customer/active')
+  getCustomerActiveSubscription(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Param('customer', ParseUUIDPipe) customer: string
+  ) {
+    return this.getCustomerBranchActiveSubscriptionUseCase.run(id, customer);
   }
 }

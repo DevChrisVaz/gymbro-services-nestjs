@@ -36,7 +36,7 @@ export class SubscriptionsController {
     private readonly updateSubscriptionUseCase: UpdateSubscriptionUseCase,
     private readonly deleteSubscriptionUseCase: DeleteSubscriptionUseCase,
     private readonly getCustomerSubscriptionsUseCase: GetCustomerSubscriptionsUseCase,
-  ) {}
+  ) { }
 
   @UseInterceptors(AddUUIDInterceptor)
   @Post()

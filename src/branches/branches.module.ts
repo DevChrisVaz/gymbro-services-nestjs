@@ -14,6 +14,7 @@ import { PlansModule } from 'src/plans/plans.module';
 import { FindGymBranchesUseCase } from './application/usecases/find-gym-branches-usecase';
 import { FindBranchUsersUseCase } from './application/usecases/find-branch-users.usecase';
 import { FindBranchEquipmentUseCase } from 'src/equipment/application/usecases/find-branch-equipment.usecase';
+import { GetCustomerBranchActiveSubscriptionUseCase } from './application/usecases/get-customer-branch-active-subscription.usecase';
 
 @Global()
 @Module({
@@ -29,6 +30,7 @@ import { FindBranchEquipmentUseCase } from 'src/equipment/application/usecases/f
     DeleteBranchUseCase,
     FindBranchUsersUseCase,
     FindBranchEquipmentUseCase,
+    GetCustomerBranchActiveSubscriptionUseCase
   ],
   exports: [BranchesService, CreateBranchUseCase],
 })

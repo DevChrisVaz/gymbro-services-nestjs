@@ -47,7 +47,7 @@ export class CustomersController {
     private readonly updateCustomerUseCase: UpdateCustomerUseCase,
     private readonly deleteCustomerUseCase: DeleteCustomerUseCase,
     private readonly getCustomerSubscriptionsUseCase: GetCustomerSubscriptionsUseCase,
-  ) {}
+  ) { }
 
   // @ApiOperation({
   //   summary: "Register a customer for mobile application access"

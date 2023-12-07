@@ -4,26 +4,29 @@ import { SubscriptionsService } from 'src/subscriptions/subscriptions.service';
 import { CreateSubscriptionDto } from '../dto';
 import { ISubscription } from 'src/subscriptions/domain/entities/subscription.entity';
 import { AlreadySubscribedException } from '../exceptions/already-subscribed-exception';
+import { GetValidSubscriptionUseCase } from './get-valid-subscription.usecase';
 
 @Injectable()
 export class CreateSubscriptionUseCase {
   constructor(
     private readonly subscriptionsService: SubscriptionsService,
-    private dataServices: DatabaseServicesContract,
-  ) {}
+    private readonly databaseServices: DatabaseServicesContract,
+    private readonly getValidSubcriptionUseCase: GetValidSubscriptionUseCase
+  ) { }
 
-  async run(createPlanDto: CreateSubscriptionDto): Promise<ISubscription> {
-    const foundSubscription = await this.dataServices.subscriptions.findOne({
-      customer: createPlanDto.customer,
-      plan: createPlanDto.plan,
+  async run(createSubscriptionDto: CreateSubscriptionDto): Promise<ISubscription> {
+    const foundSubscriptions: ISubscription[] = await this.databaseServices.subscriptions.find({
+      customer: createSubscriptionDto.customer,
+      plan: createSubscriptionDto.plan,
     });
 
-    if (foundSubscription) throw new AlreadySubscribedException();
+    // if (await Promise.all(foundSubscriptions.map(this.getValidSubcriptionUseCase.run)))
+    //   throw new AlreadySubscribedException();
 
     const subscription =
-      this.subscriptionsService.mapDtoToSubscription(createPlanDto);
+      this.subscriptionsService.mapDtoToSubscription(createSubscriptionDto);
     const createdSubscription: ISubscription =
-      await this.dataServices.subscriptions.save(subscription);
+      await this.databaseServices.subscriptions.save(subscription);
     return this.subscriptionsService.serializeSubscription(createdSubscription);
   }
 }

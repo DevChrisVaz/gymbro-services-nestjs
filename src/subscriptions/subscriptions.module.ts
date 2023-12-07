@@ -10,6 +10,7 @@ import {
   GetCustomerSubscriptionsUseCase,
   UpdateSubscriptionUseCase,
 } from './application/usecases';
+import { GetValidSubscriptionUseCase } from './application/usecases/get-valid-subscription.usecase';
 
 @Module({
   imports: [DatabaseModule],
@@ -22,6 +23,7 @@ import {
     UpdateSubscriptionUseCase,
     DeleteSubscriptionUseCase,
     GetCustomerSubscriptionsUseCase,
+    GetValidSubscriptionUseCase
   ],
 })
-export class SubscriptionsModule {}
+export class SubscriptionsModule { }

@@ -11,9 +11,8 @@ async function bootstrap() {
   app.enableCors({
     credentials: true,
     origin: [
-      "https://gymbro-dashboard.onrender.com",
-      "https://gymbro-landing-page.vercel.app",
-      "https://gymbro-dashboard.vercel.app"
+      "http://localhost:3000",
+      "http://localhost:5173",
     ]
   });
   app.setGlobalPrefix('api');
