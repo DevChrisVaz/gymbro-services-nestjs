@@ -67,6 +67,7 @@ export class GymsController {
     await this.createGymUseCase.run(createGymDto);
     createGymDto.branch.gym = createGymDto.uuid;
     await this.createBranchUseCase.run(createGymDto.branch);
+    return { message: "Te enviamos un correo de confirmación" }
   }
 
   @Public()
