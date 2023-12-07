@@ -20,8 +20,8 @@ export class CreateSubscriptionUseCase {
       plan: createSubscriptionDto.plan,
     });
 
-    // if (await Promise.all(foundSubscriptions.map(this.getValidSubcriptionUseCase.run)))
-    //   throw new AlreadySubscribedException();
+    if (await Promise.all(foundSubscriptions.map(this.getValidSubcriptionUseCase.run)))
+      throw new AlreadySubscribedException();
 
     const subscription =
       this.subscriptionsService.mapDtoToSubscription(createSubscriptionDto);
