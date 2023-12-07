@@ -20,7 +20,9 @@ export class CreateSubscriptionUseCase {
       plan: createSubscriptionDto.plan,
     });
 
-    if (await Promise.all(foundSubscriptions.map(this.getValidSubcriptionUseCase.run)))
+    const activeSubscriptions = await Promise.all(foundSubscriptions.map(this.getValidSubcriptionUseCase.run))
+
+    if (activeSubscriptions.length > 0)
       throw new AlreadySubscribedException();
 
     const subscription =

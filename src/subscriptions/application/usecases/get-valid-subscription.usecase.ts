@@ -12,7 +12,8 @@ export class GetValidSubscriptionUseCase {
         const creationDate = new Date(subscription.createdAt);
         const endDate = new Date();
         endDate.setDate(creationDate.getDate() + plan.duration);
-        if (new Date() < endDate) return;
+        const currentDate = new Date();
+        if (currentDate > endDate) return;
         return subscription;
     }
 }
