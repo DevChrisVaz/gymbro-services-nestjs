@@ -31,7 +31,7 @@ export class UsersController {
     private readonly createUserUseCase: CreateUserUseCase,
     private readonly findUsersUseCase: FindUsersUseCase,
     private readonly findUserUseCase: FindUserUseCase,
-  ) {}
+  ) { }
 
   @UseInterceptors(AddUUIDInterceptor)
   @ApiCreatedResponse({

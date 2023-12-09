@@ -10,6 +10,8 @@ import { IPerson } from 'src/users/domain/entities/person.entity';
 import { CustomerStatus } from 'src/customers/domain/enums/customer-status-enums';
 import { AccountUnverifiedException } from 'src/customers/application/exceptions/account-unverified-exception';
 import { CustomerCacheServiceContract } from 'src/customers/domain/contracts/customer-cache-service-contract';
+import { UserNotFoundException } from '../exceptions/user-not-found.exception';
+import { WrongPasswordException } from '../exceptions/wrong-password.exception';
 
 @Injectable()
 export class CustomerLoginUseCase {
@@ -18,7 +20,7 @@ export class CustomerLoginUseCase {
     private readonly dataHashingService: DataHashingContract,
     private readonly customerCacheService: CustomerCacheServiceContract,
     private readonly authService: AuthService,
-  ) {}
+  ) { }
 
   async run(
     logInDto: LogInDto,
@@ -33,7 +35,7 @@ export class CustomerLoginUseCase {
         logInDto.userName,
       );
       if (cachedCustomer) throw new AccountUnverifiedException();
-      throw new InvalidUserNameException();
+      throw new UserNotFoundException();
     }
 
     if (
@@ -42,7 +44,7 @@ export class CustomerLoginUseCase {
         foundAuth.password,
       ))
     )
-      throw new BadRequestException('Invalid password');
+      throw new WrongPasswordException();
 
     const foundCustomer: Customer = await this.dataServices.customers.findOne({
       email: foundAuth.userName,

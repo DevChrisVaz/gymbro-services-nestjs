@@ -1,10 +1,10 @@
-import { HttpException, HttpStatus } from '@nestjs/common';
+import { UnauthorizedException } from '@nestjs/common';
 
-export class AccountUnverifiedException extends HttpException {
+export class AccountUnverifiedException extends UnauthorizedException {
   constructor() {
-    super(
-      "Account isn't verified, please check your email",
-      HttpStatus.FORBIDDEN,
-    );
+    super({
+      error: "unverified_account",
+      message: "Account isn't verified, please check your email",
+    });
   }
 }
