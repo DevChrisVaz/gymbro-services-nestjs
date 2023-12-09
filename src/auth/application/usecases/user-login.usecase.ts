@@ -1,12 +1,13 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { AuthService } from 'src/auth/auth.service';
 import { Auth } from 'src/auth/domain/entities/auth';
-import { InvalidUserNameException } from 'src/auth/domain/exceptions/invalid-username.exception';
 import { DatabaseServicesContract } from 'src/database/domain/contracts/database-services.contract';
 import { LogInDto } from '../dtos';
 import { DataHashingContract } from 'src/encryption/domain/contracts/hashing.contract';
 import { IUser } from 'src/users/domain/entities/user.entity';
 import { IUserRole } from 'src/permitions/domain/entities/user-role.entity';
+import { UserNotFoundException } from '../exceptions/user-not-found.exception';
+import { WrongPasswordException } from '../exceptions/wrong-password.exception';
 
 @Injectable()
 export class UserLoginUseCase {
@@ -14,7 +15,7 @@ export class UserLoginUseCase {
     private dataServices: DatabaseServicesContract,
     private readonly dataHashingService: DataHashingContract,
     private readonly authService: AuthService,
-  ) {}
+  ) { }
 
   async run(
     logInDto: LogInDto,
@@ -24,7 +25,7 @@ export class UserLoginUseCase {
       userName: logInDto.userName,
     });
 
-    if (!foundAuth) throw new InvalidUserNameException();
+    if (!foundAuth) throw new UserNotFoundException();
 
     if (
       !(await this.dataHashingService.compare(
@@ -32,7 +33,7 @@ export class UserLoginUseCase {
         foundAuth.password,
       ))
     )
-      throw new BadRequestException('Invalid password');
+      throw new WrongPasswordException();
 
     const foundUser: IUser = await this.dataServices.users.findOne({
       userName: foundAuth.userName,
