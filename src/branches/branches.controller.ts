@@ -92,6 +92,7 @@ export class BranchesController {
     return this.findGymBranchesUseCase.run(req.user.gym ?? query.gymId);
   }
 
+  @Public()
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.findBranchUseCase.run(id);
