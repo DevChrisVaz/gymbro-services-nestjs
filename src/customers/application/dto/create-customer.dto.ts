@@ -28,9 +28,8 @@ export class CreateCustomerDto extends CreatePersonDto {
   phone: string;
 
   @ApiProperty()
-  @Type(() => Date)
-  @Transform(({ value }) => {
-    const parts = value.split('/').map(Number);
+  @Transform((value) => {
+    const parts = value.value.split('/').map(Number);
     return new Date(parts[2], parts[1] - 1, parts[0]);
   })
   @IsNotEmpty()
