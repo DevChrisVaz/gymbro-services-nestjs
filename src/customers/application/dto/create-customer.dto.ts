@@ -29,7 +29,10 @@ export class CreateCustomerDto extends CreatePersonDto {
 
   @ApiProperty()
   @Type(() => Date)
-  @Transform(value => new Date(value.value), { toClassOnly: true })
+  @Transform(({ value }) => {
+    const parts = value.split('/').map(Number);
+    return new Date(parts[2], parts[1] - 1, parts[0]);
+  })
   @IsNotEmpty()
   @IsDate()
   birthdate: string;
