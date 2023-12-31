@@ -1,5 +1,5 @@
 import { ApiHideProperty, ApiProperty } from '@nestjs/swagger';
-import { Exclude, Type } from 'class-transformer';
+import { Exclude, Transform, Type } from 'class-transformer';
 import {
   IsDate,
   IsEmail,
@@ -28,7 +28,7 @@ export class CreateCustomerDto extends CreatePersonDto {
   phone: string;
 
   @ApiProperty()
-  @Type(() => Date)
+  @Transform(value => Intl.DateTimeFormat("dd/MM/yyyy").format(new Date(value.value)))
   @IsNotEmpty()
   @IsDate()
   birthdate: string;
