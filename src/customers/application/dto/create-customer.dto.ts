@@ -28,7 +28,8 @@ export class CreateCustomerDto extends CreatePersonDto {
   phone: string;
 
   @ApiProperty()
-  @Transform(value => Intl.DateTimeFormat("dd/MM/yyyy").format(new Date(value.value)))
+  @Type(() => Date)
+  @Transform(value => new Date(value.value), { toClassOnly: true })
   @IsNotEmpty()
   @IsDate()
   birthdate: string;
